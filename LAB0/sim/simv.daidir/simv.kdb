@@ -1,0 +1,23 @@
+rc file Version 1.0
+
+[Design]
+COMPILE_PATH=/home/a34263_asu/CSE598/LAB0/sim
+VCS_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3
+VERDI_HOME=/usr/local2/synopsys/verdi_2024.09/verdi_2024
+SystemC=FALSE
+UUM=FALSE
+KDB=TRUE
+USE_NOVAS_HOME=FALSE
+COSIM=FALSE
+TOP=tb_dsp_slice 
+OPTION=-ssv -ssy 
+ELAB_OPTION=-ssv -ssy 
+ELAB=TRUE
+COMMON_ELAB=TRUE
+SIMV_WRAPPER=FALSE
+[Value]
+WREALX=ffff534e50535f58
+WREALZ=ffff534e50535f5a
+
+[CompInfo]
+FLOW_OPTS=-kdb=common_elab -ssv -ssy 

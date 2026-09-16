@@ -1,0 +1,2 @@
+Command Line: /usr/local2/synopsys/verdi_2024.09/verdi_2024/platform/LINUXAMD64/bin/Novas -dbdir ./simv.daidir -nologo
+uname(Linux nc-asu6-l02.apporto.com 4.18.0-372.19.1.el8_6.x86_64 #1 SMP Mon Jul 18 11:14:02 EDT 2022 x86_64)

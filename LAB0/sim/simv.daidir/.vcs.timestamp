@@ -1,0 +1,120 @@
+0
+40
++itf+/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcsdp_lite.tab
++vcsd1
++vpi
+-Mamsrun=
+-Masflags=
+-Mcc=gcc
+-Mcfl= -pipe -fPIC -O -I/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/include
+-Mcplusplus=g++
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mexternalobj=
+-Mldflags= -rdynamic
+-Mobjects= /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvirsim.so /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/liberrorinf.so /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libsnpsmalloc.so /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvfs.so
+-Mout=simv
+-Msaverestoreobj=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcs_save_restore_new.o
+-Msyslibs=/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/pli.a -ldl
+-Mvcsaceobjs=
+-Mxcflags= -pipe -fPIC -I/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/include
+-Mxllcflags=
+-P
+-Xufe=2steps
+-Xufe=2steps
+-Xufe=2steps
+-Xufe=2steps
+-debug_access+all
+-fsdb
+-full64
+-gen_obj
+-kdb
+-kdb=common_elab
+-kdb=common_elab
+-kdb=common_elab
+-lca
+-picarchive
+-sverilog
+/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/vcs1
+/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/verdi.tab
+../18_19_Slice.v
+../18_19_Slice_tb.v
+63
+which_declare=declare -f
+XRDP_SOCKET_PATH=/run/xrdp
+XRDP_SESSION=1
+XRDP_PULSE_SOURCE_SOCKET=xrdp_chansrv_audio_in_socket_11
+XRDP_PULSE_SINK_SOCKET=xrdp_chansrv_audio_out_socket_11
+XMODIFIERS=@im=ibus
+XDG_SESSION_ID=c7
+XDG_RUNTIME_DIR=/run/user/2288359
+XDG_MENU_PREFIX=gnome-
+XDG_DATA_DIRS=/home/a34263_asu/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+XDG_CURRENT_DESKTOP=GNOME
+VTE_VERSION=5204
+VMR_MODE_FLAG=64
+VERDI_HOME=/usr/local2/synopsys/verdi_2024.09/verdi_2024
+VENDOR=unknown
+VCS_PYTHON3=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/Python3/bin/python3
+VCS_PATHMAP_PRELOAD_DONE=1
+VCS_MX_HOME_INTERNAL=1
+VCS_MODE_FLAG=64
+VCS_LCAMSG_PRINT_OFF=1
+VCS_INTERNAL_CONVERTEDLIBS=
+VCS_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3
+VCS_EXEC_DONE=1
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH=linux64
+UNAME=/bin/uname
+TOOL_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64
+SSH_AUTH_SOCK=/run/user/2288359/keyring/ssh
+SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+SSH_AGENT_PID=3843
+SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
+SNPS_VCS_VHDL_WRAPPER_KDB=1
+SNPS_VCS_PYTHON3=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/Python3/bin/python3
+SNPS_VCS_CLANG_PATH=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/clang
+SNPS_INTERNAL_VCS_LINUX_OS=linux
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/3686,unix/unix:/tmp/.ICE-unix/3686
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+QT_IM_MODULE=ibus
+PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+PDK_DIR=/usr/local2/cadence/NCSU/SRC/FreePDK45
+OVA_UUM=0
+OSTYPE=linux
+MFLAGS=
+MAKE_TERMOUT=/dev/pts/1
+MAKE_TERMERR=/dev/pts/1
+MAKELEVEL=1
+MAKEFLAGS=
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LC_ALL=C
+KRB5CCNAME=FILE:/tmp/krb5cc_2288359
+HOSTTYPE=x86_64-linux
+HISTCONTROL=ignoreboth
+GROUP=a34263_asu
+GNOME_TERMINAL_SERVICE=:1.76
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/4b81bbb8_b7f8_4268_b1e3_b4461762a159
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+GJS_DEBUG_OUTPUT=stderr
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/2288359/bus
+COLORTERM=truecolor
+BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@_}
+0
+0
+4
+1788976523 ../18_19_Slice_tb.v
+1788976523 ../18_19_Slice.v
+1750737971 /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/verdi.tab
+1751080315 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcsdp_lite.tab
+4
+1751083201 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvirsim.so
+1751081831 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/liberrorinf.so
+1751081823 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libsnpsmalloc.so
+1751081835 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvfs.so
+1788978284 simv.daidir
+-1 partitionlib

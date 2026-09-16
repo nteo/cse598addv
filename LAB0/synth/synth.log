@@ -1,0 +1,1673 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid this.
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+              Version V-2023.12-SP5-1 for linux64 - Sep 03, 2024 
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+Initializing...
+Current time:       Wed Sep  9 18:38:09 2026
+Hostname:           nc-asu6-l02.apporto.com
+CPU Model:          Intel(R) Xeon(R) Platinum 8488C
+CPU Details:        Cores = 16 : Sockets = 1 : Cache Size = 107520 KB : Freq = 2.40 GHz
+OS:                 Linux 4.18.0-372.19.1.el8_6.x86_64
+RAM:                 61 GB (Free  54 GB)
+Swap:                 0 GB (Free   0 GB)
+Work Filesystem:    /home/a34263_asu mounted to nc-nfs-01.apporto.com:/homes/a34263_asu
+Tmp Filesystem:     /tmp mounted to tmpfs
+Work Disk:          2460 GB (Free 459 GB)
+Tmp Disk:            30 GB (Free  30 GB)
+#/**************************************************/
+#/* Compile Script for Synopsys                    */
+#/*                                                */
+#/* dc_shell-t -f compile_dc.tcl                   */
+#/*                                                */
+#/* OSU FreePDK 45nm                               */
+#/**************************************************/
+#/* All verilog files, separated by spaces         */
+set my_verilog_files [list ../18_19_Slice.v]
+../18_19_Slice.v
+#/* Top-level Module                               */
+set my_toplevel   dsp_slice
+dsp_slice
+#/* The name of the clock pin. If no clock-pin     */
+#/* exists, pick anything                          */
+set my_clock_pin clk
+clk
+#/* Target frequency in MHz for optimization       */
+set my_clk_freq_MHz 1000
+1000
+#/* Delay of input signals (Clock-to-Q, Package etc.)  */
+set my_input_delay_ns 0.1
+0.1
+#/* Reserved time for output signals (Holdtime etc.)   */
+set my_output_delay_ns 0.1
+0.1
+#/**************************************************/
+#/* No modifications needed below                  */
+#/**************************************************/
+set OSU_FREEPDK [format "%s%s"  [getenv "PDK_DIR"] "/osu_soc/lib/files"]
+/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files
+set search_path [concat  $search_path $OSU_FREEPDK]
+. /usr/local2/synopsys/syn_2023.12-SP51/libraries/syn /usr/local2/synopsys/syn_2023.12-SP51/dw/syn_ver /usr/local2/synopsys/syn_2023.12-SP51/dw/sim_ver /usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files
+set alib_library_analysis_path $OSU_FREEPDK
+/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files
+set link_library [set target_library [concat  [list gscl45nm.db] [list dw_foundation.sldb]]]
+gscl45nm.db dw_foundation.sldb
+set target_library "gscl45nm.db"
+gscl45nm.db
+define_design_lib WORK -path ./WORK
+1
+set verilogout_show_unconnected_pins "true"
+true
+set_ultra_optimization true
+Error: unknown command 'set_ultra_optimization' (CMD-005)
+set_ultra_optimization -force
+Error: unknown command 'set_ultra_optimization' (CMD-005)
+analyze -f verilog $my_verilog_files
+Running PRESTO HDLC
+Compiling source file ../18_19_Slice.v
+Warning:  ../18_19_Slice.v:8: Port c of type input is being assigned.  (VER-1005)
+Warning:  ../18_19_Slice.v:15: Port c of type input is being assigned.  (VER-1005)
+Warning:  ../18_19_Slice.v:23: Port c of type input is being assigned.  (VER-1005)
+Warning:  ../18_19_Slice.v:31: Port c of type input is being assigned.  (VER-1005)
+Presto compilation completed successfully.
+Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
+Loading db file '/usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/dw_foundation.sldb'
+1
+elaborate $my_toplevel
+Loading db file '/usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/gtech.db'
+Loading db file '/usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/standard.sldb'
+  Loading link library 'gscl45nm'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Warning:  ../18_19_Slice.v:403: The statements in initial blocks are ignored. (VER-281)
+
+Inferred memory devices in process
+	in routine dsp_slice line 167 in file
+		'../18_19_Slice.v'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| mux1_out_flopped_reg | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+================================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 177 in file
+		'../18_19_Slice.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   az_flopped_reg    | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 186 in file
+		'../18_19_Slice.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   ax_flopped_reg    | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 196 in file
+		'../18_19_Slice.v'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| mux2_out_flopped_reg | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+================================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 206 in file
+		'../18_19_Slice.v'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| mux5_out_flopped_reg | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+================================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 215 in file
+		'../18_19_Slice.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   bz_flopped_reg    | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 224 in file
+		'../18_19_Slice.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   bx_flopped_reg    | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 234 in file
+		'../18_19_Slice.v'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| mux6_out_flopped_reg | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+================================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 256 in file
+		'../18_19_Slice.v'.
+=====================================================================================
+|       Register Name       |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+=====================================================================================
+|  coefsela_flopped_1_reg   | Flip-flop |   3   |  Y  | N  | N  | N  | N  | N  | N  |
+|  coefselb_flopped_1_reg   | Flip-flop |   3   |  Y  | N  | N  | N  | N  | N  | N  |
+|  loadconst_flopped_1_reg  | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+| accumulate_flopped_1_reg  | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   negate_flopped_1_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     sub_flopped_1_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  mult2_en_flopped_1_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+| mux9_select_flopped_1_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  constant_flopped_1_reg   | Flip-flop |  74   |  Y  | N  | N  | N  | N  | N  | N  |
+|  coeffmux_flopped_1_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+=====================================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 300 in file
+		'../18_19_Slice.v'.
+=====================================================================================
+|       Register Name       |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+=====================================================================================
+|  coefsela_flopped_2_reg   | Flip-flop |   3   |  Y  | N  | N  | N  | N  | N  | N  |
+|  coefselb_flopped_2_reg   | Flip-flop |   3   |  Y  | N  | N  | N  | N  | N  | N  |
+|  loadconst_flopped_2_reg  | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+| accumulate_flopped_2_reg  | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   negate_flopped_2_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     sub_flopped_2_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  mux2_out_flopped_2_reg   | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux3_out_flopped_2_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux4_out_flopped_2_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux6_out_flopped_2_reg   | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux7_out_flopped_2_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux8_out_flopped_2_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mult2_en_flopped_2_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+| mux9_select_flopped_2_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  constant_flopped_2_reg   | Flip-flop |  74   |  Y  | N  | N  | N  | N  | N  | N  |
+|  coeffmux_flopped_2_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+=====================================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 357 in file
+		'../18_19_Slice.v'.
+=====================================================================================
+|       Register Name       |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+=====================================================================================
+|  coefsela_flopped_3_reg   | Flip-flop |   3   |  Y  | N  | N  | N  | N  | N  | N  |
+|  coefselb_flopped_3_reg   | Flip-flop |   3   |  Y  | N  | N  | N  | N  | N  | N  |
+|  loadconst_flopped_3_reg  | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+| accumulate_flopped_3_reg  | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   negate_flopped_3_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     sub_flopped_3_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  mux2_out_flopped_3_reg   | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux3_out_flopped_3_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux4_out_flopped_3_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux6_out_flopped_3_reg   | Flip-flop |  19   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux7_out_flopped_3_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mux8_out_flopped_3_reg   | Flip-flop |  18   |  Y  | N  | N  | N  | N  | N  | N  |
+|  mult2_en_flopped_3_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+| mux9_select_flopped_3_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|  constant_flopped_3_reg   | Flip-flop |  74   |  Y  | N  | N  | N  | N  | N  | N  |
+|  coeffmux_flopped_3_reg   | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+=====================================================================================
+
+Inferred memory devices in process
+	in routine dsp_slice line 449 in file
+		'../18_19_Slice.v'.
+====================================================================================
+|      Register Name       |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+====================================================================================
+|  double_acc_flopped_reg  | Flip-flop |  38   |  Y  | N  | N  | N  | N  | N  | N  |
+| output_register_bank_reg | Flip-flop |  74   |  Y  | N  | N  | N  | N  | N  | N  |
+====================================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|  dsp_slice/416   |   8    |    1    |      3       |
+|  dsp_slice/426   |   8    |    1    |      3       |
+======================================================
+Presto compilation completed successfully. (dsp_slice)
+Elaborated 1 design.
+Current design is now 'dsp_slice'.
+Information: Building the design 'pre_adder'. (HDL-193)
+Presto compilation completed successfully. (pre_adder)
+Information: Building the design 'multiplier'. (HDL-193)
+Presto compilation completed successfully. (multiplier)
+Information: Building the design 'multiplier_1'. (HDL-193)
+Presto compilation completed successfully. (multiplier_1)
+Information: Building the design 'adder_subtractor'. (HDL-193)
+Presto compilation completed successfully. (adder_subtractor)
+Information: Building the design 'inverse'. (HDL-193)
+Presto compilation completed successfully. (inverse)
+Information: Building the design 'chainout_add_acc'. (HDL-193)
+Presto compilation completed successfully. (chainout_add_acc)
+1
+current_design $my_toplevel
+Current design is 'dsp_slice'.
+{dsp_slice}
+link
+
+  Linking design 'dsp_slice'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  gscl45nm (library)          /usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db
+  dw_foundation.sldb (library) /usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/dw_foundation.sldb
+
+1
+uniquify
+1
+set my_period [expr 1000 / $my_clk_freq_MHz]
+1
+set find_clock [ find port [list $my_clock_pin] ]
+{clk}
+if {  $find_clock != [list] } {
+   set clk_name $my_clock_pin
+   create_clock -period $my_period $clk_name
+} else {
+   set clk_name vclk
+   create_clock -period $my_period -name $clk_name
+}
+1
+set_driving_cell  -lib_cell INVX1  [all_inputs]
+Warning: Design rule attributes from the driving cell will be set on the port 'clk'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'enable'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'clr'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'loadconst'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'accumulate'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'negate'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'sub'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ay[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'az[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'ax[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'by[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bz[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'bx[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'scanin[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[63]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[62]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[61]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[60]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[59]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[58]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[57]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[56]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[55]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[54]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[53]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[52]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[51]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[50]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[49]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[48]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[47]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[46]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[45]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[44]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[43]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[42]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[41]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[40]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[39]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[38]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[37]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[36]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[35]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[34]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[33]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[32]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[31]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[30]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[29]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[28]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[27]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[26]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[25]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[24]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[23]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[22]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[21]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[20]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[19]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'chainin[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'func[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'func[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'muxsel[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'coeffmux'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[73]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[72]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[71]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[70]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[69]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[68]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[67]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[66]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[65]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[64]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[63]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[62]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[61]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[60]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[59]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[58]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[57]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[56]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[55]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[54]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[53]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[52]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[51]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[50]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[49]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[48]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[47]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[46]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[45]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[44]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[43]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[42]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[41]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[40]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[39]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[38]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[37]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[36]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[35]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[34]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[33]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[32]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[31]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[30]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[29]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[28]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[27]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[26]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[25]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[24]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[23]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[22]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[21]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[20]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[19]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'constant[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'coefsela[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'coefsela[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'coefsela[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'coefselb[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'coefselb[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'coefselb[0]'. (UID-401)
+1
+set_input_delay $my_input_delay_ns -clock $clk_name [remove_from_collection [all_inputs] $my_clock_pin]
+1
+set_output_delay $my_output_delay_ns -clock $clk_name [all_outputs]
+1
+compile -ungroup_all -map_effort medium
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | V-2023.12-DWBB_202312.5 |     *     |
+| Licensed DW Building Blocks        | V-2023.12-DWBB_202312.5 |     *     |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 876                                    |
+| Number of User Hierarchies                              | 2                                      |
+| Sequential Cell Count                                   | 741                                    |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 44                                     |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+
+Information: There are 704 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'chainout_add_acc'
+  Processing 'inverse'
+Information: Ungrouping hierarchy dp_cluster_0. (OPT-772)
+  Processing 'dsp_slice'
+Information: Ungrouping hierarchy C1277. (OPT-772)
+Information: Ungrouping hierarchy C1276. (OPT-772)
+Information: The register 'coefselb_flopped_1_reg[2]' will be removed. (OPT-1207)
+Information: The register 'coefselb_flopped_1_reg[1]' will be removed. (OPT-1207)
+Information: The register 'coefselb_flopped_1_reg[0]' will be removed. (OPT-1207)
+Information: The register 'coefsela_flopped_1_reg[2]' will be removed. (OPT-1207)
+Information: The register 'coefsela_flopped_1_reg[1]' will be removed. (OPT-1207)
+Information: The register 'coefsela_flopped_1_reg[0]' will be removed. (OPT-1207)
+Information: The register 'double_acc_flopped_reg[37]' is a constant and will be removed. (OPT-1206)
+
+  Updating timing information
+Information: The register 'mult2_en_flopped_3_reg' will be removed. (OPT-1207)
+Information: The register 'mult2_en_flopped_2_reg' will be removed. (OPT-1207)
+Information: The register 'mult2_en_flopped_1_reg' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[0]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[1]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[2]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[3]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[4]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[5]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[6]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[7]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[8]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[9]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[10]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[11]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[12]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[13]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[14]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[15]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[16]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_3_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux3_out_flopped_2_reg[17]' will be removed. (OPT-1207)
+Information: The register 'az_flopped_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[0]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[1]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[2]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[3]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[4]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[5]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[6]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[7]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[8]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[9]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[10]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[11]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[12]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[13]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[14]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[15]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[16]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_3_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux4_out_flopped_2_reg[17]' will be removed. (OPT-1207)
+Information: The register 'ax_flopped_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[0]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[1]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[2]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[3]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[4]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[5]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[6]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[7]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[8]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[9]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[10]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[11]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[12]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[13]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[14]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[15]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[16]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_3_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux7_out_flopped_2_reg[17]' will be removed. (OPT-1207)
+Information: The register 'bz_flopped_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[0]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[1]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[2]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[3]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[4]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[5]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[6]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[7]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[8]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[9]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[10]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[11]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[12]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[13]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[14]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[15]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[16]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_3_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux8_out_flopped_2_reg[17]' will be removed. (OPT-1207)
+Information: The register 'bx_flopped_reg[17]' will be removed. (OPT-1207)
+Information: The register 'coeffmux_flopped_3_reg' will be removed. (OPT-1207)
+Information: The register 'coeffmux_flopped_2_reg' will be removed. (OPT-1207)
+Information: The register 'coeffmux_flopped_1_reg' will be removed. (OPT-1207)
+Information: The register 'sub_flopped_3_reg' will be removed. (OPT-1207)
+Information: The register 'sub_flopped_2_reg' will be removed. (OPT-1207)
+Information: The register 'sub_flopped_1_reg' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_3_reg[18]' will be removed. (OPT-1207)
+Information: The register 'mux2_out_flopped_2_reg[18]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[0]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[1]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[2]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[3]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[4]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[5]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[6]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[7]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[8]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[9]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[10]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[11]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[12]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[13]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[14]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[15]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[16]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[17]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_3_reg[18]' will be removed. (OPT-1207)
+Information: The register 'mux6_out_flopped_2_reg[18]' will be removed. (OPT-1207)
+Information: Updating design information... (UID-85)
+Information: Ungrouping hierarchy M6. (OPT-772)
+Information: Ungrouping hierarchy M7. (OPT-772)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'DW01_add_width74_DW01_add_0'
+  Processing 'DW01_add_width65_DW01_add_1'
+  Processing 'DW01_sub_width38_DW01_sub_0'
+  Processing 'DW01_inc_width38_DW01_inc_0'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01    6086.8      0.00       0.0     650.3                          
+    0:00:01    6086.8      0.00       0.0     650.3                          
+    0:00:01    6086.8      0.00       0.0     650.3                          
+    0:00:01    6086.8      0.00       0.0     650.3                          
+    0:00:01    6086.8      0.00       0.0     650.3                          
+    0:00:01    5733.0      0.00       0.0     528.9                          
+    0:00:01    5733.0      0.00       0.0     528.9                          
+    0:00:01    5733.0      0.00       0.0     528.9                          
+    0:00:01    5733.0      0.00       0.0     528.9                          
+    0:00:01    5733.0      0.00       0.0     528.9                          
+    0:00:01    5797.7      0.00       0.0     492.6                          
+    0:00:02    5851.7      0.00       0.0     467.0                          
+    0:00:02    5904.3      0.00       0.0     442.4                          
+    0:00:02    5956.8      0.00       0.0     417.8                          
+    0:00:02    6002.8      0.00       0.0     396.3                          
+    0:00:02    6048.8      0.00       0.0     374.8                          
+    0:00:02    6094.8      0.00       0.0     353.3                          
+    0:00:02    6134.2      0.00       0.0     334.9                          
+    0:00:02    6173.6      0.00       0.0     316.5                          
+    0:00:02    6173.6      0.00       0.0     316.5                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:02    6173.6      0.00       0.0     316.5                          
+    0:00:02    6173.6      0.00       0.0     316.5                          
+    0:00:02    6173.6      0.00       0.0     316.5                          
+    0:00:02    6173.6      0.00       0.0     316.5                          
+    0:00:02    6173.6      0.00       0.0     316.5                          
+
+
+  Beginning Design Rule Fixing  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:02    6173.6      0.00       0.0     316.5                          
+    0:00:02    6312.6      0.00       0.0     304.6 M7/n70                   
+    0:00:02    6474.0      0.00       0.0     266.6 M7/n75                   
+    0:00:02    6539.7      0.00       0.0     220.6 add_acc_out[45]          
+    0:00:02    6639.7      0.00       0.0     200.4 n189                     
+    0:00:02    6658.4      0.00       0.0     200.3                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:02    6658.4      0.00       0.0     200.3                          
+    0:00:02    6658.4      0.00       0.0     200.3                          
+    0:00:02    6540.2      0.00       0.0     200.3                          
+    0:00:02    6485.3      0.00       0.0     200.3                          
+    0:00:02    6447.2      0.00       0.0     200.3                          
+    0:00:02    6434.6      0.00       0.0     200.3                          
+    0:00:02    6421.9      0.00       0.0     200.3                          
+    0:00:02    6410.6      0.00       0.0     200.3                          
+    0:00:02    6400.8      0.00       0.0     200.3                          
+    0:00:02    6390.9      0.00       0.0     200.3                          
+    0:00:02    6390.9      0.00       0.0     200.3                          
+    0:00:02    6390.9      0.00       0.0     200.3                          
+    0:00:02    6311.6      0.00       0.0     200.3                          
+    0:00:02    6311.6      0.00       0.0     200.3                          
+    0:00:02    6311.6      0.00       0.0     200.3                          
+    0:00:02    6311.6      0.00       0.0     200.3                          
+    0:00:02    6311.6      0.00       0.0     200.3                          
+    0:00:02    6311.6      0.00       0.0     200.3                          
+    0:00:02    6311.6      0.00       0.0     200.3                          
+Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+1
+compile -incremental_mapping -map_effort medium
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 1769                                   |
+| Number of User Hierarchies                              | 0                                      |
+| Sequential Cell Count                                   | 421                                    |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 0                                      |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+
+Information: There are 255 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping  (Incremental)
+  ------------------------
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Mapping Optimizations  (Medium effort)  (Incremental)
+  -------------------------------
+
+  Beginning Incremental Implementation Selection
+  ----------------------------------------------
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:00    6311.6      0.00       0.0     200.3                          
+    0:00:00    6311.6      0.00       0.0     200.3                          
+    0:00:00    6311.6      0.00       0.0     200.3                          
+
+
+  Beginning Design Rule Fixing  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:00    6311.6      0.00       0.0     200.3                          
+    0:00:00    6386.7      0.00       0.0     200.1 n404                     
+    0:00:00    6419.6      0.00       0.0     200.0                          
+Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+1
+check_design
+ 
+****************************************
+check_design summary:
+Version:     V-2023.12-SP5-1
+Date:        Wed Sep  9 18:38:13 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                    176
+    Unloaded inputs (LINT-8)                                       79
+    Unconnected ports (LINT-28)                                     7
+    Shorted outputs (LINT-31)                                      63
+    Constant outputs (LINT-52)                                     27
+
+Nets                                                               79
+    Unloaded nets (LINT-2)                                         79
+--------------------------------------------------------------------------------
+
+Warning: In design 'dsp_slice', net 'coeffmux' driven by pin 'coeffmux' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'muxsel[2]' driven by pin 'muxsel[2]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'muxsel[3]' driven by pin 'muxsel[3]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'muxsel[6]' driven by pin 'muxsel[6]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'muxsel[7]' driven by pin 'muxsel[7]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'func[0]' driven by pin 'func[0]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[0]' driven by pin 'bx[0]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[1]' driven by pin 'bx[1]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[2]' driven by pin 'bx[2]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[3]' driven by pin 'bx[3]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[4]' driven by pin 'bx[4]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[5]' driven by pin 'bx[5]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[6]' driven by pin 'bx[6]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[7]' driven by pin 'bx[7]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[8]' driven by pin 'bx[8]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[9]' driven by pin 'bx[9]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[10]' driven by pin 'bx[10]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[11]' driven by pin 'bx[11]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[12]' driven by pin 'bx[12]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[13]' driven by pin 'bx[13]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[14]' driven by pin 'bx[14]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[15]' driven by pin 'bx[15]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[16]' driven by pin 'bx[16]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bx[17]' driven by pin 'bx[17]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[0]' driven by pin 'bz[0]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[1]' driven by pin 'bz[1]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[2]' driven by pin 'bz[2]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[3]' driven by pin 'bz[3]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[4]' driven by pin 'bz[4]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[5]' driven by pin 'bz[5]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[6]' driven by pin 'bz[6]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[7]' driven by pin 'bz[7]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[8]' driven by pin 'bz[8]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[9]' driven by pin 'bz[9]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[10]' driven by pin 'bz[10]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[11]' driven by pin 'bz[11]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[12]' driven by pin 'bz[12]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[13]' driven by pin 'bz[13]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[14]' driven by pin 'bz[14]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[15]' driven by pin 'bz[15]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[16]' driven by pin 'bz[16]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'bz[17]' driven by pin 'bz[17]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[0]' driven by pin 'ax[0]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[1]' driven by pin 'ax[1]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[2]' driven by pin 'ax[2]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[3]' driven by pin 'ax[3]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[4]' driven by pin 'ax[4]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[5]' driven by pin 'ax[5]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[6]' driven by pin 'ax[6]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[7]' driven by pin 'ax[7]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[8]' driven by pin 'ax[8]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[9]' driven by pin 'ax[9]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[10]' driven by pin 'ax[10]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[11]' driven by pin 'ax[11]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[12]' driven by pin 'ax[12]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[13]' driven by pin 'ax[13]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[14]' driven by pin 'ax[14]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[15]' driven by pin 'ax[15]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[16]' driven by pin 'ax[16]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'ax[17]' driven by pin 'ax[17]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[0]' driven by pin 'az[0]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[1]' driven by pin 'az[1]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[2]' driven by pin 'az[2]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[3]' driven by pin 'az[3]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[4]' driven by pin 'az[4]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[5]' driven by pin 'az[5]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[6]' driven by pin 'az[6]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[7]' driven by pin 'az[7]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[8]' driven by pin 'az[8]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[9]' driven by pin 'az[9]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[10]' driven by pin 'az[10]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[11]' driven by pin 'az[11]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[12]' driven by pin 'az[12]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[13]' driven by pin 'az[13]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[14]' driven by pin 'az[14]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[15]' driven by pin 'az[15]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[16]' driven by pin 'az[16]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'az[17]' driven by pin 'az[17]' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', net 'sub' driven by pin 'sub' has no loads. (LINT-2)
+Warning: In design 'dsp_slice', input port 'sub' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[17]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[16]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[15]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[14]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[13]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[12]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[11]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[10]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[9]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[8]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[7]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[6]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[5]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[4]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[3]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[2]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[1]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'az[0]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[17]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[16]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[15]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[14]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[13]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[12]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[11]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[10]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[9]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[8]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[7]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[6]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[5]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[4]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[3]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[2]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[1]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'ax[0]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[17]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[16]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[15]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[14]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[13]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[12]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[11]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[10]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[9]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[8]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[7]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[6]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[5]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[4]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[3]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[2]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[1]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bz[0]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[17]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[16]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[15]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[14]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[13]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[12]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[11]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[10]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[9]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[8]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[7]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[6]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[5]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[4]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[3]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[2]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[1]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'bx[0]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'func[0]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'muxsel[7]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'muxsel[6]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'muxsel[3]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'muxsel[2]' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', input port 'coeffmux' is unloaded. (LINT-8)
+Warning: In design 'dsp_slice', port 'enable' is not connected to any nets. (LINT-28)
+Warning: In design 'dsp_slice', port 'coefsela[2]' is not connected to any nets. (LINT-28)
+Warning: In design 'dsp_slice', port 'coefsela[1]' is not connected to any nets. (LINT-28)
+Warning: In design 'dsp_slice', port 'coefsela[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'dsp_slice', port 'coefselb[2]' is not connected to any nets. (LINT-28)
+Warning: In design 'dsp_slice', port 'coefselb[1]' is not connected to any nets. (LINT-28)
+Warning: In design 'dsp_slice', port 'coefselb[0]' is not connected to any nets. (LINT-28)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[37]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[38]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[39]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[40]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[41]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[42]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[43]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[44]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[45]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[46]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[47]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[48]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[49]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[50]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[51]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[52]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[53]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[54]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[55]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[56]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[57]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[58]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[59]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[60]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[61]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to output port 'chainout[62]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[36]' is connected directly to output port 'resulta[36]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[35]' is connected directly to output port 'resulta[35]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[34]' is connected directly to output port 'resulta[34]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[33]' is connected directly to output port 'resulta[33]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[32]' is connected directly to output port 'resulta[32]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[31]' is connected directly to output port 'resulta[31]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[30]' is connected directly to output port 'resulta[30]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[29]' is connected directly to output port 'resulta[29]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[28]' is connected directly to output port 'resulta[28]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[27]' is connected directly to output port 'resulta[27]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[26]' is connected directly to output port 'resulta[26]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[25]' is connected directly to output port 'resulta[25]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[24]' is connected directly to output port 'resulta[24]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[23]' is connected directly to output port 'resulta[23]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[22]' is connected directly to output port 'resulta[22]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[21]' is connected directly to output port 'resulta[21]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[20]' is connected directly to output port 'resulta[20]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[19]' is connected directly to output port 'resulta[19]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[18]' is connected directly to output port 'resulta[18]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[17]' is connected directly to output port 'resulta[17]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[16]' is connected directly to output port 'resulta[16]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[15]' is connected directly to output port 'resulta[15]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[14]' is connected directly to output port 'resulta[14]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[13]' is connected directly to output port 'resulta[13]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[12]' is connected directly to output port 'resulta[12]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[11]' is connected directly to output port 'resulta[11]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[10]' is connected directly to output port 'resulta[10]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[9]' is connected directly to output port 'resulta[9]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[8]' is connected directly to output port 'resulta[8]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[7]' is connected directly to output port 'resulta[7]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[6]' is connected directly to output port 'resulta[6]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[5]' is connected directly to output port 'resulta[5]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[4]' is connected directly to output port 'resulta[4]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[3]' is connected directly to output port 'resulta[3]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[2]' is connected directly to output port 'resulta[2]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[1]' is connected directly to output port 'resulta[1]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[0]' is connected directly to output port 'resulta[0]'. (LINT-31)
+Warning: In design 'dsp_slice', output port 'chainout[63]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[62]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[61]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[60]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[59]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[58]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[57]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[56]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[55]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[54]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[53]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[52]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[51]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[50]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[49]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[48]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[47]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[46]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[45]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[44]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[43]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[42]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[41]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[40]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[39]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[38]' is connected directly to 'logic 0'. (LINT-52)
+Warning: In design 'dsp_slice', output port 'chainout[37]' is connected directly to 'logic 0'. (LINT-52)
+1
+report_constraint -all_violators
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : dsp_slice
+Version: V-2023.12-SP5-1
+Date   : Wed Sep  9 18:38:13 2026
+****************************************
+
+
+   max_capacitance
+
+                             Required        Actual
+   Net                      Capacitance    Capacitance       Slack
+   -----------------------------------------------------------------
+   M7/n17                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n21                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n23                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n25                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n26                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n27                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n28                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n29                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n31                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n32                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n33                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n34                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n35                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n38                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n40                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n42                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n44                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n46                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n48                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n50                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n52                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n54                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n56                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n58                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n60                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n62                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n64                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n66                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n68                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n70                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n72                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n74                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n76                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n78                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n80                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n82                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n84                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n86                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n88                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n90                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n92                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n94                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n96                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n98                       0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n100                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n102                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n104                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n106                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n108                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n110                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n112                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n114                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n116                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n118                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n120                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n122                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n124                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n126                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n128                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n130                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n132                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n134                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n136                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n138                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n140                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n142                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n144                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n146                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n148                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n150                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n152                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n154                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   M7/n156                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n158                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n160                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n161                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n162                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n163                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n164                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n165                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n167                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n168                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n169                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n170                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n171                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n172                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n173                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n174                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n175                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n176                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n177                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n178                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n179                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n180                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n181                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n182                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n183                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n184                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n185                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n186                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n187                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n188                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n189                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n190                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n191                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n192                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n193                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n194                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n195                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n196                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n198                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n201                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n202                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n203                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n204                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n205                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n206                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n207                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n208                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n209                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n210                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n219                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n230                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n242                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n252                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n253                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n257                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n268                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n280                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n296                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n301                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n304                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n307                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n310                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n313                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n316                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n319                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n322                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n325                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n328                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n331                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n336                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n339                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n342                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n345                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n348                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n351                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n354                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n357                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n360                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n363                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n366                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n369                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n372                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n375                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n378                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n381                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n384                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n387                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n389                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n392                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n393                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n394                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n395                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n396                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n397                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n398                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n399                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n400                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n401                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n402                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n403                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n404                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n405                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n406                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n407                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n408                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n409                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n411                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n414                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n417                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n420                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n423                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n426                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n429                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n432                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+
+   -----------------------------------------------------------------
+   Total                      186                -0.29  
+
+1
+#set filename [format "%s%s"  $my_toplevel ".vh"]
+#write -f verilog -output $filename
+#set filename [format "%s%s"  $my_toplevel ".sdc"]
+#write_sdc $filename
+#set filename [format "%s%s"  $my_toplevel ".db"]
+#write -f db -hier -output $filename -xg_force_db
+redirect timing.rep { report_timing }
+redirect cell.rep { report_cell }
+redirect power.rep { report_power }
+redirect area.rep { report_area }
+quit
+
+Memory usage for this session 142 Mbytes.
+Memory usage for this session including child processes 142 Mbytes.
+CPU usage for this session 5 seconds ( 0.00 hours ).
+Elapsed time for this session 9 seconds ( 0.00 hours ).
+
+Thank you...

@@ -1,0 +1,6 @@
+verdiSetActWin -dock widgetDock_<Decl._Tree>
+simSetSimulator "-vcssv" -exec "./simv" -args
+debImport "-dbdir" "./simv.daidir"
+verdiSetActWin -dock widgetDock_MTB_SOURCE_TAB_1
+verdiWindowResize -win $_Verdi_1 "298" "48" "900" "700"
+debExit
