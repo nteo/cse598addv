@@ -8,3 +8,4 @@ Repo for CSE598: ADDV
    %cd <LAB-NUMBER>
 3. Source env for Synopsys tools
    % source env.cshrc
+4. After adding a file, go to that directory's file list (*.f) and list the file   path. Look at other .f files for reference.
