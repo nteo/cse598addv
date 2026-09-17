@@ -12,3 +12,5 @@ setenv LD_LIBRARY_PATH /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/V
 setenv LD_LIBRARY_PATH /usr/local2/synopsys/verdi_2024.09/verdi_2024/platform/linux64/lib/Qt5/lib/depends/xlib:$LD_LIBRARY_PATH
 
 setenv PDK_DIR /usr/local2/cadence/NCSU/SRC/FreePDK45
+
+setenv PROJECT_ROOT `pwd`
