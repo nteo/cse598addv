@@ -3,19 +3,19 @@ all: sim clean
 
 # This compiles with VCS and runs simulation
 compile_and_sim:
-	${VCS_HOME}/bin/vcs -R -full64 -sverilog ../files.f -debug_access+all |& tee compile_and_sim.log
+	${VCS_HOME}/bin/vcs -R -full64 -sverilog -f ../project.f -debug_access+all |& tee compile_and_sim.log
 
 # This compiles with VCS
 compile:
-	${VCS_HOME}/bin/vcs -full64 -sverilog ../files.f -debug_access+all |& tee compile.log
+	${VCS_HOME}/bin/vcs -full64 -sverilog -f ../project.f -debug_access+all |& tee compile.log
 
 # This compiles with VCS and also generates the database for Verdi
 compile_verdi:
-	${VCS_HOME}/bin/vcs -full64 -sverilog ../files.f -debug_access+all -kdb -lca  |& tee compile_verdi.log
+	${VCS_HOME}/bin/vcs -full64 -sverilog -f ../project.f -debug_access+all -kdb -lca  |& tee compile_verdi.log
 
 #This compiles UVM as well, but we are not using it for now
 compile_uvm:
-	${VCS_HOME}/bin/vcs -full64 -sverilog ../files.f -debug_access+all -ntb_opts uvm |& tee compile_uvm.log
+	${VCS_HOME}/bin/vcs -full64 -sverilog -f ../project.f -debug_access+all -ntb_opts uvm |& tee compile_uvm.log
 
 # This runs simulation
 sim:

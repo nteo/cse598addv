@@ -2,4 +2,4 @@
 +incdir+$PROJECT_ROOT/rtl/fifo
 
 // Include the FIFO file list
--f $PROJECT_ROOT/fifo/fifo.f
+-f $PROJECT_ROOT/rtl/fifo/fifo.f
