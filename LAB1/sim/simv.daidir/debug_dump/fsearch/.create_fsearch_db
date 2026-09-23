@@ -1,9 +1,0 @@
-#!/bin/sh -h 
-PYTHONHOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/etc/search/pyh
-export PYTHONHOME
-PYTHONPATH=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/pylib27
-export PYTHONPATH
-LD_LIBRARY_PATH=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib:/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/pylib27
-export LD_LIBRARY_PATH
-/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/vcsfind_create_index.exe  -z  "/home/a34263_asu/CSE598/LAB1/sim/simv.daidir/debug_dump/fsearch/./idents_tapi.xml.gz" "/home/a34263_asu/CSE598/LAB1/sim/simv.daidir/debug_dump/fsearch/./idents_ONrOrX.xml.gz" -o "/home/a34263_asu/CSE598/LAB1/sim/simv.daidir/debug_dump/fsearch/fsearch.db_tmp"
-\mv "/home/a34263_asu/CSE598/LAB1/sim/simv.daidir/debug_dump/fsearch/fsearch.db_tmp" "/home/a34263_asu/CSE598/LAB1/sim/simv.daidir/debug_dump/fsearch/fsearch.db"

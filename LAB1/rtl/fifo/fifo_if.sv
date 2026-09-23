@@ -1,7 +1,6 @@
 // FIFO interface
 interface fifo_if #(
-    parameter int DATA_WIDTH = 8,
-    parameter int ADDR_WIDTH = 4
+    parameter int DATA_WIDTH = 8
 );
     logic [DATA_WIDTH-1:0] wdata;
     logic winc;
@@ -11,8 +10,10 @@ interface fifo_if #(
     logic rclk;
     logic rrst_n;
     logic [DATA_WIDTH-1:0] rdata;
-    logic wfull;
-    logic rempty;
+    logic full;
+    logic empty;
+	logic almost_full;
+	logic almost_empty;
 
     modport FIFO (
 	input wdata,
@@ -23,8 +24,10 @@ interface fifo_if #(
 	input rclk,
 	input rrst_n,
 	output rdata,
-	output wfull,
-	output rempty
+	output full,
+	output empty,
+	output almost_full,
+	output almost_empty
     );
 
     modport CONTROLLER (
@@ -36,8 +39,10 @@ interface fifo_if #(
 	output rclk,
 	output rrst_n,
 	input rdata,
-	input wfull,
-	input rempty
+	input full,
+	input empty,
+	input almost_full,
+	input almost_empty
     );
 
 endinterface

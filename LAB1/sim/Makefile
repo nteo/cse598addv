@@ -1,6 +1,9 @@
 
 all: sim clean
 
+# This compiles RTL, runs the sim and dumps its results, and opens verdi with waves
+run: compile_verdi sim waves_verdi
+
 # This compiles with VCS and runs simulation
 compile_and_sim:
 	${VCS_HOME}/bin/vcs -R -full64 -sverilog -f ../project.f -debug_access+all |& tee compile_and_sim.log
