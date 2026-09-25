@@ -64,28 +64,32 @@ module fifo_tb;
         // Reset FIFO
         reset_fifo();
 
-        // Write data to FIFO
+        // Write data to FIFO until 3/4th
         for (int i = 0; i < (1 << ADDR_WIDTH); i++) begin
             write(i);
             $display("Wrote: %0d", i);
-            if (i == (1 << ADDR_WIDTH)/4 * 3) begin
+            if (i == ((1 << ADDR_WIDTH)/4 * 3) - 1) begin
+                @(posedge fifo_i.wclk)
                 assert (fifo_i.almost_full == 1'b1)
                     else $error("Error: expected almost_full to be 1");
             end
         end
 
+        @(posedge fifo_i.wclk);
         assert (fifo_i.full == 1'b1)
             else $error("Error: expected full to be 1");
 
         // Read data from FIFO
         for (int i = 0; i < (1 << ADDR_WIDTH); i++) begin
             check_read(i);
-            if (i == (1 << ADDR_WIDTH)/4) begin
+            if (i == ((1 << ADDR_WIDTH)/4 * 3)- 1) begin
+                @(posedge fifo_i.rclk)
                 assert (fifo_i.almost_empty == 1'b1)
                     else $error("Error: expected almost_empty to be 1");
             end
         end
 
+        @(posedge fifo_i.rclk);
         assert (fifo_i.empty == 1'b1)
             else $error("Error: expected empty to be 1");
 

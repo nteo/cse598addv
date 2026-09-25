@@ -1,0 +1,692 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid this.
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+              Version V-2023.12-SP5-1 for linux64 - Sep 03, 2024 
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+Initializing...
+Current time:       Fri Sep 25 04:19:32 2026
+Hostname:           nc-asu6-l01.apporto.com
+CPU Model:          Intel(R) Xeon(R) Platinum 8488C
+CPU Details:        Cores = 16 : Sockets = 1 : Cache Size = 107520 KB : Freq = 3.32 GHz
+OS:                 Linux 4.18.0-372.19.1.el8_6.x86_64
+RAM:                 61 GB (Free  44 GB)
+Swap:                 0 GB (Free   0 GB)
+Work Filesystem:    /home/a34263_asu mounted to nc-u24-nfs01.apporto.com:/homes/a34263_asu
+Tmp Filesystem:     /tmp mounted to tmpfs
+Work Disk:          3936 GB (Free 1518 GB)
+Tmp Disk:            30 GB (Free  30 GB)
+#/**************************************************/
+#/* Compile Script for Synopsys                    */
+#/*                                                */
+#/* dc_shell-t -f compile_dc.tcl                   */
+#/*                                                */
+#/* OSU FreePDK 45nm                               */
+#/**************************************************/
+#/* All verilog files, separated by spaces         */
+set my_verilog_files [list ../rtl/fifo/fifo_if.sv ../rtl/fifo/fifo.sv]
+../rtl/fifo/fifo_if.sv ../rtl/fifo/fifo.sv
+#/* Top-level Module                               */
+set my_toplevel fifo
+fifo
+#/* Target frequency in MHz for optimization       */
+#/* Set initial target for BOTH clock domains       */
+set my_rclk_freq_MHz 1320
+1320
+set my_wclk_freq_MHz 1650
+1650
+#/* Delay of input signals */
+set my_input_delay_ns 0.1
+0.1
+#/* Reserved time for output signals */
+set my_output_delay_ns 0.1
+0.1
+#/**************************************************/
+#/* No modifications needed below                  */
+#/**************************************************/
+set OSU_FREEPDK [format "%s%s" [getenv "PDK_DIR"] "/osu_soc/lib/files"]
+/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files
+set search_path [concat $search_path $OSU_FREEPDK]
+. /usr/local2/synopsys/syn_2023.12-SP51/libraries/syn /usr/local2/synopsys/syn_2023.12-SP51/dw/syn_ver /usr/local2/synopsys/syn_2023.12-SP51/dw/sim_ver /usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files
+set alib_library_analysis_path $OSU_FREEPDK
+/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files
+set link_library [set target_library [concat [list gscl45nm.db] [list dw_foundation.sldb]]]
+gscl45nm.db dw_foundation.sldb
+set target_library "gscl45nm.db"
+gscl45nm.db
+define_design_lib WORK -path ./WORK
+1
+set verilogout_show_unconnected_pins "true"
+true
+set_ultra_optimization true
+Error: unknown command 'set_ultra_optimization' (CMD-005)
+set_ultra_optimization -force
+Error: unknown command 'set_ultra_optimization' (CMD-005)
+# --------------------------------------------------
+# Analyze / elaborate
+# --------------------------------------------------
+analyze -f sverilog $my_verilog_files
+Running PRESTO HDLC
+Compiling source file ../rtl/fifo/fifo_if.sv
+Compiling source file ../rtl/fifo/fifo.sv
+Presto compilation completed successfully.
+Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
+Loading db file '/usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/dw_foundation.sldb'
+1
+elaborate $my_toplevel
+Loading db file '/usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/gtech.db'
+Loading db file '/usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/standard.sldb'
+  Loading link library 'gscl45nm'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+
+Inferred memory devices in process
+	in routine fifo line 58 in file
+		'../rtl/fifo/fifo.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    fifo_mem_reg     | Flip-flop |  128  |  Y  | N  | N  | N  | N  | N  | N  |
+|      wptr_reg       | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+|      wgray_reg      | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine fifo line 73 in file
+		'../rtl/fifo/fifo.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      rgray_reg      | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+|      rptr_reg       | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine fifo line 88 in file
+		'../rtl/fifo/fifo.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   wgray_sync2_reg   | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   wgray_sync1_reg   | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine fifo line 100 in file
+		'../rtl/fifo/fifo.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   rgray_sync2_reg   | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   rgray_sync1_reg   | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|     fifo/85      |   16   |    8    |      4       |
+======================================================
+Presto compilation completed successfully. (fifo)
+Elaborated 1 design.
+Current design is now 'fifo'.
+1
+current_design $my_toplevel
+Current design is 'fifo'.
+{fifo}
+link
+
+  Linking design 'fifo'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  gscl45nm (library)          /usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db
+  dw_foundation.sldb (library) /usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/dw_foundation.sldb
+
+1
+get_ports *
+{fifo_i.wdata[7] fifo_i.wdata[6] fifo_i.wdata[5] fifo_i.wdata[4] fifo_i.wdata[3] fifo_i.wdata[2] fifo_i.wdata[1] fifo_i.wdata[0] fifo_i.rdata[7] fifo_i.rdata[6] fifo_i.rdata[5] fifo_i.rdata[4] fifo_i.rdata[3] fifo_i.rdata[2] fifo_i.rdata[1] fifo_i.rdata[0] fifo_i.winc fifo_i.wclk fifo_i.wrst_n fifo_i.rinc fifo_i.rclk fifo_i.rrst_n fifo_i.full fifo_i.empty fifo_i.almost_full fifo_i.almost_empty}
+uniquify
+1
+# --------------------------------------------------
+# Clock definitions
+# --------------------------------------------------
+# 100 MHz = 10 ns period
+set my_rperiod [expr 1000.0 / $my_rclk_freq_MHz]
+0.757575757576
+set my_wperiod [expr 1000.0 / $my_wclk_freq_MHz]
+0.606060606061
+create_clock \
+    -name WCLK \
+    -period $my_wperiod \
+    [get_ports fifo_i.wclk]
+1
+create_clock \
+    -name RCLK \
+    -period $my_rperiod \
+    [get_ports fifo_i.rclk]
+1
+# WCLK and RCLK are asynchronous
+set_clock_groups -asynchronous \
+    -group [get_clocks WCLK] \
+    -group [get_clocks RCLK]
+1
+# --------------------------------------------------
+# Input/output constraints
+# --------------------------------------------------
+set_driving_cell -lib_cell INVX1 [all_inputs]
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wdata[0]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.winc'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wclk'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.wrst_n'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.rinc'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.rclk'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.rrst_n'. (UID-401)
+1
+# Don't apply input delay to either clock
+set_input_delay $my_input_delay_ns \
+    -clock WCLK \
+    [remove_from_collection [all_inputs] [get_ports wclk]]
+Warning: Can't find port 'wclk' in design 'fifo'. (UID-95)
+1
+set_input_delay $my_input_delay_ns \
+    -clock RCLK \
+    [remove_from_collection [all_inputs] [get_ports rclk]]
+Warning: Can't find port 'rclk' in design 'fifo'. (UID-95)
+1
+# Output delays
+set_output_delay $my_output_delay_ns \
+    -clock RCLK \
+    [all_outputs]
+1
+# --------------------------------------------------
+# Compile
+# --------------------------------------------------
+compile -ungroup_all -map_effort medium
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | V-2023.12-DWBB_202312.5 |     *     |
+| Licensed DW Building Blocks        | V-2023.12-DWBB_202312.5 |     *     |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 258                                    |
+| Number of User Hierarchies                              | 0                                      |
+| Sequential Cell Count                                   | 168                                    |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 3                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 2                                      |
+| Number of Dont Touch Cells                              | 24                                     |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'fifo'
+Information: Ungrouping hierarchy C680. (OPT-772)
+Information: Added key list 'DesignWare' to design 'fifo'. (DDB-72)
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Mapping 'DW_cmp'
+  Mapping 'DW_cmp'
+  Processing 'DW01_add_width5_DW01_add_0'
+  Processing 'DW01_add_width5_DW01_add_1'
+  Processing 'DW01_sub_width6_DW01_sub_0'
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01    3207.7      0.00       0.0     805.4                          
+    0:00:01    3207.7      0.00       0.0     805.4                          
+    0:00:01    3207.7      0.00       0.0     805.4                          
+    0:00:01    3207.7      0.00       0.0     805.4                          
+    0:00:01    3207.7      0.00       0.0     805.4                          
+    0:00:01    3071.1      0.01       0.5     706.6                          
+    0:00:01    3071.6      0.01       0.1     705.8                          
+    0:00:01    3073.4      0.00       0.0     702.0                          
+    0:00:01    3073.4      0.00       0.0     702.0                          
+    0:00:01    3073.4      0.00       0.0     702.0                          
+    0:00:01    3073.4      0.00       0.0     702.0                          
+    0:00:01    3073.4      0.00       0.0     702.0                          
+    0:00:01    3134.9      0.02       0.3     576.8                          
+    0:00:01    3196.4      0.02       0.3     486.5                          
+    0:00:01    3240.5      0.04       2.1     434.0                          
+    0:00:01    3289.8      0.04       1.9     387.2                          
+    0:00:01    3332.0      0.04       1.9     351.8                          
+    0:00:01    3362.5      0.04       1.9     331.1                          
+    0:00:01    3385.5      0.04       1.9     314.9                          
+    0:00:01    3407.1      0.04       1.9     300.7                          
+    0:00:01    3425.4      0.04       1.9     289.5                          
+    0:00:01    3425.4      0.04       1.9     289.5                          
+    0:00:01    3436.7      0.00       0.0     306.5                          
+    0:00:01    3436.7      0.00       0.0     307.3                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01    3436.7      0.00       0.0     307.3                          
+    0:00:01    3436.7      0.00       0.0     307.3                          
+    0:00:01    3436.7      0.00       0.0     307.3                          
+    0:00:01    3436.7      0.00       0.0     307.3                          
+    0:00:01    3436.7      0.00       0.0     307.3                          
+
+
+  Beginning Design Rule Fixing  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01    3436.7      0.00       0.0     307.3                          
+    0:00:01    3513.2      0.00       0.0     273.5 n476                     
+    0:00:01    3631.4      0.00       0.0     252.0 n432                     
+    0:00:01    3714.0      0.03       2.1     222.4 net3147                  
+    0:00:01    3783.5      0.03       2.1     183.0 fifo_i.almost_empty      
+    0:00:01    3794.8      0.02       1.8     181.9 wgray_reg[3]/D           
+    0:00:01    3799.0      0.01       0.4     181.9 fifo_mem_reg[2][7]/D     
+    0:00:01    3805.6      0.00       0.0     174.9 n264                     
+    0:00:01    3861.9      0.00       0.0     150.6                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01    3861.9      0.00       0.0     150.6                          
+    0:00:01    3861.9      0.00       0.0     150.6                          
+    0:00:01    3755.8      0.00       0.0     150.6                          
+    0:00:01    3716.4      0.00       0.0     150.6                          
+    0:00:01    3709.3      0.00       0.0     150.6                          
+    0:00:01    3707.9      0.00       0.0     150.6                          
+    0:00:01    3706.5      0.00       0.0     150.6                          
+    0:00:01    3706.5      0.00       0.0     150.6                          
+    0:00:02    3707.5      0.00       0.0     150.6                          
+    0:00:02    3661.0      0.01       0.1     150.6                          
+    0:00:02    3659.6      0.01       0.1     150.6                          
+    0:00:02    3659.6      0.01       0.1     150.6                          
+    0:00:02    3659.6      0.01       0.1     150.6                          
+    0:00:02    3659.6      0.01       0.1     150.6                          
+    0:00:02    3659.6      0.01       0.1     150.6                          
+    0:00:02    3659.6      0.01       0.1     150.6                          
+    0:00:02    3663.4      0.00       0.0     150.6                          
+Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+1
+compile -incremental_mapping -map_effort medium
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 1155                                   |
+| Number of User Hierarchies                              | 0                                      |
+| Sequential Cell Count                                   | 168                                    |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 3                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 2                                      |
+| Number of Dont Touch Cells                              | 0                                      |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+
+
+  Beginning Pass 1 Mapping  (Incremental)
+  ------------------------
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+
+  Beginning Mapping Optimizations  (Medium effort)  (Incremental)
+  -------------------------------
+
+  Beginning Incremental Implementation Selection
+  ----------------------------------------------
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:00    3663.4      0.00       0.0     150.6                          
+    0:00:00    3663.4      0.00       0.0     150.6                          
+    0:00:00    3663.4      0.00       0.0     150.6                          
+
+
+  Beginning Design Rule Fixing  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:00    3663.4      0.00       0.0     150.6                          
+    0:00:00    3792.4      0.00       0.0     144.3 n466                     
+    0:00:00    3799.9      0.00       0.0     144.3 n748                     
+    0:00:00    3801.8      0.03       0.7     142.0 n1032                    
+    0:00:00    3825.7      0.09       7.5     139.8 fifo_i.almost_empty      
+    0:00:00    3829.5      0.07       6.2     139.8 fifo_mem_reg[5][1]/D     
+    0:00:00    3837.0      0.05       4.5     139.8 wgray_reg[3]/D           
+    0:00:00    3836.1      0.03       2.7     139.8 fifo_mem_reg[4][0]/D     
+    0:00:00    3833.2      0.03       1.9     139.8 n406                     
+    0:00:00    3836.1      0.03       1.9     139.8                          
+    0:00:00    3848.3      0.02       1.1     138.7                          
+    0:00:00    3848.3      0.03       1.8     137.6                          
+    0:00:00    3834.7      0.02       1.7     137.6                          
+    0:00:01    3844.5      0.00       0.0     137.6                          
+    0:00:01    3844.5      0.00       0.0     137.6                          
+Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+1
+# --------------------------------------------------
+# Checks / reports
+# --------------------------------------------------
+check_design
+1
+report_constraint -all_violators
+Information: Updating design information... (UID-85)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : fifo
+Version: V-2023.12-SP5-1
+Date   : Fri Sep 25 04:19:36 2026
+****************************************
+
+
+   max_capacitance
+
+                             Required        Actual
+   Net                      Capacitance    Capacitance       Slack
+   -----------------------------------------------------------------
+   n354                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n355                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n356                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n357                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n358                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n360                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n361                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n373                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n375                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n376                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n377                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n378                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n379                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n380                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n382                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n383                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n387                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n389                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n390                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n391                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n392                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n393                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n394                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n396                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n397                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n401                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n403                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n404                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n405                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n406                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n407                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n408                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n410                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n411                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n415                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n417                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n418                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n419                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n420                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n421                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n422                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n424                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n425                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n429                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n431                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n432                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n433                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n434                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n435                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n436                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n438                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n439                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n443                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n445                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n446                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n447                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n448                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n449                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n450                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n452                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n453                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n457                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n459                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n460                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n461                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n462                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n463                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n464                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n466                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n467                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n474                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n476                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1003                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1013                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1014                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1016                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1018                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1020                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1022                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1024                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1026                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1029                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1030                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1037                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1039                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1050                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1075                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1082                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray[0]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray[1]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray[2]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray[3]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray[4]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync1[0]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync1[1]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync1[2]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync1[3]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync1[4]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync2[0]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync2[1]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync2[2]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync2[3]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rgray_sync2[4]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rptr[0]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rptr[1]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rptr[2]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rptr[3]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   rptr[4]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray[0]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray[1]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray[2]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray[3]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray[4]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync1[0]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync1[1]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync1[2]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync1[3]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync1[4]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync2[0]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync2[1]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync2[2]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync2[3]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wgray_sync2[4]               0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wptr[0]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wptr[1]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wptr[2]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wptr[3]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   wptr[4]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
+
+   -----------------------------------------------------------------
+   Total                      128                -0.20  
+
+1
+redirect timing.rep {
+    report_timing
+}
+redirect cell.rep {
+    report_cell
+}
+redirect power.rep {
+    report_power
+}
+redirect area.rep {
+    report_area
+}
+quit
+
+Memory usage for this session 115 Mbytes.
+Memory usage for this session including child processes 115 Mbytes.
+CPU usage for this session 4 seconds ( 0.00 hours ).
+Elapsed time for this session 7 seconds ( 0.00 hours ).
+
+Thank you...
