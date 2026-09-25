@@ -93,7 +93,23 @@ module fifo_tb;
         assert (fifo_i.empty == 1'b1)
             else $error("Error: expected empty to be 1");
 
-        #50;
+        #5;
+        write(1);
+        write(2);
+        write(3);
+        write(4);
+        fifo_i.winc = 1'b0;
+        #18;
+        fifo_i.winc = 1'b1;
+        fifo_i.rinc = 1'b1;
+        fifo_i.wdata = DATA_WIDTH'(5);
+        @(posedge fifo_i.wclk);
+        @(posedge fifo_i.rclk);
+        #1;
+        fifo_i.winc = 1'b0;
+        fifo_i.rinc = 1'b0;
+
+        #20;
 
         $finish;
     end
