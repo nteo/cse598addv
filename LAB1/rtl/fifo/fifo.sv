@@ -34,6 +34,7 @@ module fifo #(
     // FIFO contents
     logic [DATA_WIDTH-1:0] fifo_mem [0:MEM_DEPTH-1];
 
+    // Convert graycode back to binary for almost_full and almost_empty calc
     function automatic logic [ADDR_WIDTH:0] gray2bin(
         input logic [ADDR_WIDTH:0] gray
     );
@@ -48,8 +49,11 @@ module fifo #(
         return bin;
     endfunction
 
+    // Increment wptr and rptr
     assign wptr_next = wptr + (fifo_i.winc && !fifo_i.full);
     assign rptr_next = rptr + (fifo_i.rinc && !fifo_i.empty);
+
+    // Convert the next wptr and rptr values to graycode
     assign wgray_next = (wptr_next >> 1) ^ wptr_next;
     assign rgray_next = (rptr_next >> 1) ^ rptr_next;
 

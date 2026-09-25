@@ -8,22 +8,26 @@ module fifo_tb;
     // Testbench signals
     fifo_if fifo_i();
 
+    // Set wclk freq
     initial begin
         fifo_i.wclk = 1'b0;
         forever fifo_i.wclk = #5 ~fifo_i.wclk;
     end
 
+    // Set rclk freq
     initial begin
         fifo_i.rclk = 1'b0;
         forever fifo_i.rclk = #7 ~fifo_i.rclk;
     end
 
+    // Instantiate DUT
     fifo #(
         .DATA_WIDTH(DATA_WIDTH)
     ) fifo (
         .*
     );
 
+    // Write function
     task write(input logic [DATA_WIDTH-1:0] data);
         fifo_i.wdata = data;
         fifo_i.winc = 1'b1;
@@ -31,6 +35,7 @@ module fifo_tb;
         fifo_i.winc = 1'b0;
     endtask
 
+    // Read function
     task read(output logic [DATA_WIDTH-1:0] data);
         fifo_i.rinc = 1'b1;
         @(posedge fifo_i.rclk);
@@ -38,6 +43,7 @@ module fifo_tb;
         fifo_i.rinc = 1'b0;
     endtask
 
+    // Perform a read and check its value
     task check_read(input logic [DATA_WIDTH-1:0] expected_data);
         logic [DATA_WIDTH-1:0] read_data;
         read(read_data);
@@ -48,6 +54,7 @@ module fifo_tb;
         end
     endtask
 
+    // Reset the FIFO
     task reset_fifo();
         fifo_i.wrst_n = 1'b0;
         fifo_i.rrst_n = 1'b0;
@@ -60,6 +67,7 @@ module fifo_tb;
         fifo_i.rrst_n = 1'b1;
     endtask
 
+    // Testbench
     initial begin
         // Reset FIFO
         reset_fifo();
@@ -75,6 +83,7 @@ module fifo_tb;
             end
         end
 
+        // FIFO is expected to be full
         @(posedge fifo_i.wclk);
         assert (fifo_i.full == 1'b1)
             else $error("Error: expected full to be 1");
@@ -89,16 +98,20 @@ module fifo_tb;
             end
         end
 
+        // FIFO is expected to be empty
         @(posedge fifo_i.rclk);
         assert (fifo_i.empty == 1'b1)
             else $error("Error: expected empty to be 1");
 
+        // Fill up the FIFO with some elements to deassert the empty flag
         #5;
         write(1);
         write(2);
         write(3);
         write(4);
         fifo_i.winc = 1'b0;
+
+        // Wait until neither clock is on a posedge, then trigger both write and read
         #18;
         fifo_i.winc = 1'b1;
         fifo_i.rinc = 1'b1;
@@ -114,6 +127,7 @@ module fifo_tb;
         $finish;
     end
 
+    // Dump waves
     initial begin
         $fsdbDumpfile("novas.fsdb");
         $fsdbDumpvars(0, fifo_tb);
