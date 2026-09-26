@@ -1,3 +1,5 @@
 */sim/*
-*/synth/WORK
+*/synth/*
+!*/synth/compile_dc.tcl
+!*/synth/Makefile
 !*/sim/Makefile

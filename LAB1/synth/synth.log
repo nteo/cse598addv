@@ -31,16 +31,16 @@ Please use '-no_save' simv switch to avoid this.
             Inclusivity and Diversity" (Refer to article 000036315 at
                         https://solvnetplus.synopsys.com)
 Initializing...
-Current time:       Fri Sep 25 04:19:32 2026
-Hostname:           nc-asu6-l01.apporto.com
+Current time:       Sat Sep 26 03:30:14 2026
+Hostname:           nc-asu6-l03.apporto.com
 CPU Model:          Intel(R) Xeon(R) Platinum 8488C
-CPU Details:        Cores = 16 : Sockets = 1 : Cache Size = 107520 KB : Freq = 3.32 GHz
+CPU Details:        Cores = 16 : Sockets = 1 : Cache Size = 107520 KB : Freq = 2.40 GHz
 OS:                 Linux 4.18.0-372.19.1.el8_6.x86_64
-RAM:                 61 GB (Free  44 GB)
+RAM:                 61 GB (Free  46 GB)
 Swap:                 0 GB (Free   0 GB)
 Work Filesystem:    /home/a34263_asu mounted to nc-u24-nfs01.apporto.com:/homes/a34263_asu
 Tmp Filesystem:     /tmp mounted to tmpfs
-Work Disk:          3936 GB (Free 1518 GB)
+Work Disk:          3936 GB (Free 1514 GB)
 Tmp Disk:            30 GB (Free  30 GB)
 #/**************************************************/
 #/* Compile Script for Synopsys                    */
@@ -107,7 +107,7 @@ Loading db file '/usr/local2/synopsys/syn_2023.12-SP51/libraries/syn/standard.sl
 Running PRESTO HDLC
 
 Inferred memory devices in process
-	in routine fifo line 58 in file
+	in routine fifo line 62 in file
 		'../rtl/fifo/fifo.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -118,7 +118,7 @@ Inferred memory devices in process
 ===============================================================================
 
 Inferred memory devices in process
-	in routine fifo line 73 in file
+	in routine fifo line 77 in file
 		'../rtl/fifo/fifo.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -128,7 +128,7 @@ Inferred memory devices in process
 ===============================================================================
 
 Inferred memory devices in process
-	in routine fifo line 88 in file
+	in routine fifo line 92 in file
 		'../rtl/fifo/fifo.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -138,7 +138,7 @@ Inferred memory devices in process
 ===============================================================================
 
 Inferred memory devices in process
-	in routine fifo line 100 in file
+	in routine fifo line 104 in file
 		'../rtl/fifo/fifo.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -150,7 +150,7 @@ Statistics for MUX_OPs
 ======================================================
 | block name/line  | Inputs | Outputs | # sel inputs |
 ======================================================
-|     fifo/85      |   16   |    8    |      4       |
+|     fifo/89      |   16   |    8    |      4       |
 ======================================================
 Presto compilation completed successfully. (fifo)
 Elaborated 1 design.
@@ -175,7 +175,6 @@ uniquify
 # --------------------------------------------------
 # Clock definitions
 # --------------------------------------------------
-# 100 MHz = 10 ns period
 set my_rperiod [expr 1000.0 / $my_rclk_freq_MHz]
 0.757575757576
 set my_wperiod [expr 1000.0 / $my_wclk_freq_MHz]
@@ -215,15 +214,9 @@ Warning: Design rule attributes from the driving cell will be set on the port 'f
 Warning: Design rule attributes from the driving cell will be set on the port 'fifo_i.rrst_n'. (UID-401)
 1
 # Don't apply input delay to either clock
-set_input_delay $my_input_delay_ns \
-    -clock WCLK \
-    [remove_from_collection [all_inputs] [get_ports wclk]]
-Warning: Can't find port 'wclk' in design 'fifo'. (UID-95)
+set_input_delay $my_input_delay_ns -clock WCLK [get_ports {fifo_i.wdata fifo_i.winc}]
 1
-set_input_delay $my_input_delay_ns \
-    -clock RCLK \
-    [remove_from_collection [all_inputs] [get_ports rclk]]
-Warning: Can't find port 'rclk' in design 'fifo'. (UID-95)
+set_input_delay $my_input_delay_ns -clock RCLK [get_ports {fifo_i.rinc}]
 1
 # Output delays
 set_output_delay $my_output_delay_ns \
@@ -275,8 +268,6 @@ Information: Added key list 'DesignWare' to design 'fifo'. (DDB-72)
 
   Updating timing information
 Information: Updating design information... (UID-85)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
 
   Beginning Implementation Selection
   ----------------------------------
@@ -285,10 +276,6 @@ Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TI
   Processing 'DW01_add_width5_DW01_add_0'
   Processing 'DW01_add_width5_DW01_add_1'
   Processing 'DW01_sub_width6_DW01_sub_0'
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
 
   Beginning Mapping Optimizations  (Medium effort)
   -------------------------------
@@ -320,8 +307,8 @@ Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TI
     0:00:01    3407.1      0.04       1.9     300.7                          
     0:00:01    3425.4      0.04       1.9     289.5                          
     0:00:01    3425.4      0.04       1.9     289.5                          
-    0:00:01    3436.7      0.00       0.0     306.5                          
-    0:00:01    3436.7      0.00       0.0     307.3                          
+    0:00:02    3436.7      0.00       0.0     306.5                          
+    0:00:02    3436.7      0.00       0.0     307.3                          
 
 
 
@@ -332,11 +319,11 @@ Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TI
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:01    3436.7      0.00       0.0     307.3                          
-    0:00:01    3436.7      0.00       0.0     307.3                          
-    0:00:01    3436.7      0.00       0.0     307.3                          
-    0:00:01    3436.7      0.00       0.0     307.3                          
-    0:00:01    3436.7      0.00       0.0     307.3                          
+    0:00:02    3436.7      0.00       0.0     307.3                          
+    0:00:02    3436.7      0.00       0.0     307.3                          
+    0:00:02    3436.7      0.00       0.0     307.3                          
+    0:00:02    3436.7      0.00       0.0     307.3                          
+    0:00:02    3436.7      0.00       0.0     307.3                          
 
 
   Beginning Design Rule Fixing  (max_capacitance)
@@ -346,15 +333,16 @@ Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TI
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:01    3436.7      0.00       0.0     307.3                          
-    0:00:01    3513.2      0.00       0.0     273.5 n476                     
-    0:00:01    3631.4      0.00       0.0     252.0 n432                     
-    0:00:01    3714.0      0.03       2.1     222.4 net3147                  
-    0:00:01    3783.5      0.03       2.1     183.0 fifo_i.almost_empty      
-    0:00:01    3794.8      0.02       1.8     181.9 wgray_reg[3]/D           
-    0:00:01    3799.0      0.01       0.4     181.9 fifo_mem_reg[2][7]/D     
-    0:00:01    3805.6      0.00       0.0     174.9 n264                     
-    0:00:01    3861.9      0.00       0.0     150.6                          
+    0:00:02    3436.7      0.00       0.0     307.3                          
+    0:00:02    3513.2      0.00       0.0     273.5 n476                     
+    0:00:02    3631.4      0.00       0.0     252.0 n432                     
+    0:00:02    3714.0      0.03       2.1     222.4 net3147                  
+    0:00:02    3783.5      0.03       2.1     183.0 fifo_i.almost_empty      
+    0:00:02    3801.8      0.02       1.9     181.9 fifo_mem_reg[14][7]/D    
+    0:00:02    3808.4      0.01       0.3     179.8 wgray_reg[3]/D           
+    0:00:02    3810.7      0.00       0.0     179.8 wgray_reg[3]/D           
+    0:00:02    3861.4      0.00       0.0     150.7 n392                     
+    0:00:02    3881.1      0.00       0.0     148.4                          
 
 
   Beginning Area-Recovery Phase  (cleanup)
@@ -364,23 +352,23 @@ Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TI
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:01    3861.9      0.00       0.0     150.6                          
-    0:00:01    3861.9      0.00       0.0     150.6                          
-    0:00:01    3755.8      0.00       0.0     150.6                          
-    0:00:01    3716.4      0.00       0.0     150.6                          
-    0:00:01    3709.3      0.00       0.0     150.6                          
-    0:00:01    3707.9      0.00       0.0     150.6                          
-    0:00:01    3706.5      0.00       0.0     150.6                          
-    0:00:01    3706.5      0.00       0.0     150.6                          
-    0:00:02    3707.5      0.00       0.0     150.6                          
-    0:00:02    3661.0      0.01       0.1     150.6                          
-    0:00:02    3659.6      0.01       0.1     150.6                          
-    0:00:02    3659.6      0.01       0.1     150.6                          
-    0:00:02    3659.6      0.01       0.1     150.6                          
-    0:00:02    3659.6      0.01       0.1     150.6                          
-    0:00:02    3659.6      0.01       0.1     150.6                          
-    0:00:02    3659.6      0.01       0.1     150.6                          
-    0:00:02    3663.4      0.00       0.0     150.6                          
+    0:00:02    3881.1      0.00       0.0     148.4                          
+    0:00:02    3881.1      0.00       0.0     148.4                          
+    0:00:02    3771.8      0.01       0.0     147.3                          
+    0:00:02    3724.8      0.00       0.0     147.3                          
+    0:00:02    3715.4      0.00       0.0     147.3                          
+    0:00:02    3714.0      0.00       0.0     147.3                          
+    0:00:02    3712.6      0.00       0.0     147.3                          
+    0:00:02    3712.6      0.00       0.0     147.3                          
+    0:00:02    3713.6      0.00       0.0     147.3                          
+    0:00:02    3661.9      0.01       0.1     147.3                          
+    0:00:02    3658.7      0.01       0.2     147.3                          
+    0:00:02    3658.7      0.01       0.2     147.3                          
+    0:00:02    3658.7      0.01       0.2     147.3                          
+    0:00:02    3658.7      0.01       0.2     147.3                          
+    0:00:02    3658.7      0.01       0.2     147.3                          
+    0:00:02    3658.7      0.01       0.2     147.3                          
+    0:00:02    3664.3      0.00       0.0     147.3                          
 Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
 
 
@@ -418,7 +406,7 @@ compile -incremental_mapping -map_effort medium
 | Design Information                                      | Value                                  |
 ====================================================================================================
 | Number of Scenarios                                     | 0                                      |
-| Leaf Cell Count                                         | 1155                                   |
+| Leaf Cell Count                                         | 1157                                   |
 | Number of User Hierarchies                              | 0                                      |
 | Sequential Cell Count                                   | 168                                    |
 | Macro Count                                             | 0                                      |
@@ -438,18 +426,12 @@ compile -incremental_mapping -map_effort medium
 
   Updating timing information
 Information: Updating design information... (UID-85)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
 
   Beginning Mapping Optimizations  (Medium effort)  (Incremental)
   -------------------------------
 
   Beginning Incremental Implementation Selection
   ----------------------------------------------
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
 
   Beginning Delay Optimization Phase
   ----------------------------------
@@ -458,9 +440,9 @@ Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TI
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:00    3663.4      0.00       0.0     150.6                          
-    0:00:00    3663.4      0.00       0.0     150.6                          
-    0:00:00    3663.4      0.00       0.0     150.6                          
+    0:00:00    3664.3      0.00       0.0     147.3                          
+    0:00:00    3664.3      0.00       0.0     147.3                          
+    0:00:00    3664.3      0.00       0.0     147.3                          
 
 
   Beginning Design Rule Fixing  (max_capacitance)
@@ -470,21 +452,17 @@ Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TI
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:00    3663.4      0.00       0.0     150.6                          
-    0:00:00    3792.4      0.00       0.0     144.3 n466                     
-    0:00:00    3799.9      0.00       0.0     144.3 n748                     
-    0:00:00    3801.8      0.03       0.7     142.0 n1032                    
-    0:00:00    3825.7      0.09       7.5     139.8 fifo_i.almost_empty      
-    0:00:00    3829.5      0.07       6.2     139.8 fifo_mem_reg[5][1]/D     
-    0:00:00    3837.0      0.05       4.5     139.8 wgray_reg[3]/D           
-    0:00:00    3836.1      0.03       2.7     139.8 fifo_mem_reg[4][0]/D     
-    0:00:00    3833.2      0.03       1.9     139.8 n406                     
-    0:00:00    3836.1      0.03       1.9     139.8                          
-    0:00:00    3848.3      0.02       1.1     138.7                          
-    0:00:00    3848.3      0.03       1.8     137.6                          
-    0:00:00    3834.7      0.02       1.7     137.6                          
-    0:00:01    3844.5      0.00       0.0     137.6                          
-    0:00:01    3844.5      0.00       0.0     137.6                          
+    0:00:00    3664.3      0.00       0.0     147.3                          
+    0:00:00    3793.4      0.00       0.0     141.1 n466                     
+    0:00:00    3799.5      0.00       0.0     141.1 n757                     
+    0:00:00    3799.0      0.00       0.0     139.8 n1062                    
+    0:00:01    3823.9      0.05       4.1     138.7 fifo_i.almost_empty      
+    0:00:01    3833.2      0.04       3.8     138.7 fifo_mem_reg[6][0]/D     
+    0:00:01    3826.2      0.04       3.1     138.7 fifo_mem_reg[6][0]/D     
+    0:00:01    3821.5      0.02       1.7     138.7 fifo_mem_reg[2][0]/D     
+    0:00:01    3830.4      0.02       1.4     138.7 fifo_mem_reg[0][1]/D     
+    0:00:01    3830.4      0.00       0.0     138.7 fifo_mem_reg[3][0]/D     
+    0:00:01    3829.5      0.00       0.0     138.7                          
 Loading db file '/usr/local2/cadence/NCSU/SRC/FreePDK45/osu_soc/lib/files/gscl45nm.db'
 
 
@@ -520,15 +498,13 @@ check_design
 1
 report_constraint -all_violators
 Information: Updating design information... (UID-85)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
-Warning: Clock port 'WCLK' is assigned input delay relative to clock 'RCLK'. (TIM-111)
  
 ****************************************
 Report : constraint
         -all_violators
 Design : fifo
 Version: V-2023.12-SP5-1
-Date   : Fri Sep 25 04:19:36 2026
+Date   : Sat Sep 26 03:30:18 2026
 ****************************************
 
 
@@ -609,22 +585,23 @@ Date   : Fri Sep 25 04:19:36 2026
    n467                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
    n474                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
    n476                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1003                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1013                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1014                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1016                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n991                         0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1009                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
    n1018                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1020                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1022                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1024                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1026                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1019                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1021                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1023                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1025                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1027                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
    n1029                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1030                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1037                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1039                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1050                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1075                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
-   n1082                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1031                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1034                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1035                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1040                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1042                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1053                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1077                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
+   n1084                        0.00           0.00           0.00  (VIOLATED: increase significant digits)
    rgray[0]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
    rgray[1]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
    rgray[2]                     0.00           0.00           0.00  (VIOLATED: increase significant digits)
@@ -667,7 +644,7 @@ Date   : Fri Sep 25 04:19:36 2026
    wptr[4]                      0.00           0.00           0.00  (VIOLATED: increase significant digits)
 
    -----------------------------------------------------------------
-   Total                      128                -0.20  
+   Total                      129                -0.20  
 
 1
 redirect timing.rep {
@@ -686,7 +663,7 @@ quit
 
 Memory usage for this session 115 Mbytes.
 Memory usage for this session including child processes 115 Mbytes.
-CPU usage for this session 4 seconds ( 0.00 hours ).
+CPU usage for this session 3 seconds ( 0.00 hours ).
 Elapsed time for this session 7 seconds ( 0.00 hours ).
 
 Thank you...

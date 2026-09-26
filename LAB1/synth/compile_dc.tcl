@@ -64,7 +64,6 @@ uniquify
 # Clock definitions
 # --------------------------------------------------
 
-# 100 MHz = 10 ns period
 set my_rperiod [expr 1000.0 / $my_rclk_freq_MHz]
 set my_wperiod [expr 1000.0 / $my_wclk_freq_MHz]
 
@@ -92,13 +91,9 @@ set_clock_groups -asynchronous \
 set_driving_cell -lib_cell INVX1 [all_inputs]
 
 # Don't apply input delay to either clock
-set_input_delay $my_input_delay_ns \
-    -clock WCLK \
-    [remove_from_collection [all_inputs] [get_ports wclk]]
+set_input_delay $my_input_delay_ns -clock WCLK [get_ports {fifo_i.wdata fifo_i.winc}]
 
-set_input_delay $my_input_delay_ns \
-    -clock RCLK \
-    [remove_from_collection [all_inputs] [get_ports rclk]]
+set_input_delay $my_input_delay_ns -clock RCLK [get_ports {fifo_i.rinc}]
 
 # Output delays
 set_output_delay $my_output_delay_ns \

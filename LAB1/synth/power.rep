@@ -8,7 +8,7 @@ Report : power
         -analysis_effort low
 Design : fifo
 Version: V-2023.12-SP5-1
-Date   : Fri Sep 25 04:19:36 2026
+Date   : Sat Sep 26 03:30:18 2026
 ****************************************
 
 
@@ -35,12 +35,12 @@ Attributes
 i - Including register clock pin internal power
 
 
-  Cell Internal Power  =   4.6070 mW   (96%)
-  Net Switching Power  = 175.8053 uW    (4%)
+  Cell Internal Power  =   4.6121 mW   (96%)
+  Net Switching Power  = 175.2668 uW    (4%)
                          ---------
-Total Dynamic Power    =   4.7828 mW  (100%)
+Total Dynamic Power    =   4.7873 mW  (100%)
 
-Cell Leakage Power     =  22.5430 uW
+Cell Leakage Power     =  22.0955 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -49,10 +49,10 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-clock_network      4.3623            0.0000            0.0000            4.3623  (  90.78%)  i
-register       9.7458e-02        5.5534e-03        1.1382e+04            0.1144  (   2.38%)
+clock_network      4.3623            0.0000            0.0000            4.3623  (  90.70%)  i
+register       9.9154e-02        5.7450e-03        1.1382e+04            0.1163  (   2.42%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      0.1473            0.1703        1.1161e+04            0.3287  (   6.84%)
+combinational      0.1506            0.1695        1.0714e+04            0.3309  (   6.88%)
 --------------------------------------------------------------------------------------------------
-Total              4.6070 mW         0.1758 mW     2.2543e+04 nW         4.8054 mW
+Total              4.6121 mW         0.1753 mW     2.2095e+04 nW         4.8094 mW
 1

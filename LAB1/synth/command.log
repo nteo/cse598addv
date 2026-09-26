@@ -1,7 +1,7 @@
 #@ # 
 #@ # Running dc_shell Version V-2023.12-SP5-1 for linux64 -- Sep 03, 2024
-#@ # Date:   Fri Sep 25 04:19:32 2026
-#@ # Run by: a34263_asu@nc-asu6-l01.apporto.com
+#@ # Date:   Sat Sep 26 03:30:14 2026
+#@ # Run by: a34263_asu@nc-asu6-l03.apporto.com
 #@ 
 
 source /usr/local2/synopsys/syn_2023.12-SP51/admin/setup/.synopsys_dc.setup
@@ -9316,7 +9316,6 @@ source -echo -verbose /home/a34263_asu/CSE598/LAB1/synth/compile_dc.tcl
 #@ # Clock definitions
 #@ # --------------------------------------------------
 #@ 
-#@ # 100 MHz = 10 ns period
 #@ set my_rperiod [expr 1000.0 / $my_rclk_freq_MHz]
 #@ set my_wperiod [expr 1000.0 / $my_wclk_freq_MHz]
 #@ 
@@ -9344,13 +9343,9 @@ source -echo -verbose /home/a34263_asu/CSE598/LAB1/synth/compile_dc.tcl
 #@ set_driving_cell -lib_cell INVX1 [all_inputs]
 #@ 
 #@ # Don't apply input delay to either clock
-#@ set_input_delay $my_input_delay_ns \
-#@     -clock WCLK \
-#@     [remove_from_collection [all_inputs] [get_ports wclk]]
+#@ set_input_delay $my_input_delay_ns -clock WCLK [get_ports {fifo_i.wdata fifo_i.winc}]
 #@ 
-#@ set_input_delay $my_input_delay_ns \
-#@     -clock RCLK \
-#@     [remove_from_collection [all_inputs] [get_ports rclk]]
+#@ set_input_delay $my_input_delay_ns -clock RCLK [get_ports {fifo_i.rinc}]
 #@ 
 #@ # Output delays
 #@ set_output_delay $my_output_delay_ns \

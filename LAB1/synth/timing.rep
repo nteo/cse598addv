@@ -6,7 +6,7 @@ Report : timing
         -max_paths 1
 Design : fifo
 Version: V-2023.12-SP5-1
-Date   : Fri Sep 25 04:19:36 2026
+Date   : Sat Sep 26 03:30:18 2026
 ****************************************
 
 Operating Conditions: typical   Library: gscl45nm
@@ -25,22 +25,22 @@ Wire Load Model Mode: top
   clock network delay (ideal)              0.00       0.00
   rgray_reg[3]/CLK (DFFSR)                 0.00       0.00 r
   rgray_reg[3]/Q (DFFSR)                   0.11       0.11 r
-  U1132/Y (BUFX2)                          0.08       0.19 r
-  U936/YS (FAX1)                           0.10       0.28 r
-  U1395/Y (XOR2X1)                         0.04       0.32 r
-  U788/Y (INVX2)                           0.02       0.35 f
-  U1163/Y (AND2X2)                         0.04       0.39 f
-  U1107/Y (INVX1)                          0.00       0.39 r
-  U1398/Y (NAND3X1)                        0.02       0.40 f
-  U741/Y (BUFX2)                           0.03       0.44 f
-  U1399/Y (OAI21X1)                        0.04       0.48 r
-  U1400/Y (OAI21X1)                        0.03       0.51 f
-  U1401/Y (OAI21X1)                        0.02       0.53 r
-  U1176/Y (INVX1)                          0.02       0.55 f
-  U1407/Y (OAI21X1)                        0.03       0.58 r
-  U1409/Y (NAND3X1)                        0.02       0.60 f
-  U841/Y (BUFX2)                           0.03       0.63 f
-  U1410/Y (NOR2X1)                         0.02       0.65 r
+  U1153/Y (BUFX2)                          0.08       0.19 r
+  U945/YS (FAX1)                           0.10       0.28 r
+  U1397/Y (XOR2X1)                         0.04       0.32 r
+  U817/Y (INVX2)                           0.02       0.35 f
+  U1416/Y (AND2X2)                         0.04       0.39 f
+  U1108/Y (INVX1)                          0.00       0.39 r
+  U1400/Y (NAND3X1)                        0.02       0.40 f
+  U753/Y (BUFX2)                           0.03       0.44 f
+  U1401/Y (OAI21X1)                        0.04       0.48 r
+  U1402/Y (OAI21X1)                        0.03       0.51 f
+  U1403/Y (OAI21X1)                        0.02       0.53 r
+  U1180/Y (INVX1)                          0.02       0.55 f
+  U1409/Y (OAI21X1)                        0.03       0.58 r
+  U1411/Y (NAND3X1)                        0.02       0.60 f
+  U855/Y (BUFX2)                           0.03       0.63 f
+  U1412/Y (NOR2X1)                         0.02       0.65 r
   fifo_i.almost_empty (out)                0.00       0.65 r
   data arrival time                                   0.65
 
@@ -55,9 +55,9 @@ Wire Load Model Mode: top
   slack (MET)                                         0.00
 
 
-  Startpoint: rgray_sync2_reg[2]
+  Startpoint: rgray_sync2_reg[3]
               (rising edge-triggered flip-flop clocked by WCLK)
-  Endpoint: fifo_mem_reg[1][1]
+  Endpoint: fifo_mem_reg[15][5]
             (rising edge-triggered flip-flop clocked by WCLK)
   Path Group: WCLK
   Path Type: max
@@ -66,28 +66,27 @@ Wire Load Model Mode: top
   -----------------------------------------------------------
   clock WCLK (rise edge)                   0.00       0.00
   clock network delay (ideal)              0.00       0.00
-  rgray_sync2_reg[2]/CLK (DFFSR)           0.00       0.00 r
-  rgray_sync2_reg[2]/Q (DFFSR)             0.11       0.11 f
-  U1003/Y (BUFX2)                          0.04       0.15 f
-  U725/Y (XOR2X1)                          0.03       0.18 f
-  U722/Y (NOR3X1)                          0.05       0.23 r
-  U723/Y (INVX2)                           0.02       0.25 f
-  U1337/Y (NOR3X1)                         0.04       0.29 r
-  U727/Y (NOR3X1)                          0.04       0.34 f
-  U728/Y (INVX2)                           0.02       0.36 r
-  U931/Y (INVX1)                           0.02       0.37 f
-  U1387/Y (NAND3X1)                        0.03       0.40 r
-  U1161/Y (BUFX2)                          0.04       0.44 r
-  U1066/Y (INVX2)                          0.03       0.46 f
-  U1092/Y (AND2X2)                         0.05       0.51 f
-  U633/Y (INVX1)                           0.02       0.53 r
-  U256/Y (OAI21X1)                         0.01       0.55 f
-  fifo_mem_reg[1][1]/D (DFFPOSX1)          0.00       0.55 f
+  rgray_sync2_reg[3]/CLK (DFFSR)           0.00       0.00 r
+  rgray_sync2_reg[3]/Q (DFFSR)             0.11       0.11 f
+  U1147/Y (BUFX2)                          0.04       0.15 f
+  U1337/Y (XOR2X1)                         0.03       0.18 f
+  U1340/Y (NAND3X1)                        0.04       0.22 r
+  U856/Y (BUFX2)                           0.04       0.26 r
+  U751/Y (NOR3X1)                          0.02       0.28 f
+  U808/Y (NOR3X1)                          0.05       0.34 r
+  U1040/Y (AND2X2)                         0.05       0.38 r
+  U1132/Y (AND2X1)                         0.04       0.42 r
+  U1133/Y (INVX1)                          0.02       0.44 f
+  U1155/Y (BUFX2)                          0.05       0.49 f
+  U671/Y (AND2X1)                          0.04       0.54 f
+  U973/Y (INVX1)                           0.00       0.54 r
+  U491/Y (OAI21X1)                         0.01       0.55 f
+  fifo_mem_reg[15][5]/D (DFFPOSX1)         0.00       0.55 f
   data arrival time                                   0.55
 
   clock WCLK (rise edge)                   0.61       0.61
   clock network delay (ideal)              0.00       0.61
-  fifo_mem_reg[1][1]/CLK (DFFPOSX1)        0.00       0.61 r
+  fifo_mem_reg[15][5]/CLK (DFFPOSX1)       0.00       0.61 r
   library setup time                      -0.06       0.55
   data required time                                  0.55
   -----------------------------------------------------------
