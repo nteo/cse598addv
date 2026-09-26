@@ -1,6 +1,6 @@
 // Top Module: Even Odd Sorter
 module even_odd_sorter #(
-    parameter int FIFO_DEPTH = 40,
+    parameter int FIFO_DEPTH = 6,
     parameter int DATA_WIDTH = 8
 )
     (

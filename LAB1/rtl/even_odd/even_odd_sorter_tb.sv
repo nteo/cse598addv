@@ -3,7 +3,7 @@
 module even_odd_sorter_tb;
     // Parameters
     localparam int DATA_WIDTH = 8;
-    localparam int FIFO_DEPTH = 40;
+    localparam int FIFO_DEPTH = 6;  // depth is 40 but the address width is 6
 
     // DUT signals
     logic                   clk;
