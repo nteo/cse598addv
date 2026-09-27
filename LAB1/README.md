@@ -19,6 +19,12 @@ First,
    % cd synth
    % make synth
 
+# Sim specific design
+First,
+   %cd <LAB-NUMBER>/<DESIGN-FOLDER>
+1. To compile, run simulation, and open Verdi waveforms:
+   $ make run
+
 # Adding a new file
 .f denotes a file list. We can list all the .sv files the compiler should target in a singular .f, but we can also link other .f files in our list so we can create a hierarchical structure to encapsulate all our files.
 1. Create some new file either with vi or in vscode
