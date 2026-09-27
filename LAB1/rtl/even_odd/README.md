@@ -9,6 +9,7 @@ Repo for CSE598: ADDV
 
 # Sim and synth
 First, 
+   Change directory to rtl
 1. To compile, run simulation, and open Verdi waveforms:
    % cd even_odd
    $ make run

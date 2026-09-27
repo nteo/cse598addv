@@ -21,7 +21,7 @@ First,
 
 # Sim specific design
 First,
-   %cd <LAB-NUMBER>/<DESIGN-FOLDER>
+   %cd <LAB-NUMBER>/rtl/<DESIGN-FOLDER>
 1. To compile, run simulation, and open Verdi waveforms:
    $ make run
 
