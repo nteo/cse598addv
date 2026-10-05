@@ -15,7 +15,7 @@ module top (
     output [31:0] writedata, dataadr,
     output memwrite
 );
-    wire [31:0] pc, instr, readdata;
+    logic [31:0] pc, instr, readdata;
 
     // instantiate processor and memories
     mips mips (clk, reset, pc, instr, memwrite, dataadr, writedata, readdata);
@@ -36,8 +36,8 @@ module mips (
     input   [31:0]  readdata
 );
 
-    wire memtoreg, branch, alusrc, regdst, regwrite, jump;
-    wire [2:0] alucontrol;
+    logic memtoreg, branch, alusrc, regdst, regwrite, jump;
+    logic [2:0] alucontrol;
 
     controller c(instr[31:26], instr[5:0], zero, memtoreg, memwrite, pcsrc, alusrc, regdst, regwrite, jump, alucontrol);
 
@@ -55,11 +55,11 @@ module dmem (
     output [31:0] rd
 );
     // OpenRAM signals
-    wire csb0;          // Chip select (active low)
-    wire web0;          // Write enable (active low)
-    wire [5:0] addr0;   // 6-bit address
-    wire [31:0] din0;   // Data input
-    wire [31:0] dout0;  // Data output
+    logic csb0;          // Chip select (active low)
+    logic web0;          // Write enable (active low)
+    logic [5:0] addr0;   // 6-bit address
+    logic [31:0] din0;   // Data input
+    logic [31:0] dout0;  // Data output
     
 
     assign csb0 = 1'b0;         // Always enabled
@@ -89,12 +89,12 @@ module imem (
     output [31:0] rd
 );
     // OpenRAM interface signals
-    wire clk0;          // Clock
-    wire csb0;          // Chip select (active low)
-    wire web0;          // Write enable (active low)
-    wire [5:0] addr0;   // 6-bit address
-    wire [31:0] din0;   // Data input
-    wire [31:0] dout0;  // Data output
+    logic clk0;          // Clock
+    logic csb0;          // Chip select (active low)
+    logic web0;          // Write enable (active low)
+    logic [5:0] addr0;   // 6-bit address
+    logic [31:0] din0;   // Data input
+    logic [31:0] dout0;  // Data output
     
     // Control signal connections
     assign clk0 = 1'b0;         // No clock needed for read-only
