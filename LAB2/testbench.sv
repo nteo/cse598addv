@@ -6,18 +6,18 @@
 // - You need to modify these arrays to match the instructions in memfile.dat file used to initialize imem
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module MIPS_Testbench ();
-    reg clk;
-    reg reset;
-    wire [31:0] writedata, dataadr;
-    wire memwrite;
+    logic clk;
+    logic reset;
+    logic [31:0] writedata, dataadr;
+    logic memwrite;
 
     integer i;
     integer j;
 
     // expected memory writes
     parameter N = 2; 
-    reg [31:0] expected_data[N:1];
-    reg [31:0] expected_addr[N:1]; 
+    logic [31:0] expected_data[N:1];
+    logic [31:0] expected_addr[N:1]; 
     
     // Instantiate top module
     top dut(

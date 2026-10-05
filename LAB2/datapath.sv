@@ -26,11 +26,11 @@ module datapath (
     input [31:0] readdata
 );
 
-    wire [4:0] writereg;
-    wire [31:0] pcnext, pcnextbr, pcplus4, pcbranch;
-    wire [31:0] signimm, signimmsh;
-    wire [31:0] srca, srcb;
-    wire [31:0] result;
+    logic [4:0] writereg;
+    logic [31:0] pcnext, pcnextbr, pcplus4, pcbranch;
+    logic [31:0] signimm, signimmsh;
+    logic [31:0] srca, srcb;
+    logic [31:0] result;
     
     // next PC logic
     flopr #(32) pcreg(clk, reset, pcnext, pc);
@@ -63,12 +63,12 @@ module regfile (
     output [31:0] rd1, rd2
 );
     
-    reg [31:0] rf[31:0];
+    logic [31:0] rf[31:0];
     // three ported register file
     // read two ports combinationally
     // write third port on rising edge of clock
     // register 0 hardwired to 0
-    always @ (posedge clk)
+    always_ff @ (posedge clk)
         if (we3) rf[wa3] <= wd3;
 
     assign rd1 = (ra1 != 0) ? rf[ra1] : 0;
@@ -82,7 +82,7 @@ module alu(
     input [31:0] a,          // First operand
     input [31:0] b,          // Second operand
     input [2:0] control,     // ALU control signal
-    output reg [31:0] result, // ALU result
+    output logic [31:0] result, // ALU result
     output zero              // Zero flag
 );
 
@@ -94,7 +94,7 @@ module alu(
     localparam ALU_SLT = 3'b111;
     
     // Calculate result based on control input
-    always @(*) begin
+    always_comb begin
         case(control)
             ALU_AND: result = a & b;                     // AND
             ALU_OR:  result = a | b;                     // OR
@@ -163,9 +163,9 @@ endmodule
 module flopr # (parameter WIDTH = 8)(
     input clk, reset,
     input [WIDTH-1:0] d,
-    output reg [WIDTH-1:0] q
+    output logic [WIDTH-1:0] q
 );
-    always @ (posedge clk, posedge reset)
+    always_ff @ (posedge clk, posedge reset)
         if (reset) q <= 0;
         else q <= d;
 endmodule

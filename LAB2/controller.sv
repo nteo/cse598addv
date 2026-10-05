@@ -17,8 +17,8 @@ module controller (
     output jump,
     output [2:0] alucontrol
 );
-    wire [1:0] aluop;
-    wire branch;
+    logic [1:0] aluop;
+    logic branch;
     
     maindec md (op, memtoreg, memwrite, branch, alusrc, regdst, regwrite, jump, aluop);
     aludec ad (funct, aluop, alucontrol);
@@ -39,11 +39,11 @@ module maindec(
     output [1:0] aluop
 );
 
-    reg [8:0] controls;
+    logic [8:0] controls;
     
     assign {regwrite, regdst, alusrc, branch, memwrite, memtoreg, jump, aluop} = controls;
 
-    always @ (*)
+    always_comb
         case(op)
             6'b000000: controls <= 9'b110000010; //Rtyp
             6'b100011: controls <= 9'b101001000; //LW
@@ -62,9 +62,9 @@ endmodule
 module aludec (
     input [5:0] funct,
     input [1:0] aluop,
-    output reg [2:0] alucontrol
+    output logic [2:0] alucontrol
 );
-    always @ (*)
+    always_comb
         case (aluop)
             2'b00: alucontrol <= 3'b010; // add
             2'b01: alucontrol <= 3'b110; // sub
