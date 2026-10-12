@@ -144,9 +144,9 @@ module datapath (
 	ID_EX ID_EX(
         flushE, clk, instrD[25:21], instrD, // Inputs
         regwrite, memtoreg, memwrite, branch, alucontrol, alusrc, regdst, // Inputs (control)
-        srca, writedata, instrD[20:16], instrD[15:11], signimmD, pcplus4D, // Inputs
+        srca, writedata, srcc, instrD[20:16], instrD[15:11], signimmD, pcplus4D, // Inputs
 		regwriteE, memtoregE, memwriteE, branchE, alucontrolE, alusrcE, regdstE, // Outputs (control)
-        srcaMUX, writedataMUX, rtE, rdE, signimmE, pcplus4E, instrE, rsE // Outputs
+        srcaMUX, writedataMUX, srccE, rtE, rdE, signimmE, pcplus4E, instrE, rsE // Outputs
     );
     
     // ====================================
@@ -497,6 +497,7 @@ module ID_EX(
 			regdstE <= 0;
 			srcaMUX <= 0;
 			writedataMUX <= 0;
+            srccE <= 0;
 			rtE <= 0;
 			rdE <= 0;
 			signimmE <= 0;
