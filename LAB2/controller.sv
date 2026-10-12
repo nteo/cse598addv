@@ -69,6 +69,7 @@ module maindec(
             6'b000100: controls <= 9'b000100001; // BEQ
             6'b001000: controls <= 9'b101000000; // ADDI
             6'b000010: controls <= 9'b000000100; // J
+            6'b000011: controls <= 9'b110000000; // PERFMON
             default: controls <= 9'bxxxxxxxxx;    // ???
         endcase
 

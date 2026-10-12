@@ -66,6 +66,9 @@ module datapath (
     logic stallF, stallD, flushE;
 
 	logic [31:0] srcaEQ, writedataEQ;
+
+    // Valid bit for each stage of the pipeline
+    logic validD, validE, validM, validW;
     
     // ====================================
     // Next PC logic
@@ -110,7 +113,7 @@ module datapath (
     // Instruction fetch --> Instruction decode register
     IF_ID IF_ID(
         pcsrcD, stallD, clk, instr, pcplus4,    // Input
-        instrD, pcplus4D        // Output
+        instrD, pcplus4D, validD                // Output
     );
 
     // ====================================
@@ -129,8 +132,8 @@ module datapath (
     );
 
     // Select what value gets written back to the register
-    mux2 #(32) resmux(
-        aluoutW, readdataW, memtoregW, // Input
+    mux3 #(32) resmux(
+        aluoutW, readdataW, perfmon_value, memtoregW, // Input
         result                      // Output
     );
 
@@ -144,9 +147,9 @@ module datapath (
 	ID_EX ID_EX(
         flushE, clk, instrD[25:21], instrD, // Inputs
         regwrite, memtoreg, memwrite, branch, alucontrol, alusrc, regdst, // Inputs (control)
-        srca, writedata, srcc, instrD[20:16], instrD[15:11], signimmD, pcplus4D, // Inputs
+        srca, writedata, srcc, instrD[20:16], instrD[15:11], signimmD, pcplus4D, validD// Inputs
 		regwriteE, memtoregE, memwriteE, branchE, alucontrolE, alusrcE, regdstE, // Outputs (control)
-        srcaMUX, writedataMUX, srccE, rtE, rdE, signimmE, pcplus4E, instrE, rsE // Outputs
+        srcaMUX, writedataMUX, srccE, rtE, rdE, signimmE, pcplus4E, instrE, rsE, validE // Outputs
     );
     
     // ====================================
@@ -168,20 +171,27 @@ module datapath (
         aluout, zero                        // Output
     );
 
+    performance_monitor pm(
+        clk,
+        reset,
+        flag,
+        validW,
+        perfmon_value,
+    );
     // Execution --> Memory pipeline register
     EX_MEM EX_MEM(
         clk, instrE, // Inputs
         regwriteE, memtoregE, memwriteE, branchE, // Inputs (control)
-        zero, aluout, writedataE, writeregE, pcbranch, // Inputs 
+        zero, aluout, writedataE, writeregE, pcbranch, validE // Inputs 
 		regwriteM, memtoregM, memwriteM, branchM, // Outputs (control)
-		zeroM, aluoutM, writedataM, writeregM, pcbranchM, instrM // Outputs
+		zeroM, aluoutM, writedataM, writeregM, pcbranchM, instrM, validM // Outputs
     );
 
     // Memory --> Writeback pipeline register
     MEM_WB MEM_WB(
         clk, instrM, // Inputs
-        regwriteM, memtoregM, aluoutM, readdata, writeregM, // Inputs (control)
-		regwriteW, memtoregW, aluoutW, readdataW, writeregW, instrW // Outputs (control)
+        regwriteM, memtoregM, aluoutM, readdata, writeregM, validM // Inputs (control)
+		regwriteW, memtoregW, aluoutW, readdataW, writeregW, instrW, validW // Outputs (control)
     );
 
     hazardunit hazardunit(
@@ -258,6 +268,37 @@ module alu(
     
     assign zero = (result == 32'b0);
     
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
+// Performance Monitor Module
+//////////////////////////////////////////////////////////////////////
+module performance_monitor(
+    input  logic clk,
+    input  logic reset,
+    input  logic flag,
+    input  logic validW,
+    output logic [31:0] result,
+);
+
+    logic [31:0] cycle_count, inst_count;
+
+    assign result = (flag == 1'b0) ? cycle_count : inst_count;
+
+    always_ff @(posedge clk) begin
+        if (reset) begin
+            cycle_count <= 0;
+            inst_count <= 0;
+        end
+        else begin
+            cycle_count <= cycle_count + 1;
+            if (validW)
+                inst_count <= inst_count + 1;
+            else
+                inst_count <= inst_count;
+        end
+    end
 endmodule
 
 
@@ -444,16 +485,19 @@ module IF_ID(
     input logic stallD, 
     input logic clk,
 	input logic [31:0] instr, pcplus4,
-	output logic [31:0] instrD, pcplus4D
+	output logic [31:0] instrD, pcplus4D,
+    output logic validD
 );
     always_ff @(posedge clk) begin
         if (pcsrcD == 1'b1) begin
             instrD <= 0;
             pcplus4D <= 0;
+            validD <= 0;
         end
         else if (!stallD) begin
             instrD  <= instr;
             pcplus4D <= pcplus4;
+            validD <= 1'b1;
             if(instrD!=8'hx)
 			$display("Instruction %h is in ID stage", instrD);
         end
@@ -475,6 +519,7 @@ module ID_EX(
 	input logic [31:0] srca, writedata, srcc,
 	input logic [4:0] rtD, rdD,
 	input logic [31:0] signimmD, pcplus4D,
+    input logic validD,
 	output logic regwriteE, memtoregE, memwriteE, branchE, 
 	output logic [2:0] alucontrolE,
 	output logic alusrcE, regdstE,
@@ -482,7 +527,8 @@ module ID_EX(
 	output logic [4:0] rtE, rdE,
 	output logic [31:0] signimmE, pcplus4E,
 	output logic [31:0] instrE,
-    output logic [4:0] rsE
+	output logic [4:0] rsE,
+    output logic validE
 );
 	always_ff @(posedge clk)
 	begin
@@ -504,6 +550,7 @@ module ID_EX(
 			pcplus4E <= 0;
 			instrE <= 0;
 			rsE <= 0;
+			validE <= 0;
 		end
 		else 
 		begin
@@ -523,6 +570,7 @@ module ID_EX(
 			pcplus4E <= pcplus4D;
 			instrE <= instrD;
 			rsE <= rsD;
+            validE <= validD;
 			if(instrE!=8'hx)
 			$display("Instruction %h is in EX stage", instrE);
 		end
@@ -541,12 +589,14 @@ module EX_MEM(
 	input logic [31:0] aluout, writedataE, 
 	input logic [4:0] writeregE, 
 	input logic [31:0] pcbranch,
+    input logic validE,
 	output logic regwriteM, memtoregM, memwriteM, branchM,
 	output logic zeroM, 
 	output logic [31:0] aluoutM, writedataM,
 	output logic [4:0] writeregM, 
 	output logic [31:0] pcbranchM,
-	output logic [31:0] instrM
+	output logic [31:0] instrM,
+    output logic validM
 );
 	always_ff @(posedge clk)
 	begin
@@ -561,6 +611,7 @@ module EX_MEM(
 		writeregM <= writeregE;
 		pcbranchM <= pcbranch;
 		instrM <= instrE;
+        validM <= validE;
 		if(instrM != 8'hx)
 		    $display("Instruction %h entered MEM stage", instrM);
 	end
@@ -577,11 +628,13 @@ module MEM_WB(
 	input logic memtoregM,
 	input logic [31:0] aluoutM, readdata,
 	input logic [4:0] writeregM,
+    input logic validM,
 	output logic regwriteW,
 	output logic memtoregW,
 	output logic [31:0] aluoutW, readdataW,
 	output logic [4:0] writeregW,
-	output logic [31:0] instrW
+	output logic [31:0] instrW,
+    output logic validW
 );
 	always_ff @(posedge clk)
 	begin
@@ -592,6 +645,7 @@ module MEM_WB(
 		readdataW <= readdata;
 		writeregW <= writeregM;
 		instrW <= instrM;
+        validW <= validM;
 		if(instrW != 8'hx)
 		    $display("Instruction %h entered WB stage", instrW);
 	end
