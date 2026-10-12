@@ -11,44 +11,192 @@
 // 8. flopr
 // ===================================================================
 //////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////
 // Datapath module
 //////////////////////////////////////////////////////////////////////
 module datapath (
     input clk, reset,
-    input memtoreg, pcsrc,
-    input alusrc, regdst,
-    input regwrite, jump,
+    input [31:0] readdata,
+    input [31:0] instr,
+    input regwrite,
+    input memtoreg,
+    input memwrite, 
     input [2:0] alucontrol,
+    input alusrc, 
+    input regdst,
+    input branch,
+    input jump,
+    output [31:0] instrD,
     output zero,
     output [31:0] pc,
-    input [31:0] instr,
-    output [31:0] aluout, writedata,
-    input [31:0] readdata
+    output memwriteM,
+    output [31:0] aluoutM,
+    output [31:0] writedataM
 );
 
-    logic [4:0] writereg;
-    logic [31:0] pcnext, pcnextbr, pcplus4, pcbranch;
-    logic [31:0] signimm, signimmsh;
-    logic [31:0] srca, srcb;
-    logic [31:0] result;
-    
-    // next PC logic
-    flopr #(32) pcreg(clk, reset, pcnext, pc);
-    adder pcadd1 (pc, 32'b100, pcplus4);
-    sl2 immsh(signimm, signimmsh);
-    adder pcadd2(pcplus4, signimmsh, pcbranch);
-    mux2 #(32) pcbrmux(pcplus4, pcbranch, pcsrc, pcnextbr);
-    mux2 #(32) pcmux(pcnextbr, {pcplus4[31:28], instr[25:0], 2'b00}, jump, pcnext);
+    // Pipelined control signals
+    logic [31:0] instrE, instrM, instrW;
+    logic regwriteE, regwriteM, regwriteW;
+    logic memtoregE, memtoregM, memtoregW;
+    logic memwriteE;
+    logic [2:0] alucontrolE;
+    logic alusrcE;
+    logic regdstE;
+    logic branchE, branchM;
+    logic zeroM;
 
-    // register file logic
-    regfile rf(clk, regwrite, instr[25:21], instr[20:16], writereg, result, srca, writedata);
-    mux2 #(5) wrmux(instr[20:16], instr[15:11], regdst, writereg);
-    mux2 #(32) resmux(aluout, readdata, memtoreg, result);
-    signext se(instr[15:0], signimm);
+    // Pipelined internal datapath signals
+    logic pcsrc, pcsrcD;
+    logic equalD;
+    logic [31:0] aluout, aluoutE, aluoutW;
+    logic [31:0] writedata, writedataMUX, writedataE;
+    logic [31:0] readdataW;
+    logic [4:0] writeregE, writeregM, writeregW;
+    logic [4:0] rtE, rsE, rdE;
+    logic [31:0] pcnext, pcnextbr, pcbranch, pcbranchM, pcplus4, pcplus4D, pcplus4E;
+    logic [31:0] signimmsh, signimmD, signimmE;
+    logic [31:0] srca, srcaMUX, srcaE, srcbE;
+    logic [31:0] result;
+
+    // Hazard internal signals
+    logic [1:0] forwardAE, forwardBE;
+    logic forwardAD, forwardBD;
+    logic stallF, stallD, flushE;
+
+	logic [31:0] srcaEQ, writedataEQ;
     
+    // ====================================
+    // Next PC logic
+    // ====================================
+    // Switch between PC+1 or a computed PC
+    assign pcsrc = branchM & zeroM;
+
+    // Register to hold and update the PC
+    flopr #(32) pcreg(
+        stallF, clk, reset, pcnext, // Input
+        pc                  // Output
+    );
+
+    // Adder to calculate next PC address
+    adder pcadd1(
+        pc, 32'b100,    // Input
+        pcplus4         // Output
+    );
+    
+    // Shift immediate 2 to the left to jump word addresses
+    sl2 immsh(
+        signimmE,    // Input
+        signimmsh   // Output
+    );
+
+    // Adder to calculate branch address
+    adder pcadd2(
+        pcplus4E, signimmsh, // Input
+        pcbranch            // Output
+    );
+
+    // Handle branch logic
+    mux_dontcare pcbrmux(
+        pcplus4, pcbranchM, pcsrc,   // Input
+        pcnextbr                    // Output
+    );
+
+    // Handle jump logic
+    mux_dontcare pcmux(
+        pcnextbr, {pcplus4D[31:28], instrD[25:0], 2'b00}, jump,   // Input
+        pcnext                                                  // Output
+    );
+
+    // Instruction fetch --> Instruction decode register
+    IF_ID IF_ID(
+        stallD, clk, instr, pcplus4,    // Input
+        instrD, pcplus4D        // Output
+    );
+
+    // ====================================
+    // Register File Logic
+    // ====================================
+    // Register file instantiation
+    regfile rf(
+        clk, regwriteW, instrD[25:21], instrD[20:16], writeregW, result, // Input
+        srca, writedata                                              // Output
+    );
+
+    // Select which register to write to
+    mux2 #(5) wrmux(
+        rtE, rdE, regdstE, // Input
+        writeregE          // Output
+    );
+
+    // Select what value gets written back to the register
+    mux2 #(32) resmux(
+        aluoutW, readdataW, memtoregW, // Input
+        result                      // Output
+    );
+
+    // Sign extend the lower 16 bits of the instruction for branch and immediate instructions
+    signext se(
+        instrD[15:0],    // Input
+        signimmD         // Output
+    );
+
+    // Instruction Decode --> Execution pipeline register
+	ID_EX ID_EX(
+        flushE, clk, instrD[25:21], instrD, // Inputs
+        regwrite, memtoreg, memwrite, branch, alucontrol, alusrc, regdst, // Inputs (control)
+        srca, writedata, instrD[20:16], instrD[15:11], signimmD, pcplus4D, // Inputs
+		regwriteE, memtoregE, memwriteE, branchE, alucontrolE, alusrcE, regdstE, // Outputs (control)
+        srcaMUX, writedataMUX, rtE, rdE, signimmE, pcplus4E, instrE, rsE // Outputs
+    );
+    
+    // ====================================
     // ALU logic
-    mux2 #(32) srcbmux(writedata, signimm, alusrc, srcb);
-    alu alu(srca, srcb, alucontrol, aluout, zero);
+    // ====================================
+    // Forwarding logic for the ALU
+    mux_dontcare3 muxsrca(srcaMUX, result, aluoutM, forwardAE, srcaE);
+    mux_dontcare3 muxwritedata(writedataMUX, result, aluoutM, forwardBE, writedataE);
+
+    // Choose between register and immediate values for the ALU
+    mux2 #(32) srcbmux(
+        writedataE, signimmE, alusrcE, // Input
+        srcbE                        // Output
+    );
+
+    // ALU instantiation
+    alu alu(
+        srcaE, srcbE, alucontrolE, // Input
+        aluout, zero            // Output
+    );
+
+    // Execution --> Memory pipeline register
+    EX_MEM EX_MEM(
+        clk, instrE, // Inputs
+        regwriteE, memtoregE, memwriteE, branchE, // Inputs (control)
+        zero, aluout, writedataE, writeregE, pcbranch, // Inputs 
+		regwriteM, memtoregM, memwriteM, branchM, // Outputs (control)
+		zeroM, aluoutM, writedataM, writeregM, pcbranchM, instrM // Outputs
+    );
+
+    // Memory --> Writeback pipeline register
+    MEM_WB MEM_WB(
+        clk, instrM, // Inputs
+        regwriteM, memtoregM, aluoutM, readdata, writeregM, // Inputs (control)
+		regwriteW, memtoregW, aluoutW, readdataW, writeregW, instrW // Outputs (control)
+    );
+
+    hazardunit hazardunit(
+        branch, memtoregE, memtoregM, instrD[25:21], instrD[20:16], // Inputs
+        regwriteE, regwriteM, regwriteW, rsE, rtE, writeregE, writeregM, writeregW, // Inputs
+		forwardAE, forwardBE, stallF, stallD, flushE, forwardAD, forwardBD // Outputs
+    );
+
+    equal equal(srcaEQ, writedataEQ, equalD);
+
+    mux_dontcare srcsEQMUX(srca, aluoutM, forwardAD, srcaEQ);
+    mux_dontcare writedataEQMUX(writedata, aluoutM, forwardBD, writedataEQ);
+
 endmodule
 
 
@@ -64,6 +212,7 @@ module regfile (
 );
     
     logic [31:0] rf[31:0];
+
     // three ported register file
     // read two ports combinationally
     // write third port on rising edge of clock
@@ -73,39 +222,38 @@ module regfile (
 
     assign rd1 = (ra1 != 0) ? rf[ra1] : 0;
     assign rd2 = (ra2 != 0) ? rf[ra2] : 0;
+
 endmodule
+
 
 //////////////////////////////////////////////////////////////////////
 // ALU Module
-////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////
 module alu(
-    input [31:0] a,          // First operand
-    input [31:0] b,          // Second operand
-    input [2:0] control,     // ALU control signal
-    output logic [31:0] result, // ALU result
-    output zero              // Zero flag
+    input [31:0] a,
+    input [31:0] b,
+    input [2:0] control,
+    output logic [31:0] result,
+    output zero
 );
 
-    // Define ALU operations based on control signal
     localparam ALU_AND = 3'b000;
     localparam ALU_OR  = 3'b001;
     localparam ALU_ADD = 3'b010;
     localparam ALU_SUB = 3'b110;
     localparam ALU_SLT = 3'b111;
     
-    // Calculate result based on control input
     always_comb begin
         case(control)
-            ALU_AND: result = a & b;                     // AND
-            ALU_OR:  result = a | b;                     // OR
-            ALU_ADD: result = a + b;                     // ADD
-            ALU_SUB: result = a - b;                     // SUB
-            ALU_SLT: result = ($signed(a) < $signed(b)); // Set Less Than (signed)
-            default: result = 32'bx;                     // Undefined operation
+            ALU_AND: result = a & b;
+            ALU_OR:  result = a | b;
+            ALU_ADD: result = a + b;
+            ALU_SUB: result = a - b;
+            ALU_SLT: result = ($signed(a) < $signed(b));
+            default: result = 32'bx;
         endcase
     end
     
-    // Set zero flag when result is 0
     assign zero = (result == 32'b0);
     
 endmodule
@@ -135,6 +283,49 @@ endmodule
 
 
 //////////////////////////////////////////////////////////////////////
+// 2-to-1 'Don't Care' Multiplexer Module
+//////////////////////////////////////////////////////////////////////
+module mux_dontcare(
+    input  logic [31:0] d0, d1, 
+	input  logic s, 
+	output logic [31:0] y
+);
+
+    always_comb
+    begin
+	    case(s)
+		    1'b0 : y = d0;
+    		1'bx : y = d0;
+    		1'b1 : y = d1;
+    	endcase
+    end
+
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
+// 3-to-1 'Don't Care' Multiplexer Module
+//////////////////////////////////////////////////////////////////////
+module mux_dontcare3(
+    input  logic [31:0] d0, d1, d2,
+	input  logic [1:0] s, 
+	output logic [31:0] y
+);
+
+    always_comb
+    begin
+        case(s)
+            2'bxx : y = d0;
+            2'b00 : y = d0;
+            2'b01 : y = d1;
+            2'b10 : y = d2; 
+        endcase
+    end
+
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
 // Shift Left by 2 Module
 //////////////////////////////////////////////////////////////////////
 module sl2 (
@@ -160,12 +351,220 @@ endmodule
 //////////////////////////////////////////////////////////////////////
 // Flop Register Module
 //////////////////////////////////////////////////////////////////////
-module flopr # (parameter WIDTH = 8)(
-    input clk, reset,
-    input [WIDTH-1:0] d,
+module flopr #(parameter WIDTH = 8) (
+    input logic stallF,
+	input logic clk, reset,
+    input  logic [WIDTH-1:0] d, 
     output logic [WIDTH-1:0] q
 );
-    always_ff @ (posedge clk, posedge reset)
-        if (reset) q <= 0;
-        else q <= d;
+
+    always_ff @(posedge clk, posedge reset) begin
+        if (reset) q <= '0;
+    	else if (!stallF) q <= d;
+    end
+endmodule
+
+
+module equal(
+    input logic [31:0] srca, writedata,
+    output logic equalD
+);
+    always_comb begin
+        equalD = (srca == writedata);
+    end
+endmodule
+
+
+module hazardunit(
+    input logic branch,
+    input logic memtoregE, memtoregM, 
+    input logic [4:0] rsD, rtD,
+    input logic regwriteE, regwriteM, regwriteW,
+	input logic [4:0] rsE, rtE, 
+	input logic [4:0] writeregE, writeregM, writeregW,
+	output logic [1:0] forwardAE, forwardBE,
+    output logic stallF, stallD, flushE,
+    output logic forwardAD, forwardBD
+);
+    
+    logic lwstall;
+    logic branchstall;
+
+	always_comb
+	begin
+		if((rsE!=5'b00000)&&(rsE==writeregM)&&regwriteM) forwardAE = 2'b10;
+		else if ((rsE!=5'b00000)&&(rsE==writeregW)&&regwriteW) forwardAE = 2'b01;
+		else forwardAE = 2'b00;
+		
+		if((rtE!=5'b00000)&&(rtE==writeregM)&&regwriteM) forwardBE = 2'b10;
+		else if ((rtE!=5'b00000)&&(rtE==writeregW)&&regwriteW) forwardBE = 2'b01;
+		else forwardBE = 2'b00;
+
+        lwstall = ((rsD == rtE) || (rtD == rtE)) && memtoregE && (rtE != 5'd0);
+
+		forwardAD = ((rsD != 0) && (rsD == writeregM) && regwriteM);
+		forwardBD = ((rtD != 0) && (rtD == writeregM) && regwriteM);
+		
+		branchstall = (branch&&regwriteE && ((writeregE==rsD) || (writeregE==rtD))) ||
+						(branch&&memtoregM && ((writeregM==rsD) || (writeregM==rtD)));
+						
+		stallF = lwstall || branchstall;
+		stallD = lwstall || branchstall;
+		flushE = lwstall || branchstall;
+	end			
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
+// IF --> ID Pipelined Register Module
+//////////////////////////////////////////////////////////////////////
+module IF_ID(
+    input logic stallD, 
+    input logic clk,
+	input logic [31:0] instr, pcplus4,
+	output logic [31:0] instrD, pcplus4D
+);
+    always_ff @(posedge clk) begin
+        if (!stallD) begin
+            instrD  <= instr;
+            pcplus4D <= pcplus4;
+            if(instrD!=8'hx)
+			$display("Instruction %h is in ID stage", instrD);
+        end
+	end
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
+// ID --> EX Pipelined Register Module
+//////////////////////////////////////////////////////////////////////
+module ID_EX(
+    input logic flushE,
+    input logic clk,
+    input logic [4:0] rsD,
+	input logic [31:0] instrD,
+	input logic regwrite, memtoreg, memwrite, branch, 
+	input logic [2:0] alucontrol,
+	input logic alusrc, regdst,
+	input logic [31:0] srca, writedata,
+	input logic [4:0] rtD, rdD,
+	input logic [31:0] signimmD, pcplus4D,
+	output logic regwriteE, memtoregE, memwriteE, branchE, 
+	output logic [2:0] alucontrolE,
+	output logic alusrcE, regdstE,
+    output logic [31:0] srcaMUX, writedataMUX,
+	output logic [4:0] rtE, rdE,
+	output logic [31:0] signimmE, pcplus4E,
+	output logic [31:0] instrE,
+    output logic [4:0] rsE
+);
+	always_ff @(posedge clk)
+	begin
+		if(flushE==1'b1)
+		begin
+			regwriteE <= 0;
+			memtoregE <= 0;
+			memwriteE <= 0;
+			branchE <= 0;
+			alucontrolE <= 0;
+			alusrcE <= 0;
+			regdstE <= 0;
+			srcaMUX <= 0;
+			writedataMUX <= 0;
+			rtE <= 0;
+			rdE <= 0;
+			signimmE <= 0;
+			pcplus4E <= 0;
+			instrE <= 0;
+			rsE <= 0;
+		end
+		else 
+		begin
+			regwriteE <= regwrite;
+			memtoregE <= memtoreg;
+			memwriteE <= memwrite;
+			branchE <= branch;
+			alucontrolE <= alucontrol;
+			alusrcE <= alusrc;
+			regdstE <= regdst;
+			srcaMUX <= srca;
+			writedataMUX <= writedata;
+			rtE <= rtD;
+			rdE <= rdD;
+			signimmE <= signimmD;
+			pcplus4E <= pcplus4D;
+			instrE <= instrD;
+			rsE <= rsD;
+			if(instrE!=8'hx)
+			$display("Instruction %h is in EX stage", instrE);
+		end
+	end
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
+// EX --> MEM Pipelined Register Module
+//////////////////////////////////////////////////////////////////////
+module EX_MEM(
+    input logic clk, 
+	input logic [31:0] instrE,
+	input logic regwriteE, memtoregE, memwriteE, branchE,
+	input logic zero, 
+	input logic [31:0] aluout, writedataE, 
+	input logic [4:0] writeregE, 
+	input logic [31:0] pcbranch,
+	output logic regwriteM, memtoregM, memwriteM, branchM,
+	output logic zeroM, 
+	output logic [31:0] aluoutM, writedataM,
+	output logic [4:0] writeregM, 
+	output logic [31:0] pcbranchM,
+	output logic [31:0] instrM
+);
+	always_ff @(posedge clk)
+	begin
+		//$display("EX to MEM");
+		regwriteM <= regwriteE;
+		memtoregM <= memtoregE;
+		memwriteM <= memwriteE;
+		branchM <= branchE;
+		zeroM <= zero;
+		aluoutM <= aluout;
+		writedataM <= writedataE;
+		writeregM <= writeregE;
+		pcbranchM <= pcbranch;
+		instrM <= instrE;
+		if(instrM != 8'hx)
+		    $display("Instruction %h entered MEM stage", instrM);
+	end
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
+// MEM --> WB Pipelined Register Module
+//////////////////////////////////////////////////////////////////////
+module MEM_WB(
+    input logic clk,
+	input logic [31:0] instrM,
+	input logic regwriteM,
+	input logic memtoregM,
+	input logic [31:0] aluoutM, readdata,
+	input logic [4:0] writeregM,
+	output logic regwriteW,
+	output logic memtoregW,
+	output logic [31:0] aluoutW, readdataW,
+	output logic [4:0] writeregW,
+	output logic [31:0] instrW
+);
+	always_ff @(posedge clk)
+	begin
+		//$display("MEM to WB");
+		regwriteW <= regwriteM;
+		memtoregW <= memtoregM;
+		aluoutW <= aluoutM;
+		readdataW <= readdata;
+		writeregW <= writeregM;
+		instrW <= instrM;
+		if(instrW != 8'hx)
+		    $display("Instruction %h entered WB stage", instrW);
+	end
 endmodule
