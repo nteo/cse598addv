@@ -55,7 +55,7 @@ module datapath (
     logic [31:0] readdataW;
     logic [4:0] writeregE, writeregM, writeregW;
     logic [4:0] rtE, rsE, rdE;
-    logic [31:0] pcnext, pcnextbr, pcbranch, pcbranchM, pcplus4, pcplus4D, pcplus4E;
+    logic [31:0] pcnext, pcnextbr, pcbranch, pcbranchD, pcbranchM, pcplus4, pcplus4D, pcplus4E;
     logic [31:0] signimmsh, signimmD, signimmE;
     logic [31:0] srca, srcaMUX, srcaE, srcbE;
     logic [31:0] result;
@@ -71,7 +71,7 @@ module datapath (
     // Next PC logic
     // ====================================
     // Switch between PC+1 or a computed PC
-    assign pcsrc = branchM & zeroM;
+    assign pcsrcD = branch & equalD;
 
     // Register to hold and update the PC
     flopr #(32) pcreg(
@@ -87,31 +87,29 @@ module datapath (
     
     // Shift immediate 2 to the left to jump word addresses
     sl2 immsh(
-        signimmE,    // Input
+        signimmD,    // Input
         signimmsh   // Output
     );
 
     // Adder to calculate branch address
     adder pcadd2(
-        pcplus4E, signimmsh, // Input
-        pcbranch            // Output
+        pcplus4D, signimmsh, // Input
+        pcbranchD            // Output
     );
 
-    // Handle branch logic
-    mux_dontcare pcbrmux(
-        pcplus4, pcbranchM, pcsrc,   // Input
-        pcnextbr                    // Output
-    );
-
-    // Handle jump logic
-    mux_dontcare pcmux(
-        pcnextbr, {pcplus4D[31:28], instrD[25:0], 2'b00}, jump,   // Input
-        pcnext                                                  // Output
-    );
+    // Branch and jump logic
+    always_comb begin
+        if (pcsrcD)
+            pcnext = pcbranchD;
+        else if (jump)
+            pcnext = {pcplus4D[31:28], instrD[25:0], 2'b00};
+        else
+            pcnext = pcplus4;
+    end
 
     // Instruction fetch --> Instruction decode register
     IF_ID IF_ID(
-        stallD, clk, instr, pcplus4,    // Input
+        pcsrcD, stallD, clk, instr, pcplus4,    // Input
         instrD, pcplus4D        // Output
     );
 
@@ -217,8 +215,8 @@ module regfile (
     // read two ports combinationally
     // write third port on rising edge of clock
     // register 0 hardwired to 0
-    always_ff @ (posedge clk)
-        if (we3) rf[wa3] <= wd3;
+    always_ff @ (negedge clk)
+        if (we3 && wa3 != 0) rf[wa3] <= wd3;
 
     assign rd1 = (ra1 != 0) ? rf[ra1] : 0;
     assign rd2 = (ra2 != 0) ? rf[ra2] : 0;
@@ -294,9 +292,8 @@ module mux_dontcare(
     always_comb
     begin
 	    case(s)
-		    1'b0 : y = d0;
-    		1'bx : y = d0;
     		1'b1 : y = d1;
+            default: y = d0;
     	endcase
     end
 
@@ -315,10 +312,10 @@ module mux_dontcare3(
     always_comb
     begin
         case(s)
-            2'bxx : y = d0;
             2'b00 : y = d0;
             2'b01 : y = d1;
             2'b10 : y = d2; 
+            default: y = d0;
         endcase
     end
 
@@ -392,21 +389,41 @@ module hazardunit(
 
 	always_comb
 	begin
-		if((rsE!=5'b00000)&&(rsE==writeregM)&&regwriteM) forwardAE = 2'b10;
-		else if ((rsE!=5'b00000)&&(rsE==writeregW)&&regwriteW) forwardAE = 2'b01;
-		else forwardAE = 2'b00;
+        if ((rsE != 5'd0) &&
+            (rsE == writeregM) && regwriteM && !memtoregM)
+            forwardAE = 2'b10;
+        else if ((rsE != 5'd0) &&
+                (rsE == writeregW) && regwriteW)
+            forwardAE = 2'b01;
+        else
+            forwardAE = 2'b00;
 		
-		if((rtE!=5'b00000)&&(rtE==writeregM)&&regwriteM) forwardBE = 2'b10;
-		else if ((rtE!=5'b00000)&&(rtE==writeregW)&&regwriteW) forwardBE = 2'b01;
-		else forwardBE = 2'b00;
+        if ((rtE != 5'd0) &&
+            (rtE == writeregM) && regwriteM && !memtoregM)
+            forwardBE = 2'b10;
+        else if ((rtE != 5'd0) &&
+                (rtE == writeregW) && regwriteW)
+            forwardBE = 2'b01;
+        else
+            forwardBE = 2'b00;
 
         lwstall = ((rsD == rtE) || (rtD == rtE)) && memtoregE && (rtE != 5'd0);
 
-		forwardAD = ((rsD != 0) && (rsD == writeregM) && regwriteM);
-		forwardBD = ((rtD != 0) && (rtD == writeregM) && regwriteM);
+        forwardAD = (rsD != 5'd0) &&
+                    (rsD == writeregM) &&
+                    regwriteM && !memtoregM;
+
+        forwardBD = (rtD != 5'd0) &&
+                    (rtD == writeregM) &&
+                    regwriteM && !memtoregM;
 		
-		branchstall = (branch&&regwriteE && ((writeregE==rsD) || (writeregE==rtD))) ||
-						(branch&&memtoregM && ((writeregM==rsD) || (writeregM==rtD)));
+        branchstall =
+            (branch && regwriteE &&
+                (writeregE != 5'd0) &&
+                ((writeregE == rsD) || (writeregE == rtD))) ||
+            (branch && memtoregM &&
+                (writeregM != 5'd0) &&
+                ((writeregM == rsD) || (writeregM == rtD)));
 						
 		stallF = lwstall || branchstall;
 		stallD = lwstall || branchstall;
@@ -419,13 +436,18 @@ endmodule
 // IF --> ID Pipelined Register Module
 //////////////////////////////////////////////////////////////////////
 module IF_ID(
+    input logic pcsrcD,
     input logic stallD, 
     input logic clk,
 	input logic [31:0] instr, pcplus4,
 	output logic [31:0] instrD, pcplus4D
 );
     always_ff @(posedge clk) begin
-        if (!stallD) begin
+        if (pcsrcD == 1'b1) begin
+            instrD <= 0;
+            pcplus4D <= 0;
+        end
+        else if (!stallD) begin
             instrD  <= instr;
             pcplus4D <= pcplus4;
             if(instrD!=8'hx)
