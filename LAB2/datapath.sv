@@ -48,7 +48,8 @@ module datapath (
     logic zeroM;
 
     // Pipelined internal datapath signals
-    logic pcsrc;
+    logic pcsrc, pcsrcD;
+    logic equalD;
     logic [31:0] aluout, aluoutE, aluoutW;
     logic [31:0] writedata, writedataMUX, writedataE;
     logic [31:0] readdataW;
@@ -61,7 +62,10 @@ module datapath (
 
     // Hazard internal signals
     logic [1:0] forwardAE, forwardBE;
+    logic forwardAD, forwardBD;
     logic stallF, stallD, flushE;
+
+	logic [31:0] srcaEQ, writedataEQ;
     
     // ====================================
     // Next PC logic
@@ -183,9 +187,15 @@ module datapath (
     );
 
     hazardunit hazardunit(
-        memtoregE, instrD[25:21], instrD[20:16], regwriteM, regwriteW, rsE, rtE, writeregM, writeregW, // Inputs
-		forwardAE, forwardBE, stallF, stallD, flushE // Outputs
+        branch, memtoregE, memtoregM, instrD[25:21], instrD[20:16], // Inputs
+        regwriteE, regwriteM, regwriteW, rsE, rtE, writeregE, writeregM, writeregW, // Inputs
+		forwardAE, forwardBE, stallF, stallD, flushE, forwardAD, forwardBD // Outputs
     );
+
+    equal equal(srcaEQ, writedataEQ, equalD);
+
+    mux_dontcare srcsEQMUX(srca, aluoutM, forwardAD, srcaEQ);
+    mux_dontcare writedataEQMUX(writedata, aluoutM, forwardBD, writedataEQ);
 
 endmodule
 
@@ -355,17 +365,30 @@ module flopr #(parameter WIDTH = 8) (
 endmodule
 
 
+module equal(
+    input logic [31:0] srca, writedata,
+    output logic equalD
+);
+    always_comb begin
+        equalD = (srca == writedata);
+    end
+endmodule
+
+
 module hazardunit(
-    input logic memtoregE,
+    input logic branch,
+    input logic memtoregE, memtoregM, 
     input logic [4:0] rsD, rtD,
-    input logic regwriteM, regwriteW,
+    input logic regwriteE, regwriteM, regwriteW,
 	input logic [4:0] rsE, rtE, 
-	input logic [4:0] writeregM, writeregW,
+	input logic [4:0] writeregE, writeregM, writeregW,
 	output logic [1:0] forwardAE, forwardBE,
-    output logic stallF, stallD, flushE
+    output logic stallF, stallD, flushE,
+    output logic forwardAD, forwardBD
 );
     
     logic lwstall;
+    logic branchstall;
 
 	always_comb
 	begin
@@ -377,10 +400,17 @@ module hazardunit(
 		else if ((rtE!=5'b00000)&&(rtE==writeregW)&&regwriteW) forwardBE = 2'b01;
 		else forwardBE = 2'b00;
 
-        lwstall = ((rsD == rtE) || (rtD == rtE)) && memtoregE;
-		stallF = lwstall;
-		stallD = lwstall;
-		flushE = lwstall;
+        lwstall = ((rsD == rtE) || (rtD == rtE)) && memtoregE && (rtE != 5'd0);
+
+		forwardAD = ((rsD != 0) && (rsD == writeregM) && regwriteM);
+		forwardBD = ((rtD != 0) && (rtD == writeregM) && regwriteM);
+		
+		branchstall = (branch&&regwriteE && ((writeregE==rsD) || (writeregE==rtD))) ||
+						(branch&&memtoregM && ((writeregM==rsD) || (writeregM==rtD)));
+						
+		stallF = lwstall || branchstall;
+		stallD = lwstall || branchstall;
+		flushE = lwstall || branchstall;
 	end			
 endmodule
 
