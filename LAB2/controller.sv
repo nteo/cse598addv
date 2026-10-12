@@ -6,24 +6,42 @@
 // 3. aludec
 // ===================================================================
 //////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////
 // Controller module
 //////////////////////////////////////////////////////////////////////
 module controller (
     input [5:0] op, funct,
     input zero,
     output memtoreg, memwrite,
-    output pcsrc, alusrc,
+    output alusrc,
     output regdst, regwrite,
     output jump,
+    output branch,
     output [2:0] alucontrol
 );
+
     logic [1:0] aluop;
-    logic branch;
     
-    maindec md (op, memtoreg, memwrite, branch, alusrc, regdst, regwrite, jump, aluop);
-    aludec ad (funct, aluop, alucontrol);
+    maindec md(
+        .op(op),                // Input
+        .memtoreg(memtoreg),    // Output
+        .memwrite(memwrite),    // Output
+        .branch(branch),        // Output
+        .alusrc(alusrc),        // Output
+        .regdst(regdst),        // Output
+        .regwrite(regwrite),    // Output
+        .jump(jump),            // Output
+        .aluop(aluop)           // Output
+    );
+
+    aludec ad(
+        .funct(funct),          // Input
+        .aluop(aluop),          // Input
+        .alucontrol(alucontrol) // Output
+    );
     
-    assign pcsrc = branch & zero;
 endmodule
 
 
@@ -45,14 +63,15 @@ module maindec(
 
     always_comb
         case(op)
-            6'b000000: controls <= 9'b110000010; //Rtyp
-            6'b100011: controls <= 9'b101001000; //LW
-            6'b101011: controls <= 9'b001010000; //SW
-            6'b000100: controls <= 9'b000100001; //BEQ
-            6'b001000: controls <= 9'b101000000; //ADDI
-            6'b000010: controls <= 9'b000000100; //J
-            default: controls <= 9'bxxxxxxxxx; //???
+            6'b000000: controls <= 9'b110000010; // Rtyp
+            6'b100011: controls <= 9'b101001000; // LW
+            6'b101011: controls <= 9'b001010000; // SW
+            6'b000100: controls <= 9'b000100001; // BEQ
+            6'b001000: controls <= 9'b101000000; // ADDI
+            6'b000010: controls <= 9'b000000100; // J
+            default: controls <= 9'bxxxxxxxxx;    // ???
         endcase
+
 endmodule
 
 
@@ -64,17 +83,20 @@ module aludec (
     input [1:0] aluop,
     output logic [2:0] alucontrol
 );
+
     always_comb
         case (aluop)
             2'b00: alucontrol <= 3'b010; // add
             2'b01: alucontrol <= 3'b110; // sub
+
             default: case(funct) // RTYPE
                 6'b100000: alucontrol <= 3'b010; // ADD
                 6'b100010: alucontrol <= 3'b110; // SUB
                 6'b100100: alucontrol <= 3'b000; // AND
                 6'b100101: alucontrol <= 3'b001; // OR
                 6'b101010: alucontrol <= 3'b111; // SLT
-                default: alucontrol <= 3'bxxx; // ???
+                default: alucontrol <= 3'bxxx;    // ???
             endcase
         endcase
+
 endmodule
