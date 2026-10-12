@@ -57,7 +57,7 @@ module datapath (
     logic [4:0] rtE, rsE, rdE;
     logic [31:0] pcnext, pcnextbr, pcbranch, pcbranchD, pcbranchM, pcplus4, pcplus4D, pcplus4E;
     logic [31:0] signimmsh, signimmD, signimmE;
-    logic [31:0] srca, srcaMUX, srcaE, srcbE;
+    logic [31:0] srca, srcaMUX, srcaE, srcbE, srccE;
     logic [31:0] result;
 
     // Hazard internal signals
@@ -118,8 +118,8 @@ module datapath (
     // ====================================
     // Register file instantiation
     regfile rf(
-        clk, regwriteW, instrD[25:21], instrD[20:16], writeregW, result, // Input
-        srca, writedata                                              // Output
+        clk, regwriteW, instrD[25:21], instrD[20:16], instrD[15:11], writeregW, result, // Input
+        srca, writedata, srcc                                                           // Output
     );
 
     // Select which register to write to
@@ -164,8 +164,8 @@ module datapath (
 
     // ALU instantiation
     alu alu(
-        srcaE, srcbE, alucontrolE, // Input
-        aluout, zero            // Output
+        srcaE, srcbE, srccE, alucontrolE,   // Input
+        aluout, zero                        // Output
     );
 
     // Execution --> Memory pipeline register
@@ -204,15 +204,15 @@ endmodule
 module regfile (
     input clk,
     input we3,
-    input [4:0] ra1, ra2, wa3,
+    input [4:0] ra1, ra2, ra3, wa3,
     input [31:0] wd3,
-    output [31:0] rd1, rd2
+    output [31:0] rd1, rd2, rd3
 );
     
     logic [31:0] rf[31:0];
 
-    // three ported register file
-    // read two ports combinationally
+    // four ported register file
+    // read three ports combinationally
     // write third port on rising edge of clock
     // register 0 hardwired to 0
     always_ff @ (negedge clk)
@@ -220,6 +220,7 @@ module regfile (
 
     assign rd1 = (ra1 != 0) ? rf[ra1] : 0;
     assign rd2 = (ra2 != 0) ? rf[ra2] : 0;
+    assign rd3 = (ra3 != 0) ? rf[ra3] : 0;
 
 endmodule
 
@@ -230,22 +231,25 @@ endmodule
 module alu(
     input [31:0] a,
     input [31:0] b,
+    input [31:0] c,
     input [2:0] control,
     output logic [31:0] result,
     output zero
 );
 
-    localparam ALU_AND = 3'b000;
-    localparam ALU_OR  = 3'b001;
-    localparam ALU_ADD = 3'b010;
-    localparam ALU_SUB = 3'b110;
-    localparam ALU_SLT = 3'b111;
+    localparam ALU_AND      = 3'b000;
+    localparam ALU_OR       = 3'b001;
+    localparam ALU_ADD      = 3'b010;
+    localparam ALU_MULADD   = 3'b100;
+    localparam ALU_SUB      = 3'b110;
+    localparam ALU_SLT      = 3'b111;
     
     always_comb begin
         case(control)
             ALU_AND: result = a & b;
             ALU_OR:  result = a | b;
             ALU_ADD: result = a + b;
+            ALU_MULADD: result = a * b + c;
             ALU_SUB: result = a - b;
             ALU_SLT: result = ($signed(a) < $signed(b));
             default: result = 32'bx;
@@ -468,13 +472,13 @@ module ID_EX(
 	input logic regwrite, memtoreg, memwrite, branch, 
 	input logic [2:0] alucontrol,
 	input logic alusrc, regdst,
-	input logic [31:0] srca, writedata,
+	input logic [31:0] srca, writedata, srcc,
 	input logic [4:0] rtD, rdD,
 	input logic [31:0] signimmD, pcplus4D,
 	output logic regwriteE, memtoregE, memwriteE, branchE, 
 	output logic [2:0] alucontrolE,
 	output logic alusrcE, regdstE,
-    output logic [31:0] srcaMUX, writedataMUX,
+    output logic [31:0] srcaMUX, writedataMUX, srccE,
 	output logic [4:0] rtE, rdE,
 	output logic [31:0] signimmE, pcplus4E,
 	output logic [31:0] instrE,
@@ -511,6 +515,7 @@ module ID_EX(
 			regdstE <= regdst;
 			srcaMUX <= srca;
 			writedataMUX <= writedata;
+			srccE <= srcc;
 			rtE <= rtD;
 			rdE <= rdD;
 			signimmE <= signimmD;
