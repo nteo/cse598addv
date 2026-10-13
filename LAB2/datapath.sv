@@ -109,7 +109,7 @@ module datapath (
 
     // Instruction fetch --> Instruction decode register
     IF_ID IF_ID(
-        pcsrcD, stallD, clk, instr, pcplus4,    // Input
+        (pcsrcD || jump), stallD, clk, reset, instr, pcplus4,    // Input
         instrD, pcplus4D        // Output
     );
 
@@ -118,7 +118,7 @@ module datapath (
     // ====================================
     // Register file instantiation
     regfile rf(
-        clk, regwriteW, instrD[25:21], instrD[20:16], writeregW, result, // Input
+        clk, reset, regwriteW, instrD[25:21], instrD[20:16], writeregW, result, // Input
         srca, writedata                                              // Output
     );
 
@@ -142,7 +142,7 @@ module datapath (
 
     // Instruction Decode --> Execution pipeline register
 	ID_EX ID_EX(
-        flushE, clk, instrD[25:21], instrD, // Inputs
+        flushE, clk, reset, instrD[25:21], instrD, // Inputs
         regwrite, memtoreg, memwrite, branch, alucontrol, alusrc, regdst, // Inputs (control)
         srca, writedata, instrD[20:16], instrD[15:11], signimmD, pcplus4D, // Inputs
 		regwriteE, memtoregE, memwriteE, branchE, alucontrolE, alusrcE, regdstE, // Outputs (control)
@@ -170,7 +170,7 @@ module datapath (
 
     // Execution --> Memory pipeline register
     EX_MEM EX_MEM(
-        clk, instrE, // Inputs
+        clk, reset, instrE, // Inputs
         regwriteE, memtoregE, memwriteE, branchE, // Inputs (control)
         zero, aluout, writedataE, writeregE, pcbranch, // Inputs 
 		regwriteM, memtoregM, memwriteM, branchM, // Outputs (control)
@@ -179,7 +179,7 @@ module datapath (
 
     // Memory --> Writeback pipeline register
     MEM_WB MEM_WB(
-        clk, instrM, // Inputs
+        clk, reset, instrM, // Inputs
         regwriteM, memtoregM, aluoutM, readdata, writeregM, // Inputs (control)
 		regwriteW, memtoregW, aluoutW, readdataW, writeregW, instrW // Outputs (control)
     );
@@ -202,25 +202,28 @@ endmodule
 // Register File Module
 //////////////////////////////////////////////////////////////////////
 module regfile (
-    input clk,
-    input we3,
-    input [4:0] ra1, ra2, wa3,
-    input [31:0] wd3,
-    output [31:0] rd1, rd2
+    input logic clk, reset,
+    input logic we3,
+    input logic [4:0] ra1, ra2, wa3,
+    input logic [31:0] wd3,
+    output logic [31:0] rd1, rd2
 );
-    
+
     logic [31:0] rf[31:0];
+    integer i;
 
-    // three ported register file
-    // read two ports combinationally
-    // write third port on rising edge of clock
-    // register 0 hardwired to 0
-    always_ff @ (negedge clk)
-        if (we3 && wa3 != 0) rf[wa3] <= wd3;
-
-    assign rd1 = (ra1 != 0) ? rf[ra1] : 0;
-    assign rd2 = (ra2 != 0) ? rf[ra2] : 0;
-
+    always_ff @(negedge clk or posedge reset) begin
+        if (reset) begin
+            for (i = 0; i < 32; i = i + 1)
+                rf[i] <= 32'b0;
+        end
+        else if (we3 && wa3 != 5'd0) begin
+            rf[wa3] <= wd3;
+        end
+    end
+  
+    assign rd1 = (ra1 != 5'd0) ? rf[ra1] : 32'b0;
+    assign rd2 = (ra2 != 5'd0) ? rf[ra2] : 32'b0;
 endmodule
 
 
@@ -438,14 +441,18 @@ endmodule
 module IF_ID(
     input logic pcsrcD,
     input logic stallD, 
-    input logic clk,
+    input logic clk, reset,
 	input logic [31:0] instr, pcplus4,
 	output logic [31:0] instrD, pcplus4D
 );
-    always_ff @(posedge clk) begin
-        if (pcsrcD == 1'b1) begin
-            instrD <= 0;
-            pcplus4D <= 0;
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            instrD  <= 32'b0;
+            pcplus4D <= 32'b0;
+        end
+        else if (pcsrcD) begin
+            instrD <= 32'b0;
+            pcplus4D <= 32'b0;
         end
         else if (!stallD) begin
             instrD  <= instr;
@@ -462,7 +469,7 @@ endmodule
 //////////////////////////////////////////////////////////////////////
 module ID_EX(
     input logic flushE,
-    input logic clk,
+    input logic clk, reset,
     input logic [4:0] rsD,
 	input logic [31:0] instrD,
 	input logic regwrite, memtoreg, memwrite, branch, 
@@ -480,9 +487,9 @@ module ID_EX(
 	output logic [31:0] instrE,
     output logic [4:0] rsE
 );
-	always_ff @(posedge clk)
+	always_ff @(posedge clk or posedge reset)
 	begin
-		if(flushE==1'b1)
+		if(reset || flushE)
 		begin
 			regwriteE <= 0;
 			memtoregE <= 0;
@@ -528,7 +535,7 @@ endmodule
 // EX --> MEM Pipelined Register Module
 //////////////////////////////////////////////////////////////////////
 module EX_MEM(
-    input logic clk, 
+    input logic clk, reset,
 	input logic [31:0] instrE,
 	input logic regwriteE, memtoregE, memwriteE, branchE,
 	input logic zero, 
@@ -542,21 +549,35 @@ module EX_MEM(
 	output logic [31:0] pcbranchM,
 	output logic [31:0] instrM
 );
-	always_ff @(posedge clk)
+	always_ff @(posedge clk or posedge reset)
 	begin
-		//$display("EX to MEM");
-		regwriteM <= regwriteE;
-		memtoregM <= memtoregE;
-		memwriteM <= memwriteE;
-		branchM <= branchE;
-		zeroM <= zero;
-		aluoutM <= aluout;
-		writedataM <= writedataE;
-		writeregM <= writeregE;
-		pcbranchM <= pcbranch;
-		instrM <= instrE;
-		if(instrM != 8'hx)
-		    $display("Instruction %h entered MEM stage", instrM);
+        if (reset) begin
+            regwriteM <= 1'b0;
+            memtoregM <= 1'b0;
+            memwriteM <= 1'b0;
+            branchM   <= 1'b0;
+            zeroM     <= 1'b0;
+            aluoutM   <= 32'b0;
+            writedataM <= 32'b0;
+            writeregM <= 5'b0;
+            pcbranchM <= 32'b0;
+            instrM    <= 32'b0;
+        end
+        else begin
+            //$display("EX to MEM");
+            regwriteM <= regwriteE;
+            memtoregM <= memtoregE;
+            memwriteM <= memwriteE;
+            branchM <= branchE;
+            zeroM <= zero;
+            aluoutM <= aluout;
+            writedataM <= writedataE;
+            writeregM <= writeregE;
+            pcbranchM <= pcbranch;
+            instrM <= instrE;
+            if(instrM != 8'hx)
+                $display("Instruction %h entered MEM stage", instrM);
+        end
 	end
 endmodule
 
@@ -565,7 +586,7 @@ endmodule
 // MEM --> WB Pipelined Register Module
 //////////////////////////////////////////////////////////////////////
 module MEM_WB(
-    input logic clk,
+    input logic clk, reset,
 	input logic [31:0] instrM,
 	input logic regwriteM,
 	input logic memtoregM,
@@ -579,14 +600,24 @@ module MEM_WB(
 );
 	always_ff @(posedge clk)
 	begin
-		//$display("MEM to WB");
-		regwriteW <= regwriteM;
-		memtoregW <= memtoregM;
-		aluoutW <= aluoutM;
-		readdataW <= readdata;
-		writeregW <= writeregM;
-		instrW <= instrM;
-		if(instrW != 8'hx)
-		    $display("Instruction %h entered WB stage", instrW);
+        if (reset) begin
+            regwriteW <= 1'b0;
+            memtoregW <= 1'b0;
+            aluoutW   <= 32'b0;
+            readdataW <= 32'b0;
+            writeregW <= 5'b0;
+            instrW    <= 32'b0;
+        end
+        else begin
+            //$display("MEM to WB");
+            regwriteW <= regwriteM;
+            memtoregW <= memtoregM;
+            aluoutW <= aluoutM;
+            readdataW <= readdata;
+            writeregW <= writeregM;
+            instrW <= instrM;
+            if(instrW != 8'hx)
+                $display("Instruction %h entered WB stage", instrW);
+        end
 	end
 endmodule
