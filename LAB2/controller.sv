@@ -100,7 +100,7 @@ module aludec (
                     6'b100101: alucontrol = 3'b001; // OR
                     6'b101010: alucontrol = 3'b111; // SLT
                     6'b101100: alucontrol = 3'b100; // MULADD
-                    default:   alucontrol = 3'bxxx; // ???
+                    default:   alucontrol = 3'b010; // ???
                 endcase
             end
 

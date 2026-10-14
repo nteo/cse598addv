@@ -147,9 +147,9 @@ module datapath (
     // Instruction Decode --> Execution pipeline register
 	ID_EX ID_EX(
         flushE, clk, reset, instrD[25:21], instrD, // Inputs
-        regwrite, resultsrc, memwrite, branch, alucontrol, alusrc, regdst, // Inputs (control)
-        srca, writedata, srcc, instrD[20:16], instrD[15:11], signimmD, pcplus4D, validD// Inputs
-		regwriteE, resultsrcE, memwriteE, branchE, alucontrolE, alusrcE, regdstE, // Outputs (control)
+        resultsrc, regwrite, memwrite, branch, alucontrol, alusrc, regdst, // Inputs (control)
+        srca, writedata, srcc, instrD[20:16], instrD[15:11], signimmD, pcplus4D, validD, // Inputs
+		resultsrcE, regwriteE, memwriteE, branchE, alucontrolE, alusrcE, regdstE, // Outputs (control)
         srcaMUX, writedataMUX, srccE, rtE, rdE, signimmE, pcplus4E, instrE, rsE, validE // Outputs
     );
     
@@ -182,21 +182,21 @@ module datapath (
     // Execution --> Memory pipeline register
     EX_MEM EX_MEM(
         clk, reset, instrE, // Inputs
-        regwriteE, resultsrcE, memwriteE, branchE, // Inputs (control)
-        zero, aluout, writedataE, writeregE, pcbranch, validE // Inputs 
-		regwriteM, resultsrcM, memwriteM, branchM, // Outputs (control)
+        resultsrcE, regwriteE, memwriteE, branchE, // Inputs (control)
+        zero, aluout, writedataE, writeregE, pcbranch, validE, // Inputs 
+		resultsrcM, regwriteM, memwriteM, branchM, // Outputs (control)
 		zeroM, aluoutM, writedataM, writeregM, pcbranchM, instrM, validM // Outputs
     );
 
     // Memory --> Writeback pipeline register
     MEM_WB MEM_WB(
         clk, reset, instrM, // Inputs
-        regwriteM, resultsrcM, aluoutM, readdata, writeregM, validM // Inputs (control)
+        regwriteM, resultsrcM, aluoutM, readdata, writeregM, validM, // Inputs (control)
 		regwriteW, resultsrcW, aluoutW, readdataW, writeregW, instrW, validW // Outputs (control)
     );
 
     hazardunit hazardunit(
-        pcsrcD, branch, memtoregE, memtoregM, instrD[25:21], instrD[20:16], // Inputs
+        pcsrcD, branch, resultsrcE, resultsrcM, instrD[25:21], instrD[20:16], // Inputs
         regwriteE, regwriteM, regwriteW, rsE, rtE, writeregE, writeregM, writeregW, // Inputs
 		forwardAE, forwardBE, stallF, stallD, flushE, forwardAD, forwardBD // Outputs
     );
@@ -549,7 +549,7 @@ module ID_EX(
 		if(reset)
 		begin
 			regwriteE <= 0;
-			memtoregE <= 0;
+			resultsrcE <= 0;
 			memwriteE <= 0;
 			branchE <= 0;
 			alucontrolE <= 0;
@@ -557,6 +557,7 @@ module ID_EX(
 			regdstE <= 0;
 			srcaMUX <= 0;
 			writedataMUX <= 0;
+            srccE <= 0;
 			rtE <= 0;
 			rdE <= 0;
 			signimmE <= 0;
