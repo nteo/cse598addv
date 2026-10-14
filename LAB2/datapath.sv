@@ -50,7 +50,7 @@ module datapath (
     // Pipelined internal datapath signals
     logic pcsrc, pcsrcD;
     logic equalD;
-    logic [31:0] aluout, aluoutE, aluoutW;
+    logic [31:0] aluout, aluoutW;
     logic [31:0] writedata, writedataMUX, writedataE;
     logic [31:0] readdataW;
     logic [4:0] writeregE, writeregM, writeregW;
@@ -185,7 +185,7 @@ module datapath (
     );
 
     hazardunit hazardunit(
-        branch, memtoregE, memtoregM, instrD[25:21], instrD[20:16], // Inputs
+        pcsrcD, branch, memtoregE, memtoregM, instrD[25:21], instrD[20:16], // Inputs
         regwriteE, regwriteM, regwriteW, rsE, rtE, writeregE, writeregM, writeregW, // Inputs
 		forwardAE, forwardBE, stallF, stallD, flushE, forwardAD, forwardBD // Outputs
     );
@@ -376,6 +376,7 @@ endmodule
 
 
 module hazardunit(
+    input logic pcsrcD,
     input logic branch,
     input logic memtoregE, memtoregM, 
     input logic [4:0] rsD, rtD,
@@ -430,7 +431,7 @@ module hazardunit(
 						
 		stallF = lwstall || branchstall;
 		stallD = lwstall || branchstall;
-		flushE = lwstall || branchstall;
+		flushE = lwstall || branchstall || pcsrcD;
 	end			
 endmodule
 
@@ -489,7 +490,25 @@ module ID_EX(
 );
 	always_ff @(posedge clk or posedge reset)
 	begin
-		if(reset || flushE)
+		if(reset)
+		begin
+			regwriteE <= 0;
+			memtoregE <= 0;
+			memwriteE <= 0;
+			branchE <= 0;
+			alucontrolE <= 0;
+			alusrcE <= 0;
+			regdstE <= 0;
+			srcaMUX <= 0;
+			writedataMUX <= 0;
+			rtE <= 0;
+			rdE <= 0;
+			signimmE <= 0;
+			pcplus4E <= 0;
+			instrE <= 0;
+			rsE <= 0;
+		end
+        else if(flushE)
 		begin
 			regwriteE <= 0;
 			memtoregE <= 0;
