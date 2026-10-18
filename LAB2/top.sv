@@ -37,13 +37,14 @@ module mips (
 );
 
     logic [31:0] instrD;
-    logic memtoreg, branch, alusrc, regdst, regwrite, jump;
+    logic [1:0] resultsrc;
+    logic branch, alusrc, regdst, regwrite, jump;
     logic memwrite, zero;
     logic [2:0] alucontrol;
 
-    controller c(instrD[31:26], instrD[5:0], zero, memtoreg, memwrite, alusrc, regdst, regwrite, jump, branch, alucontrol);
+    controller c(instrD[31:26], instrD[5:0], zero, resultsrc, memwrite, alusrc, regdst, regwrite, jump, branch, alucontrol);
 
-    datapath dp(clk, reset, readdata, instr, regwrite, memtoreg, memwrite, alucontrol, alusrc, regdst, branch, jump, instrD, zero, pc, memwriteout, aluout, writedata);
+    datapath dp(clk, reset, readdata, instr, regwrite, resultsrc, memwrite, alucontrol, alusrc, regdst, branch, jump, instrD, zero, pc, memwriteout, aluout, writedata);
 endmodule
 
 
@@ -79,7 +80,7 @@ module imem (
     logic [31:0] RAM[63:0];
     
     initial begin
-        $readmemh("../memfile_dh.dat",RAM);
+        $readmemh("../memfile_perfmon.dat",RAM);
     end
     assign rd = RAM[a]; // word aligned
 endmodule
