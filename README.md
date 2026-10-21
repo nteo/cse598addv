@@ -14,7 +14,7 @@ First,
    %cd <LAB-NUMBER>
 1. To compile, run simulation, and open Verdi waveforms:
    % cd sim
-   $ make run
+   % make run
 2. To run synthesis, change compile_dc.tcl accordingly, then:
    % cd synth
    % make synth
@@ -23,7 +23,7 @@ First,
 .f denotes a file list. We can list all the .sv files the compiler should target in a singular .f, but we can also link other .f files in our list so we can create a hierarchical structure to encapsulate all our files.
 1. Create some new file either with vi or in vscode
 2. If it is in a brand new folder, go to the .f in the parent folder and add
-   +incdir+$PROJECT_ROOT/path/to/folder (where PROJECT_ROOT is your LAB directory)
+   +incdir+$PROJECT_ROOT/path/to/folder ($PROJECT_ROOT is a variable enabled by sourcing env.cshrc and is set to your LAB directory provided the 'Setup' steps were all followed)
 3. Create a new .f for the folder you are in (name it after the folder) and list all files within the folder
    $PROJECT_ROOT/path/to/file
 
