@@ -80,7 +80,7 @@ module imem (
     logic [31:0] RAM[63:0];
     
     initial begin
-        $readmemh("../memfile_perfmon.dat",RAM);
+        $readmemh("../memfile_ch.dat",RAM);
     end
     assign rd = RAM[a]; // word aligned
 endmodule
