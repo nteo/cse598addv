@@ -45,8 +45,13 @@ module matmul_8x8 #(
 // A flows downward and B flows rightward
 logic [MAT_MUL_SIZE*DWIDTH-1:0] a_data_out00;
 logic [MAT_MUL_SIZE*DWIDTH-1:0] b_data_out00;
+
 logic [MAT_MUL_SIZE*DWIDTH-1:0] b_data_out01;
+
 logic [MAT_MUL_SIZE*DWIDTH-1:0] a_data_out10;
+
+logic [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out00;
+logic [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out10;
 
 logic c_valid00, c_valid01, c_valid10, c_valid11;
 logic done00, done01, done10, done11;
@@ -72,7 +77,7 @@ matmul_4x4_systolic matmul_4x4_systolic_00(
     .b_data(b_data_left),
     .a_data_in(), // Not connected to memory or other 4x4
     .b_data_in(), // Not connected to memory or other 4x4
-    .c_data_in('0),
+    .c_data_in({MAT_MUL_SIZE*DWIDTH{1'b0}}),
     .c_data_out(c_data_out00),
     .a_data_out(a_data_out00),
     .b_data_out(b_data_out00),
@@ -83,9 +88,9 @@ matmul_4x4_systolic matmul_4x4_systolic_00(
     .validity_mask_a_rows(4'b1111), // Tie validity_mask* values to default values
     .validity_mask_a_cols_b_rows(4'b1111),
     .validity_mask_b_cols(4'b1111),
-    .final_mat_mul_size('d8),
-    .a_loc('d0),
-    .b_loc('d0)
+    .final_mat_mul_size(8'd8),
+    .a_loc(8'd0),
+    .b_loc(8'd0)
 );
 
 matmul_4x4_systolic matmul_4x4_systolic_01(
@@ -116,9 +121,9 @@ matmul_4x4_systolic matmul_4x4_systolic_01(
     .validity_mask_a_rows(4'b1111), // Tie validity_mask* values to default values
     .validity_mask_a_cols_b_rows(4'b1111),
     .validity_mask_b_cols(4'b1111),
-    .final_mat_mul_size('d8),
-    .a_loc('d0),
-    .b_loc('d1)
+    .final_mat_mul_size(8'd8),
+    .a_loc(8'd0),
+    .b_loc(8'd1)
 );
 
 matmul_4x4_systolic matmul_4x4_systolic_10(
@@ -138,7 +143,7 @@ matmul_4x4_systolic matmul_4x4_systolic_10(
     .b_data(), // Not connected to memory or other 4x4
     .a_data_in(), // Not connected to memory or other 4x4
     .b_data_in(b_data_out00),
-    .c_data_in('0),
+    .c_data_in({MAT_MUL_SIZE*DWIDTH{1'b0}}),
     .c_data_out(c_data_out10),
     .a_data_out(a_data_out10),
     .b_data_out(),
@@ -149,9 +154,9 @@ matmul_4x4_systolic matmul_4x4_systolic_10(
     .validity_mask_a_rows(4'b1111), // Tie validity_mask* values to default values
     .validity_mask_a_cols_b_rows(4'b1111),
     .validity_mask_b_cols(4'b1111),
-    .final_mat_mul_size('d8),
-    .a_loc('d1),
-    .b_loc('d0)
+    .final_mat_mul_size(8'd8),
+    .a_loc(8'd1),
+    .b_loc(8'd0)
 );
 
 matmul_4x4_systolic matmul_4x4_systolic_11(
@@ -182,9 +187,9 @@ matmul_4x4_systolic matmul_4x4_systolic_11(
     .validity_mask_a_rows(4'b1111), // Tie validity_mask* values to default values
     .validity_mask_a_cols_b_rows(4'b1111),
     .validity_mask_b_cols(4'b1111),
-    .final_mat_mul_size('d8),
-    .a_loc('d1),
-    .b_loc('d1)
+    .final_mat_mul_size(8'd8),
+    .a_loc(8'd1),
+    .b_loc(8'd1)
 );
 
 assign done_mat_mul = done00 & done01 & done10 & done11;
