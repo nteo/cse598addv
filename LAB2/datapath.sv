@@ -179,6 +179,7 @@ module datapath (
         validW,
         perfmon_value
     );
+    
     // Execution --> Memory pipeline register
     EX_MEM EX_MEM(
         clk, reset, instrE, // Inputs
