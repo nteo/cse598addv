@@ -3,3 +3,4 @@
 !*/synth/compile_dc.tcl
 !*/synth/Makefile
 !*/sim/Makefile
+!*/sim/*.rc

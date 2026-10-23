@@ -52,27 +52,27 @@ module matmul_4x4_systolic(
     input pe_reset;
     input start_mat_mul;
     output done_mat_mul;
-    input [`AWIDTH-1:0] address_mat_a;
-    input [`AWIDTH-1:0] address_mat_b;
-    input [`AWIDTH-1:0] address_mat_c;
-    input [`ADDR_STRIDE_WIDTH-1:0] address_stride_a;
-    input [`ADDR_STRIDE_WIDTH-1:0] address_stride_b;
-    input [`ADDR_STRIDE_WIDTH-1:0] address_stride_c;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] a_data;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] b_data;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] a_data_in;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] b_data_in;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_in;
-    output [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out;
-    output [`MAT_MUL_SIZE*`DWIDTH-1:0] a_data_out;
-    output [`MAT_MUL_SIZE*`DWIDTH-1:0] b_data_out;
-    output [`AWIDTH-1:0] a_addr;
-    output [`AWIDTH-1:0] b_addr;
-    output [`AWIDTH-1:0] c_addr;
+    input [AWIDTH-1:0] address_mat_a;
+    input [AWIDTH-1:0] address_mat_b;
+    input [AWIDTH-1:0] address_mat_c;
+    input [ADDR_STRIDE_WIDTH-1:0] address_stride_a;
+    input [ADDR_STRIDE_WIDTH-1:0] address_stride_b;
+    input [ADDR_STRIDE_WIDTH-1:0] address_stride_c;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] a_data;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] b_data;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] a_data_in;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] b_data_in;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] c_data_in;
+    output [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out;
+    output [MAT_MUL_SIZE*DWIDTH-1:0] a_data_out;
+    output [MAT_MUL_SIZE*DWIDTH-1:0] b_data_out;
+    output [AWIDTH-1:0] a_addr;
+    output [AWIDTH-1:0] b_addr;
+    output [AWIDTH-1:0] c_addr;
     output c_data_available;
-    input [`MASK_WIDTH-1:0] validity_mask_a_rows;
-    input [`MASK_WIDTH-1:0] validity_mask_a_cols_b_rows;
-    input [`MASK_WIDTH-1:0] validity_mask_b_cols;
+    input [MASK_WIDTH-1:0] validity_mask_a_rows;
+    input [MASK_WIDTH-1:0] validity_mask_a_cols_b_rows;
+    input [MASK_WIDTH-1:0] validity_mask_b_cols;
     //7:0 is okay here. We aren't going to make a matmul larger than 128x128
     //In fact, these will get optimized out by the synthesis tool, because
     //we hardcode them at the instantiation level.
@@ -98,7 +98,7 @@ module matmul_4x4_systolic(
     logic [7:0] cycles_for_matmul; 
         
     assign cycles_for_matmul = 8'd14;
-    assign clk_cnt_for_done = (cycles_for_matmul + `NUM_CYCLES_IN_MAC) ;  
+    assign clk_cnt_for_done = (cycles_for_matmul + NUM_CYCLES_IN_MAC) ;  
 
 
     always_ff @(posedge clk) 
@@ -123,26 +123,26 @@ module matmul_4x4_systolic(
     end
 
 
-    logic [`DWIDTH-1:0] a0_data;
-    logic [`DWIDTH-1:0] a1_data;
-    logic [`DWIDTH-1:0] a2_data;
-    logic [`DWIDTH-1:0] a3_data;
-    logic [`DWIDTH-1:0] b0_data;
-    logic [`DWIDTH-1:0] b1_data;
-    logic [`DWIDTH-1:0] b2_data;
-    logic [`DWIDTH-1:0] b3_data;
-    logic [`DWIDTH-1:0] a1_data_delayed_1;
-    logic [`DWIDTH-1:0] a2_data_delayed_1;
-    logic [`DWIDTH-1:0] a2_data_delayed_2;
-    logic [`DWIDTH-1:0] a3_data_delayed_1;
-    logic [`DWIDTH-1:0] a3_data_delayed_2;
-    logic [`DWIDTH-1:0] a3_data_delayed_3;
-    logic [`DWIDTH-1:0] b1_data_delayed_1;
-    logic [`DWIDTH-1:0] b2_data_delayed_1;
-    logic [`DWIDTH-1:0] b2_data_delayed_2;
-    logic [`DWIDTH-1:0] b3_data_delayed_1;
-    logic [`DWIDTH-1:0] b3_data_delayed_2;
-    logic [`DWIDTH-1:0] b3_data_delayed_3;
+    logic [DWIDTH-1:0] a0_data;
+    logic [DWIDTH-1:0] a1_data;
+    logic [DWIDTH-1:0] a2_data;
+    logic [DWIDTH-1:0] a3_data;
+    logic [DWIDTH-1:0] b0_data;
+    logic [DWIDTH-1:0] b1_data;
+    logic [DWIDTH-1:0] b2_data;
+    logic [DWIDTH-1:0] b3_data;
+    logic [DWIDTH-1:0] a1_data_delayed_1;
+    logic [DWIDTH-1:0] a2_data_delayed_1;
+    logic [DWIDTH-1:0] a2_data_delayed_2;
+    logic [DWIDTH-1:0] a3_data_delayed_1;
+    logic [DWIDTH-1:0] a3_data_delayed_2;
+    logic [DWIDTH-1:0] a3_data_delayed_3;
+    logic [DWIDTH-1:0] b1_data_delayed_1;
+    logic [DWIDTH-1:0] b2_data_delayed_1;
+    logic [DWIDTH-1:0] b2_data_delayed_2;
+    logic [DWIDTH-1:0] b3_data_delayed_1;
+    logic [DWIDTH-1:0] b3_data_delayed_2;
+    logic [DWIDTH-1:0] b3_data_delayed_3;
     
 //////////////////////////////////////////////////////////////////////////
 // Instantiation of systolic data setup
@@ -153,32 +153,32 @@ module matmul_4x4_systolic(
 //////////////////////////////////////////////////////////////////////////
 // Logic to mux data_in coming from neighboring matmuls
 //////////////////////////////////////////////////////////////////////////
-    logic [`DWIDTH-1:0] a0;
-    logic [`DWIDTH-1:0] a1;
-    logic [`DWIDTH-1:0] a2;
-    logic [`DWIDTH-1:0] a3;
-    logic [`DWIDTH-1:0] b0;
-    logic [`DWIDTH-1:0] b1;
-    logic [`DWIDTH-1:0] b2;
-    logic [`DWIDTH-1:0] b3;
+    logic [DWIDTH-1:0] a0;
+    logic [DWIDTH-1:0] a1;
+    logic [DWIDTH-1:0] a2;
+    logic [DWIDTH-1:0] a3;
+    logic [DWIDTH-1:0] b0;
+    logic [DWIDTH-1:0] b1;
+    logic [DWIDTH-1:0] b2;
+    logic [DWIDTH-1:0] b3;
     
-    logic [`DWIDTH-1:0] a0_data_in;
-    logic [`DWIDTH-1:0] a1_data_in;
-    logic [`DWIDTH-1:0] a2_data_in;
-    logic [`DWIDTH-1:0] a3_data_in;
-    assign a0_data_in = a_data_in[`DWIDTH-1:0];
-    assign a1_data_in = a_data_in[2*`DWIDTH-1:`DWIDTH];
-    assign a2_data_in = a_data_in[3*`DWIDTH-1:2*`DWIDTH];
-    assign a3_data_in = a_data_in[4*`DWIDTH-1:3*`DWIDTH];
+    logic [DWIDTH-1:0] a0_data_in;
+    logic [DWIDTH-1:0] a1_data_in;
+    logic [DWIDTH-1:0] a2_data_in;
+    logic [DWIDTH-1:0] a3_data_in;
+    assign a0_data_in = a_data_in[DWIDTH-1:0];
+    assign a1_data_in = a_data_in[2*DWIDTH-1:DWIDTH];
+    assign a2_data_in = a_data_in[3*DWIDTH-1:2*DWIDTH];
+    assign a3_data_in = a_data_in[4*DWIDTH-1:3*DWIDTH];
     
-    logic [`DWIDTH-1:0] b0_data_in;
-    logic [`DWIDTH-1:0] b1_data_in;
-    logic [`DWIDTH-1:0] b2_data_in;
-    logic [`DWIDTH-1:0] b3_data_in;
-    assign b0_data_in = b_data_in[`DWIDTH-1:0];
-    assign b1_data_in = b_data_in[2*`DWIDTH-1:`DWIDTH];
-    assign b2_data_in = b_data_in[3*`DWIDTH-1:2*`DWIDTH];
-    assign b3_data_in = b_data_in[4*`DWIDTH-1:3*`DWIDTH];
+    logic [DWIDTH-1:0] b0_data_in;
+    logic [DWIDTH-1:0] b1_data_in;
+    logic [DWIDTH-1:0] b2_data_in;
+    logic [DWIDTH-1:0] b3_data_in;
+    assign b0_data_in = b_data_in[DWIDTH-1:0];
+    assign b1_data_in = b_data_in[2*DWIDTH-1:DWIDTH];
+    assign b2_data_in = b_data_in[3*DWIDTH-1:2*DWIDTH];
+    assign b3_data_in = b_data_in[4*DWIDTH-1:3*DWIDTH];
     
     //If b_loc is 0, that means this matmul block is on the top-row of the
     //final large matmul. In that case, b will take inputs from mem.
@@ -201,22 +201,22 @@ module matmul_4x4_systolic(
     assign b3 = (a_loc==0) ? b3_data_delayed_3 : b3_data_in;
     
 
-    logic [`DWIDTH-1:0] matrixC00;
-    logic [`DWIDTH-1:0] matrixC01;
-    logic [`DWIDTH-1:0] matrixC02;
-    logic [`DWIDTH-1:0] matrixC03;
-    logic [`DWIDTH-1:0] matrixC10;
-    logic [`DWIDTH-1:0] matrixC11;
-    logic [`DWIDTH-1:0] matrixC12;
-    logic [`DWIDTH-1:0] matrixC13;
-    logic [`DWIDTH-1:0] matrixC20;
-    logic [`DWIDTH-1:0] matrixC21;
-    logic [`DWIDTH-1:0] matrixC22;
-    logic [`DWIDTH-1:0] matrixC23;
-    logic [`DWIDTH-1:0] matrixC30;
-    logic [`DWIDTH-1:0] matrixC31;
-    logic [`DWIDTH-1:0] matrixC32;
-    logic [`DWIDTH-1:0] matrixC33;
+    logic [DWIDTH-1:0] matrixC00;
+    logic [DWIDTH-1:0] matrixC01;
+    logic [DWIDTH-1:0] matrixC02;
+    logic [DWIDTH-1:0] matrixC03;
+    logic [DWIDTH-1:0] matrixC10;
+    logic [DWIDTH-1:0] matrixC11;
+    logic [DWIDTH-1:0] matrixC12;
+    logic [DWIDTH-1:0] matrixC13;
+    logic [DWIDTH-1:0] matrixC20;
+    logic [DWIDTH-1:0] matrixC21;
+    logic [DWIDTH-1:0] matrixC22;
+    logic [DWIDTH-1:0] matrixC23;
+    logic [DWIDTH-1:0] matrixC30;
+    logic [DWIDTH-1:0] matrixC31;
+    logic [DWIDTH-1:0] matrixC32;
+    logic [DWIDTH-1:0] matrixC33;
     
 
 //////////////////////////////////////////////////////////////////////////
@@ -270,52 +270,52 @@ module output_logic(
     input reset;
     input start_mat_mul;
     input done_mat_mul;
-    input [`AWIDTH-1:0] address_mat_c;
-    input [`ADDR_STRIDE_WIDTH-1:0] address_stride_c;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_in;
-    output [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out;
-    output [`AWIDTH-1:0] c_addr;
+    input [AWIDTH-1:0] address_mat_c;
+    input [ADDR_STRIDE_WIDTH-1:0] address_stride_c;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] c_data_in;
+    output [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out;
+    output [AWIDTH-1:0] c_addr;
     output c_data_available;
     input [7:0] clk_cnt;
     output row_latch_en;
     input [7:0] final_mat_mul_size;
-    input [`DWIDTH-1:0] matrixC00;
-    input [`DWIDTH-1:0] matrixC01;
-    input [`DWIDTH-1:0] matrixC02;
-    input [`DWIDTH-1:0] matrixC03;
-    input [`DWIDTH-1:0] matrixC10;
-    input [`DWIDTH-1:0] matrixC11;
-    input [`DWIDTH-1:0] matrixC12;
-    input [`DWIDTH-1:0] matrixC13;
-    input [`DWIDTH-1:0] matrixC20;
-    input [`DWIDTH-1:0] matrixC21;
-    input [`DWIDTH-1:0] matrixC22;
-    input [`DWIDTH-1:0] matrixC23;
-    input [`DWIDTH-1:0] matrixC30;
-    input [`DWIDTH-1:0] matrixC31;
-    input [`DWIDTH-1:0] matrixC32;
-    input [`DWIDTH-1:0] matrixC33;
+    input [DWIDTH-1:0] matrixC00;
+    input [DWIDTH-1:0] matrixC01;
+    input [DWIDTH-1:0] matrixC02;
+    input [DWIDTH-1:0] matrixC03;
+    input [DWIDTH-1:0] matrixC10;
+    input [DWIDTH-1:0] matrixC11;
+    input [DWIDTH-1:0] matrixC12;
+    input [DWIDTH-1:0] matrixC13;
+    input [DWIDTH-1:0] matrixC20;
+    input [DWIDTH-1:0] matrixC21;
+    input [DWIDTH-1:0] matrixC22;
+    input [DWIDTH-1:0] matrixC23;
+    input [DWIDTH-1:0] matrixC30;
+    input [DWIDTH-1:0] matrixC31;
+    input [DWIDTH-1:0] matrixC32;
+    input [DWIDTH-1:0] matrixC33;
     
     logic row_latch_en;
 
 //////////////////////////////////////////////////////////////////////////
 // Logic to capture matrix C data from the PEs and shift it out
 //////////////////////////////////////////////////////////////////////////
-    assign row_latch_en = ((clk_cnt == ((final_mat_mul_size<<2) - final_mat_mul_size -1 +`NUM_CYCLES_IN_MAC)));
+    assign row_latch_en = ((clk_cnt == ((final_mat_mul_size<<2) - final_mat_mul_size -1 + NUM_CYCLES_IN_MAC)));
     
     logic c_data_available;
-    logic [`AWIDTH-1:0] c_addr;
+    logic [AWIDTH-1:0] c_addr;
     logic start_capturing_c_data;
     integer counter;
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out;
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_1;
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_2;
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_3;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out_1;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out_2;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out_3;
     
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col0;
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col1;
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col2;
-    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col3;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] col0;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] col1;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] col2;
+    logic [MAT_MUL_SIZE*DWIDTH-1:0] col3;
     assign col0 = {matrixC30, matrixC20, matrixC10, matrixC00};
     assign col1 = {matrixC31, matrixC21, matrixC11, matrixC01};
     assign col2 = {matrixC32, matrixC22, matrixC12, matrixC02};
@@ -361,7 +361,7 @@ module output_logic(
             c_data_out_2 <= 0;
             c_data_out_3 <= 0;
         end 
-        else if (counter >= `MAT_MUL_SIZE) 
+        else if (counter >= MAT_MUL_SIZE) 
         begin
             c_addr <= c_addr + address_stride_c;
             c_data_out <= c_data_out_1;
@@ -418,52 +418,52 @@ module systolic_data_setup(
     input clk;
     input reset;
     input start_mat_mul;
-    output [`AWIDTH-1:0] a_addr;
-    output [`AWIDTH-1:0] b_addr;
-    input [`AWIDTH-1:0] address_mat_a;
-    input [`AWIDTH-1:0] address_mat_b;
-    input [`ADDR_STRIDE_WIDTH-1:0] address_stride_a;
-    input [`ADDR_STRIDE_WIDTH-1:0] address_stride_b;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] a_data;
-    input [`MAT_MUL_SIZE*`DWIDTH-1:0] b_data;
+    output [AWIDTH-1:0] a_addr;
+    output [AWIDTH-1:0] b_addr;
+    input [AWIDTH-1:0] address_mat_a;
+    input [AWIDTH-1:0] address_mat_b;
+    input [ADDR_STRIDE_WIDTH-1:0] address_stride_a;
+    input [ADDR_STRIDE_WIDTH-1:0] address_stride_b;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] a_data;
+    input [MAT_MUL_SIZE*DWIDTH-1:0] b_data;
     input [7:0] clk_cnt;
-    output [`DWIDTH-1:0] a0_data;
-    output [`DWIDTH-1:0] a1_data_delayed_1;
-    output [`DWIDTH-1:0] a2_data_delayed_2;
-    output [`DWIDTH-1:0] a3_data_delayed_3;
-    output [`DWIDTH-1:0] b0_data;
-    output [`DWIDTH-1:0] b1_data_delayed_1;
-    output [`DWIDTH-1:0] b2_data_delayed_2;
-    output [`DWIDTH-1:0] b3_data_delayed_3;
-    input [`MASK_WIDTH-1:0] validity_mask_a_rows;
-    input [`MASK_WIDTH-1:0] validity_mask_a_cols_b_rows;
-    input [`MASK_WIDTH-1:0] validity_mask_b_cols;
+    output [DWIDTH-1:0] a0_data;
+    output [DWIDTH-1:0] a1_data_delayed_1;
+    output [DWIDTH-1:0] a2_data_delayed_2;
+    output [DWIDTH-1:0] a3_data_delayed_3;
+    output [DWIDTH-1:0] b0_data;
+    output [DWIDTH-1:0] b1_data_delayed_1;
+    output [DWIDTH-1:0] b2_data_delayed_2;
+    output [DWIDTH-1:0] b3_data_delayed_3;
+    input [MASK_WIDTH-1:0] validity_mask_a_rows;
+    input [MASK_WIDTH-1:0] validity_mask_a_cols_b_rows;
+    input [MASK_WIDTH-1:0] validity_mask_b_cols;
     input [7:0] final_mat_mul_size;
     input [7:0] a_loc;
     input [7:0] b_loc;
     
-    logic [`DWIDTH-1:0] a0_data;
-    logic [`DWIDTH-1:0] a1_data;
-    logic [`DWIDTH-1:0] a2_data;
-    logic [`DWIDTH-1:0] a3_data;
-    logic [`DWIDTH-1:0] b0_data;
-    logic [`DWIDTH-1:0] b1_data;
-    logic [`DWIDTH-1:0] b2_data;
-    logic [`DWIDTH-1:0] b3_data;
+    logic [DWIDTH-1:0] a0_data;
+    logic [DWIDTH-1:0] a1_data;
+    logic [DWIDTH-1:0] a2_data;
+    logic [DWIDTH-1:0] a3_data;
+    logic [DWIDTH-1:0] b0_data;
+    logic [DWIDTH-1:0] b1_data;
+    logic [DWIDTH-1:0] b2_data;
+    logic [DWIDTH-1:0] b3_data;
 
 //////////////////////////////////////////////////////////////////////////
 // Logic to generate addresses to BRAM A
 //////////////////////////////////////////////////////////////////////////
-    logic [`AWIDTH-1:0] a_addr;
+    logic [AWIDTH-1:0] a_addr;
     logic a_mem_access; //flag that tells whether the matmul is trying to access memory or not
     
     always_ff @(posedge clk) 
     begin
-        if ((reset || ~start_mat_mul) || (clk_cnt >= (a_loc<<`LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) begin
+        if ((reset || ~start_mat_mul) || (clk_cnt >= (a_loc<<LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) begin
             a_addr <= address_mat_a-address_stride_a;
             a_mem_access <= 0;
         end
-        else if ((clk_cnt >= (a_loc<<`LOG2_MAT_MUL_SIZE)) && (clk_cnt < (a_loc<<`LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) 
+        else if ((clk_cnt >= (a_loc<<LOG2_MAT_MUL_SIZE)) && (clk_cnt < (a_loc<<LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) 
         begin
             a_addr <= a_addr + address_stride_a;
             a_mem_access <= 1;
@@ -490,24 +490,24 @@ module systolic_data_setup(
         (validity_mask_a_cols_b_rows[1]==1'b0 && a_mem_access_counter==2) ||
         (validity_mask_a_cols_b_rows[2]==1'b0 && a_mem_access_counter==3) ||
         (validity_mask_a_cols_b_rows[3]==1'b0 && a_mem_access_counter==4)) ?
-        1'b0 : (a_mem_access_counter >= `MEM_ACCESS_LATENCY);
+        1'b0 : (a_mem_access_counter >= MEM_ACCESS_LATENCY);
     
 //////////////////////////////////////////////////////////////////////////
 // Logic to delay certain parts of the data received from BRAM A (systolic data setup)
 //////////////////////////////////////////////////////////////////////////
 //Slice data into chunks and qualify it with whether it is valid or not
-    assign a0_data = a_data[`DWIDTH-1:0] & {`DWIDTH{a_data_valid}} & {`DWIDTH{validity_mask_a_rows[0]}};
-    assign a1_data = a_data[2*`DWIDTH-1:`DWIDTH] & {`DWIDTH{a_data_valid}} & {`DWIDTH{validity_mask_a_rows[1]}};
-    assign a2_data = a_data[3*`DWIDTH-1:2*`DWIDTH] & {`DWIDTH{a_data_valid}} & {`DWIDTH{validity_mask_a_rows[2]}};
-    assign a3_data = a_data[4*`DWIDTH-1:3*`DWIDTH] & {`DWIDTH{a_data_valid}} & {`DWIDTH{validity_mask_a_rows[3]}};
+    assign a0_data = a_data[DWIDTH-1:0] & {DWIDTH{a_data_valid}} & {DWIDTH{validity_mask_a_rows[0]}};
+    assign a1_data = a_data[2*DWIDTH-1:DWIDTH] & {DWIDTH{a_data_valid}} & {DWIDTH{validity_mask_a_rows[1]}};
+    assign a2_data = a_data[3*DWIDTH-1:2*DWIDTH] & {DWIDTH{a_data_valid}} & {DWIDTH{validity_mask_a_rows[2]}};
+    assign a3_data = a_data[4*DWIDTH-1:3*DWIDTH] & {DWIDTH{a_data_valid}} & {DWIDTH{validity_mask_a_rows[3]}};
 
 //For larger matmuls, more such delaying flops will be needed
-    logic [`DWIDTH-1:0] a1_data_delayed_1;
-    logic [`DWIDTH-1:0] a2_data_delayed_1;
-    logic [`DWIDTH-1:0] a2_data_delayed_2;
-    logic [`DWIDTH-1:0] a3_data_delayed_1;
-    logic [`DWIDTH-1:0] a3_data_delayed_2;
-    logic [`DWIDTH-1:0] a3_data_delayed_3;
+    logic [DWIDTH-1:0] a1_data_delayed_1;
+    logic [DWIDTH-1:0] a2_data_delayed_1;
+    logic [DWIDTH-1:0] a2_data_delayed_2;
+    logic [DWIDTH-1:0] a3_data_delayed_1;
+    logic [DWIDTH-1:0] a3_data_delayed_2;
+    logic [DWIDTH-1:0] a3_data_delayed_3;
     
     always_ff @(posedge clk) 
     begin
@@ -534,17 +534,17 @@ module systolic_data_setup(
 //////////////////////////////////////////////////////////////////////////
 // Logic to generate addresses to BRAM B
 //////////////////////////////////////////////////////////////////////////
-    logic [`AWIDTH-1:0] b_addr;
+    logic [AWIDTH-1:0] b_addr;
     logic b_mem_access; //flag that tells whether the matmul is trying to access memory or not
 
     always_ff @(posedge clk) 
     begin
-        if ((reset || ~start_mat_mul) || (clk_cnt >= (b_loc<<`LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) 
+        if ((reset || ~start_mat_mul) || (clk_cnt >= (b_loc<<LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) 
         begin
             b_addr <= address_mat_b - address_stride_b;
             b_mem_access <= 0;
         end
-        else if ((clk_cnt >= (b_loc<<`LOG2_MAT_MUL_SIZE)) && (clk_cnt < (b_loc<<`LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) 
+        else if ((clk_cnt >= (b_loc<<LOG2_MAT_MUL_SIZE)) && (clk_cnt < (b_loc<<LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) 
         begin
             b_addr <= b_addr + address_stride_b;
             b_mem_access <= 1;
@@ -571,25 +571,25 @@ module systolic_data_setup(
         (validity_mask_a_cols_b_rows[1]==1'b0 && b_mem_access_counter==2) ||
         (validity_mask_a_cols_b_rows[2]==1'b0 && b_mem_access_counter==3) ||
         (validity_mask_a_cols_b_rows[3]==1'b0 && b_mem_access_counter==4)) ?
-        1'b0 : (b_mem_access_counter >= `MEM_ACCESS_LATENCY);
+        1'b0 : (b_mem_access_counter >= MEM_ACCESS_LATENCY);
 
 
 //////////////////////////////////////////////////////////////////////////
 // Logic to delay certain parts of the data received from BRAM B (systolic data setup)
 //////////////////////////////////////////////////////////////////////////
 //Slice data into chunks and qualify it with whether it is valid or not
-    assign b0_data = b_data[`DWIDTH-1:0] & {`DWIDTH{b_data_valid}} & {`DWIDTH{validity_mask_b_cols[0]}};
-    assign b1_data = b_data[2*`DWIDTH-1:`DWIDTH] & {`DWIDTH{b_data_valid}} & {`DWIDTH{validity_mask_b_cols[1]}};
-    assign b2_data = b_data[3*`DWIDTH-1:2*`DWIDTH] & {`DWIDTH{b_data_valid}} & {`DWIDTH{validity_mask_b_cols[2]}};
-    assign b3_data = b_data[4*`DWIDTH-1:3*`DWIDTH] & {`DWIDTH{b_data_valid}} & {`DWIDTH{validity_mask_b_cols[3]}};
+    assign b0_data = b_data[DWIDTH-1:0] & {DWIDTH{b_data_valid}} & {DWIDTH{validity_mask_b_cols[0]}};
+    assign b1_data = b_data[2*DWIDTH-1:DWIDTH] & {DWIDTH{b_data_valid}} & {DWIDTH{validity_mask_b_cols[1]}};
+    assign b2_data = b_data[3*DWIDTH-1:2*DWIDTH] & {DWIDTH{b_data_valid}} & {DWIDTH{validity_mask_b_cols[2]}};
+    assign b3_data = b_data[4*DWIDTH-1:3*DWIDTH] & {DWIDTH{b_data_valid}} & {DWIDTH{validity_mask_b_cols[3]}};
 
 //For larger matmuls, more such delaying flops will be needed
-    logic [`DWIDTH-1:0] b1_data_delayed_1;
-    logic [`DWIDTH-1:0] b2_data_delayed_1;
-    logic [`DWIDTH-1:0] b2_data_delayed_2;
-    logic [`DWIDTH-1:0] b3_data_delayed_1;
-    logic [`DWIDTH-1:0] b3_data_delayed_2;
-    logic [`DWIDTH-1:0] b3_data_delayed_3;
+    logic [DWIDTH-1:0] b1_data_delayed_1;
+    logic [DWIDTH-1:0] b2_data_delayed_1;
+    logic [DWIDTH-1:0] b2_data_delayed_2;
+    logic [DWIDTH-1:0] b3_data_delayed_1;
+    logic [DWIDTH-1:0] b3_data_delayed_2;
+    logic [DWIDTH-1:0] b3_data_delayed_3;
     
     always_ff @(posedge clk) 
     begin
@@ -651,42 +651,42 @@ module systolic_pe_matrix(
     input reset;
     input pe_reset;
     input start_mat_mul;
-    input [`DWIDTH-1:0] a0;
-    input [`DWIDTH-1:0] a1;
-    input [`DWIDTH-1:0] a2;
-    input [`DWIDTH-1:0] a3;
-    input [`DWIDTH-1:0] b0;
-    input [`DWIDTH-1:0] b1;
-    input [`DWIDTH-1:0] b2;
-    input [`DWIDTH-1:0] b3;
-    output [`DWIDTH-1:0] matrixC00;
-    output [`DWIDTH-1:0] matrixC01;
-    output [`DWIDTH-1:0] matrixC02;
-    output [`DWIDTH-1:0] matrixC03;
-    output [`DWIDTH-1:0] matrixC10;
-    output [`DWIDTH-1:0] matrixC11;
-    output [`DWIDTH-1:0] matrixC12;
-    output [`DWIDTH-1:0] matrixC13;
-    output [`DWIDTH-1:0] matrixC20;
-    output [`DWIDTH-1:0] matrixC21;
-    output [`DWIDTH-1:0] matrixC22;
-    output [`DWIDTH-1:0] matrixC23;
-    output [`DWIDTH-1:0] matrixC30;
-    output [`DWIDTH-1:0] matrixC31;
-    output [`DWIDTH-1:0] matrixC32;
-    output [`DWIDTH-1:0] matrixC33;
-    output [`MAT_MUL_SIZE*`DWIDTH-1:0] a_data_out;
-    output [`MAT_MUL_SIZE*`DWIDTH-1:0] b_data_out;
+    input [DWIDTH-1:0] a0;
+    input [DWIDTH-1:0] a1;
+    input [DWIDTH-1:0] a2;
+    input [DWIDTH-1:0] a3;
+    input [DWIDTH-1:0] b0;
+    input [DWIDTH-1:0] b1;
+    input [DWIDTH-1:0] b2;
+    input [DWIDTH-1:0] b3;
+    output [DWIDTH-1:0] matrixC00;
+    output [DWIDTH-1:0] matrixC01;
+    output [DWIDTH-1:0] matrixC02;
+    output [DWIDTH-1:0] matrixC03;
+    output [DWIDTH-1:0] matrixC10;
+    output [DWIDTH-1:0] matrixC11;
+    output [DWIDTH-1:0] matrixC12;
+    output [DWIDTH-1:0] matrixC13;
+    output [DWIDTH-1:0] matrixC20;
+    output [DWIDTH-1:0] matrixC21;
+    output [DWIDTH-1:0] matrixC22;
+    output [DWIDTH-1:0] matrixC23;
+    output [DWIDTH-1:0] matrixC30;
+    output [DWIDTH-1:0] matrixC31;
+    output [DWIDTH-1:0] matrixC32;
+    output [DWIDTH-1:0] matrixC33;
+    output [MAT_MUL_SIZE*DWIDTH-1:0] a_data_out;
+    output [MAT_MUL_SIZE*DWIDTH-1:0] b_data_out;
 
-    logic [`DWIDTH-1:0] a00to01, a01to02, a02to03, a03to04;
-    logic [`DWIDTH-1:0] a10to11, a11to12, a12to13, a13to14;
-    logic [`DWIDTH-1:0] a20to21, a21to22, a22to23, a23to24;
-    logic [`DWIDTH-1:0] a30to31, a31to32, a32to33, a33to34;
+    logic [DWIDTH-1:0] a00to01, a01to02, a02to03, a03to04;
+    logic [DWIDTH-1:0] a10to11, a11to12, a12to13, a13to14;
+    logic [DWIDTH-1:0] a20to21, a21to22, a22to23, a23to24;
+    logic [DWIDTH-1:0] a30to31, a31to32, a32to33, a33to34;
     
-    logic [`DWIDTH-1:0] b00to10, b10to20, b20to30, b30to40; 
-    logic [`DWIDTH-1:0] b01to11, b11to21, b21to31, b31to41;
-    logic [`DWIDTH-1:0] b02to12, b12to22, b22to32, b32to42;
-    logic [`DWIDTH-1:0] b03to13, b13to23, b23to33, b33to43;
+    logic [DWIDTH-1:0] b00to10, b10to20, b20to30, b30to40; 
+    logic [DWIDTH-1:0] b01to11, b11to21, b21to31, b31to41;
+    logic [DWIDTH-1:0] b02to12, b12to22, b22to32, b32to42;
+    logic [DWIDTH-1:0] b03to13, b13to23, b23to33, b33to43;
     
     logic effective_rst;
     assign effective_rst = reset | pe_reset;
@@ -743,16 +743,16 @@ module processing_element(
 
     input reset;
     input clk;
-    input  [`DWIDTH-1:0] in_a;
-    input  [`DWIDTH-1:0] in_b;
-    output [`DWIDTH-1:0] out_a;
-    output [`DWIDTH-1:0] out_b;
-    output [`DWIDTH-1:0] out_c;  //reduced precision
+    input  [DWIDTH-1:0] in_a;
+    input  [DWIDTH-1:0] in_b;
+    output [DWIDTH-1:0] out_a;
+    output [DWIDTH-1:0] out_b;
+    output [DWIDTH-1:0] out_c;  //reduced precision
 
-    logic [`DWIDTH-1:0] out_a;
-    logic [`DWIDTH-1:0] out_b;
-    logic [`DWIDTH-1:0] out_c;
-    logic [`DWIDTH-1:0] out_mac;
+    logic [DWIDTH-1:0] out_a;
+    logic [DWIDTH-1:0] out_b;
+    logic [DWIDTH-1:0] out_c;
+    logic [DWIDTH-1:0] out_mac;
 
     assign out_c = out_mac;
     
@@ -778,14 +778,14 @@ endmodule
 // Multiply-and-accumulate (MAC) block
 //////////////////////////////////////////////////////////////////////////
 module seq_mac(a, b, out, reset, clk);
-    input [`DWIDTH-1:0] a;
-    input [`DWIDTH-1:0] b;
+    input [DWIDTH-1:0] a;
+    input [DWIDTH-1:0] b;
     input reset;
     input clk;
-    output [`DWIDTH-1:0] out;
+    output [DWIDTH-1:0] out;
 
-    logic [`DWIDTH-1:0] out;
-    logic [`DWIDTH-1:0] a_flop, b_flop, mult;
+    logic [DWIDTH-1:0] out;
+    logic [DWIDTH-1:0] a_flop, b_flop, mult;
 
     always_ff @(posedge clk)
     begin
