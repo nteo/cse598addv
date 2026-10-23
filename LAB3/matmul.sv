@@ -1,19 +1,19 @@
 `timescale 1ns / 1ps
-`define DWIDTH 8
-`define AWIDTH 10
-`define MEM_SIZE 1024
+parameter DWIDTH = 8;
+parameter AWIDTH = 10;
+parameter MEM_SIZE = 1024;
 
-`define MAT_MUL_SIZE 4
-`define MASK_WIDTH 4
-`define LOG2_MAT_MUL_SIZE 2
+parameter MAT_MUL_SIZE = 4;
+parameter MASK_WIDTH = 4;
+parameter LOG2_MAT_MUL_SIZE = 2;
 
-`define BB_MAT_MUL_SIZE `MAT_MUL_SIZE
-`define NUM_CYCLES_IN_MAC 3
-`define MEM_ACCESS_LATENCY 1
-`define REG_DATAWIDTH 32
-`define REG_ADDRWIDTH 8
-`define ADDR_STRIDE_WIDTH 8
-`define MAX_BITS_POOL 3
+parameter BB_MAT_MUL_SIZE = MAT_MUL_SIZE;
+parameter NUM_CYCLES_IN_MAC = 3;
+parameter MEM_ACCESS_LATENCY = 1;
+parameter REG_DATAWIDTH = 32;
+parameter REG_ADDRWIDTH = 8;
+parameter ADDR_STRIDE_WIDTH = 8;
+parameter MAX_BITS_POOL = 3;
 
 module matmul_4x4_systolic(
     clk,
@@ -84,24 +84,24 @@ module matmul_4x4_systolic(
 // Logic for clock counting and when to assert done
 //////////////////////////////////////////////////////////////////////////
 
-    reg done_mat_mul;
+    logic done_mat_mul;
     //This is 7 bits because the expectation is that clock count will be pretty
     //small. For large matmuls, this will need to increased to have more bits.
     //In general, a systolic multiplier takes f(N)+P cycles, where N is the size 
     //of the matmul and P is the number of pipleine stages in the MAC block.
     //f(N) is a function describing the number of cycles taken to perform matmul
     //with a systolic array strcture.
-    reg [7:0] clk_cnt;
+    logic [7:0] clk_cnt;
     
     //Finding out number of cycles to assert matmul done.
-    wire [7:0] clk_cnt_for_done;
-    wire [7:0] cycles_for_matmul; 
+    logic [7:0] clk_cnt_for_done;
+    logic [7:0] cycles_for_matmul; 
         
     assign cycles_for_matmul = 8'd14;
     assign clk_cnt_for_done = (cycles_for_matmul + `NUM_CYCLES_IN_MAC) ;  
 
 
-    always @(posedge clk) 
+    always_ff @(posedge clk) 
     begin
         if (reset || ~start_mat_mul) 
         begin
@@ -123,85 +123,58 @@ module matmul_4x4_systolic(
     end
 
 
-    wire [`DWIDTH-1:0] a0_data;
-    wire [`DWIDTH-1:0] a1_data;
-    wire [`DWIDTH-1:0] a2_data;
-    wire [`DWIDTH-1:0] a3_data;
-    wire [`DWIDTH-1:0] b0_data;
-    wire [`DWIDTH-1:0] b1_data;
-    wire [`DWIDTH-1:0] b2_data;
-    wire [`DWIDTH-1:0] b3_data;
-    wire [`DWIDTH-1:0] a1_data_delayed_1;
-    wire [`DWIDTH-1:0] a2_data_delayed_1;
-    wire [`DWIDTH-1:0] a2_data_delayed_2;
-    wire [`DWIDTH-1:0] a3_data_delayed_1;
-    wire [`DWIDTH-1:0] a3_data_delayed_2;
-    wire [`DWIDTH-1:0] a3_data_delayed_3;
-    wire [`DWIDTH-1:0] b1_data_delayed_1;
-    wire [`DWIDTH-1:0] b2_data_delayed_1;
-    wire [`DWIDTH-1:0] b2_data_delayed_2;
-    wire [`DWIDTH-1:0] b3_data_delayed_1;
-    wire [`DWIDTH-1:0] b3_data_delayed_2;
-    wire [`DWIDTH-1:0] b3_data_delayed_3;
+    logic [`DWIDTH-1:0] a0_data;
+    logic [`DWIDTH-1:0] a1_data;
+    logic [`DWIDTH-1:0] a2_data;
+    logic [`DWIDTH-1:0] a3_data;
+    logic [`DWIDTH-1:0] b0_data;
+    logic [`DWIDTH-1:0] b1_data;
+    logic [`DWIDTH-1:0] b2_data;
+    logic [`DWIDTH-1:0] b3_data;
+    logic [`DWIDTH-1:0] a1_data_delayed_1;
+    logic [`DWIDTH-1:0] a2_data_delayed_1;
+    logic [`DWIDTH-1:0] a2_data_delayed_2;
+    logic [`DWIDTH-1:0] a3_data_delayed_1;
+    logic [`DWIDTH-1:0] a3_data_delayed_2;
+    logic [`DWIDTH-1:0] a3_data_delayed_3;
+    logic [`DWIDTH-1:0] b1_data_delayed_1;
+    logic [`DWIDTH-1:0] b2_data_delayed_1;
+    logic [`DWIDTH-1:0] b2_data_delayed_2;
+    logic [`DWIDTH-1:0] b3_data_delayed_1;
+    logic [`DWIDTH-1:0] b3_data_delayed_2;
+    logic [`DWIDTH-1:0] b3_data_delayed_3;
     
 //////////////////////////////////////////////////////////////////////////
 // Instantiation of systolic data setup
 //////////////////////////////////////////////////////////////////////////
-    systolic_data_setup u_systolic_data_setup(
-        .clk(clk),
-        .reset(reset),
-        .start_mat_mul(start_mat_mul),
-        .a_addr(a_addr),
-        .b_addr(b_addr),
-        .address_mat_a(address_mat_a),
-        .address_mat_b(address_mat_b),
-        .address_stride_a(address_stride_a),
-        .address_stride_b(address_stride_b),
-        .a_data(a_data),
-        .b_data(b_data),
-        .clk_cnt(clk_cnt),
-        .a0_data(a0_data),
-        .a1_data_delayed_1(a1_data_delayed_1),
-        .a2_data_delayed_2(a2_data_delayed_2),
-        .a3_data_delayed_3(a3_data_delayed_3),
-        .b0_data(b0_data),
-        .b1_data_delayed_1(b1_data_delayed_1),
-        .b2_data_delayed_2(b2_data_delayed_2),
-        .b3_data_delayed_3(b3_data_delayed_3),
-        .validity_mask_a_rows(validity_mask_a_rows),
-        .validity_mask_a_cols_b_rows(validity_mask_a_cols_b_rows),
-        .validity_mask_b_cols(validity_mask_b_cols),
-        .final_mat_mul_size(final_mat_mul_size),
-        .a_loc(a_loc),
-        .b_loc(b_loc)
-        );
+    systolic_data_setup u_systolic_data_setup(.*);
 
 
 //////////////////////////////////////////////////////////////////////////
 // Logic to mux data_in coming from neighboring matmuls
 //////////////////////////////////////////////////////////////////////////
-    wire [`DWIDTH-1:0] a0;
-    wire [`DWIDTH-1:0] a1;
-    wire [`DWIDTH-1:0] a2;
-    wire [`DWIDTH-1:0] a3;
-    wire [`DWIDTH-1:0] b0;
-    wire [`DWIDTH-1:0] b1;
-    wire [`DWIDTH-1:0] b2;
-    wire [`DWIDTH-1:0] b3;
+    logic [`DWIDTH-1:0] a0;
+    logic [`DWIDTH-1:0] a1;
+    logic [`DWIDTH-1:0] a2;
+    logic [`DWIDTH-1:0] a3;
+    logic [`DWIDTH-1:0] b0;
+    logic [`DWIDTH-1:0] b1;
+    logic [`DWIDTH-1:0] b2;
+    logic [`DWIDTH-1:0] b3;
     
-    wire [`DWIDTH-1:0] a0_data_in;
-    wire [`DWIDTH-1:0] a1_data_in;
-    wire [`DWIDTH-1:0] a2_data_in;
-    wire [`DWIDTH-1:0] a3_data_in;
+    logic [`DWIDTH-1:0] a0_data_in;
+    logic [`DWIDTH-1:0] a1_data_in;
+    logic [`DWIDTH-1:0] a2_data_in;
+    logic [`DWIDTH-1:0] a3_data_in;
     assign a0_data_in = a_data_in[`DWIDTH-1:0];
     assign a1_data_in = a_data_in[2*`DWIDTH-1:`DWIDTH];
     assign a2_data_in = a_data_in[3*`DWIDTH-1:2*`DWIDTH];
     assign a3_data_in = a_data_in[4*`DWIDTH-1:3*`DWIDTH];
     
-    wire [`DWIDTH-1:0] b0_data_in;
-    wire [`DWIDTH-1:0] b1_data_in;
-    wire [`DWIDTH-1:0] b2_data_in;
-    wire [`DWIDTH-1:0] b3_data_in;
+    logic [`DWIDTH-1:0] b0_data_in;
+    logic [`DWIDTH-1:0] b1_data_in;
+    logic [`DWIDTH-1:0] b2_data_in;
+    logic [`DWIDTH-1:0] b3_data_in;
     assign b0_data_in = b_data_in[`DWIDTH-1:0];
     assign b1_data_in = b_data_in[2*`DWIDTH-1:`DWIDTH];
     assign b2_data_in = b_data_in[3*`DWIDTH-1:2*`DWIDTH];
@@ -228,94 +201,33 @@ module matmul_4x4_systolic(
     assign b3 = (a_loc==0) ? b3_data_delayed_3 : b3_data_in;
     
 
-    wire [`DWIDTH-1:0] matrixC00;
-    wire [`DWIDTH-1:0] matrixC01;
-    wire [`DWIDTH-1:0] matrixC02;
-    wire [`DWIDTH-1:0] matrixC03;
-    wire [`DWIDTH-1:0] matrixC10;
-    wire [`DWIDTH-1:0] matrixC11;
-    wire [`DWIDTH-1:0] matrixC12;
-    wire [`DWIDTH-1:0] matrixC13;
-    wire [`DWIDTH-1:0] matrixC20;
-    wire [`DWIDTH-1:0] matrixC21;
-    wire [`DWIDTH-1:0] matrixC22;
-    wire [`DWIDTH-1:0] matrixC23;
-    wire [`DWIDTH-1:0] matrixC30;
-    wire [`DWIDTH-1:0] matrixC31;
-    wire [`DWIDTH-1:0] matrixC32;
-    wire [`DWIDTH-1:0] matrixC33;
+    logic [`DWIDTH-1:0] matrixC00;
+    logic [`DWIDTH-1:0] matrixC01;
+    logic [`DWIDTH-1:0] matrixC02;
+    logic [`DWIDTH-1:0] matrixC03;
+    logic [`DWIDTH-1:0] matrixC10;
+    logic [`DWIDTH-1:0] matrixC11;
+    logic [`DWIDTH-1:0] matrixC12;
+    logic [`DWIDTH-1:0] matrixC13;
+    logic [`DWIDTH-1:0] matrixC20;
+    logic [`DWIDTH-1:0] matrixC21;
+    logic [`DWIDTH-1:0] matrixC22;
+    logic [`DWIDTH-1:0] matrixC23;
+    logic [`DWIDTH-1:0] matrixC30;
+    logic [`DWIDTH-1:0] matrixC31;
+    logic [`DWIDTH-1:0] matrixC32;
+    logic [`DWIDTH-1:0] matrixC33;
     
 
 //////////////////////////////////////////////////////////////////////////
 // Instantiation of the output logic
 //////////////////////////////////////////////////////////////////////////
-    output_logic u_output_logic(
-        .clk(clk),
-        .reset(reset),
-        .start_mat_mul(start_mat_mul),
-        .done_mat_mul(done_mat_mul),
-        .address_mat_c(address_mat_c),
-        .address_stride_c(address_stride_c),
-        .c_data_out(c_data_out),
-        .c_data_in(c_data_in),
-        .c_addr(c_addr),
-        .c_data_available(c_data_available),
-        .clk_cnt(clk_cnt),
-        .row_latch_en(row_latch_en),
-        .final_mat_mul_size(final_mat_mul_size),
-        .matrixC00(matrixC00),
-        .matrixC01(matrixC01),
-        .matrixC02(matrixC02),
-        .matrixC03(matrixC03),
-        .matrixC10(matrixC10),
-        .matrixC11(matrixC11),
-        .matrixC12(matrixC12),
-        .matrixC13(matrixC13),
-        .matrixC20(matrixC20),
-        .matrixC21(matrixC21),
-        .matrixC22(matrixC22),
-        .matrixC23(matrixC23),
-        .matrixC30(matrixC30),
-        .matrixC31(matrixC31),
-        .matrixC32(matrixC32),
-        .matrixC33(matrixC33)
-        );
+    output_logic u_output_logic(.*);
 
 //////////////////////////////////////////////////////////////////////////
 // Instantiations of the actual PEs
 //////////////////////////////////////////////////////////////////////////
-    systolic_pe_matrix u_systolic_pe_matrix(
-        .reset(reset),
-        .clk(clk),
-        .pe_reset(pe_reset),
-        .start_mat_mul(start_mat_mul),
-        .a0(a0), 
-        .a1(a1), 
-        .a2(a2), 
-        .a3(a3),
-        .b0(b0), 
-        .b1(b1), 
-        .b2(b2), 
-        .b3(b3),
-        .matrixC00(matrixC00),
-        .matrixC01(matrixC01),
-        .matrixC02(matrixC02),
-        .matrixC03(matrixC03),
-        .matrixC10(matrixC10),
-        .matrixC11(matrixC11),
-        .matrixC12(matrixC12),
-        .matrixC13(matrixC13),
-        .matrixC20(matrixC20),
-        .matrixC21(matrixC21),
-        .matrixC22(matrixC22),
-        .matrixC23(matrixC23),
-        .matrixC30(matrixC30),
-        .matrixC31(matrixC31),
-        .matrixC32(matrixC32),
-        .matrixC33(matrixC33),
-        .a_data_out(a_data_out),
-        .b_data_out(b_data_out)
-        );
+    systolic_pe_matrix u_systolic_pe_matrix(.*);
 
 endmodule
 
@@ -384,26 +296,26 @@ module output_logic(
     input [`DWIDTH-1:0] matrixC32;
     input [`DWIDTH-1:0] matrixC33;
     
-    wire row_latch_en;
+    logic row_latch_en;
 
 //////////////////////////////////////////////////////////////////////////
 // Logic to capture matrix C data from the PEs and shift it out
 //////////////////////////////////////////////////////////////////////////
     assign row_latch_en = ((clk_cnt == ((final_mat_mul_size<<2) - final_mat_mul_size -1 +`NUM_CYCLES_IN_MAC)));
     
-    reg c_data_available;
-    reg [`AWIDTH-1:0] c_addr;
-    reg start_capturing_c_data;
+    logic c_data_available;
+    logic [`AWIDTH-1:0] c_addr;
+    logic start_capturing_c_data;
     integer counter;
-    reg [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out;
-    reg [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_1;
-    reg [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_2;
-    reg [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_3;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_1;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_2;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] c_data_out_3;
     
-    wire [`MAT_MUL_SIZE*`DWIDTH-1:0] col0;
-    wire [`MAT_MUL_SIZE*`DWIDTH-1:0] col1;
-    wire [`MAT_MUL_SIZE*`DWIDTH-1:0] col2;
-    wire [`MAT_MUL_SIZE*`DWIDTH-1:0] col3;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col0;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col1;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col2;
+    logic [`MAT_MUL_SIZE*`DWIDTH-1:0] col3;
     assign col0 = {matrixC30, matrixC20, matrixC10, matrixC00};
     assign col1 = {matrixC31, matrixC21, matrixC11, matrixC01};
     assign col2 = {matrixC32, matrixC22, matrixC12, matrixC02};
@@ -411,11 +323,11 @@ module output_logic(
 
 //If save_output_to_accum is asserted, that means we are not intending to shift
 //out the outputs, because the outputs are still partial sums. 
-    wire condition_to_start_shifting_output;
+    logic condition_to_start_shifting_output;
     assign condition_to_start_shifting_output = row_latch_en ;  
 
 //For larger matmuls, this logic will have more entries in the case statement
-    always @(posedge clk) 
+    always_ff @(posedge clk) 
     begin
         if (reset | ~start_mat_mul) 
         begin
@@ -530,22 +442,22 @@ module systolic_data_setup(
     input [7:0] a_loc;
     input [7:0] b_loc;
     
-    wire [`DWIDTH-1:0] a0_data;
-    wire [`DWIDTH-1:0] a1_data;
-    wire [`DWIDTH-1:0] a2_data;
-    wire [`DWIDTH-1:0] a3_data;
-    wire [`DWIDTH-1:0] b0_data;
-    wire [`DWIDTH-1:0] b1_data;
-    wire [`DWIDTH-1:0] b2_data;
-    wire [`DWIDTH-1:0] b3_data;
+    logic [`DWIDTH-1:0] a0_data;
+    logic [`DWIDTH-1:0] a1_data;
+    logic [`DWIDTH-1:0] a2_data;
+    logic [`DWIDTH-1:0] a3_data;
+    logic [`DWIDTH-1:0] b0_data;
+    logic [`DWIDTH-1:0] b1_data;
+    logic [`DWIDTH-1:0] b2_data;
+    logic [`DWIDTH-1:0] b3_data;
 
 //////////////////////////////////////////////////////////////////////////
 // Logic to generate addresses to BRAM A
 //////////////////////////////////////////////////////////////////////////
-    reg [`AWIDTH-1:0] a_addr;
-    reg a_mem_access; //flag that tells whether the matmul is trying to access memory or not
+    logic [`AWIDTH-1:0] a_addr;
+    logic a_mem_access; //flag that tells whether the matmul is trying to access memory or not
     
-    always @(posedge clk) 
+    always_ff @(posedge clk) 
     begin
         if ((reset || ~start_mat_mul) || (clk_cnt >= (a_loc<<`LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) begin
             a_addr <= address_mat_a-address_stride_a;
@@ -561,8 +473,8 @@ module systolic_data_setup(
 //////////////////////////////////////////////////////////////////////////
 // Logic to generate valid signals for data coming from BRAM A
 //////////////////////////////////////////////////////////////////////////
-    reg [7:0] a_mem_access_counter;
-    always @(posedge clk) 
+    logic [7:0] a_mem_access_counter;
+    always_ff @(posedge clk) 
     begin
         if (reset || ~start_mat_mul) 
             a_mem_access_counter <= 0;
@@ -572,7 +484,7 @@ module systolic_data_setup(
             a_mem_access_counter <= 0;
     end
 
-    wire a_data_valid; //flag that tells whether the data from memory is valid
+    logic a_data_valid; //flag that tells whether the data from memory is valid
     assign a_data_valid = 
         ((validity_mask_a_cols_b_rows[0]==1'b0 && a_mem_access_counter==1) ||
         (validity_mask_a_cols_b_rows[1]==1'b0 && a_mem_access_counter==2) ||
@@ -590,14 +502,14 @@ module systolic_data_setup(
     assign a3_data = a_data[4*`DWIDTH-1:3*`DWIDTH] & {`DWIDTH{a_data_valid}} & {`DWIDTH{validity_mask_a_rows[3]}};
 
 //For larger matmuls, more such delaying flops will be needed
-    reg [`DWIDTH-1:0] a1_data_delayed_1;
-    reg [`DWIDTH-1:0] a2_data_delayed_1;
-    reg [`DWIDTH-1:0] a2_data_delayed_2;
-    reg [`DWIDTH-1:0] a3_data_delayed_1;
-    reg [`DWIDTH-1:0] a3_data_delayed_2;
-    reg [`DWIDTH-1:0] a3_data_delayed_3;
+    logic [`DWIDTH-1:0] a1_data_delayed_1;
+    logic [`DWIDTH-1:0] a2_data_delayed_1;
+    logic [`DWIDTH-1:0] a2_data_delayed_2;
+    logic [`DWIDTH-1:0] a3_data_delayed_1;
+    logic [`DWIDTH-1:0] a3_data_delayed_2;
+    logic [`DWIDTH-1:0] a3_data_delayed_3;
     
-    always @(posedge clk) 
+    always_ff @(posedge clk) 
     begin
         if (reset || ~start_mat_mul || clk_cnt==0) 
         begin
@@ -622,10 +534,10 @@ module systolic_data_setup(
 //////////////////////////////////////////////////////////////////////////
 // Logic to generate addresses to BRAM B
 //////////////////////////////////////////////////////////////////////////
-    reg [`AWIDTH-1:0] b_addr;
-    reg b_mem_access; //flag that tells whether the matmul is trying to access memory or not
+    logic [`AWIDTH-1:0] b_addr;
+    logic b_mem_access; //flag that tells whether the matmul is trying to access memory or not
 
-    always @(posedge clk) 
+    always_ff @(posedge clk) 
     begin
         if ((reset || ~start_mat_mul) || (clk_cnt >= (b_loc<<`LOG2_MAT_MUL_SIZE)+final_mat_mul_size)) 
         begin
@@ -642,8 +554,8 @@ module systolic_data_setup(
 //////////////////////////////////////////////////////////////////////////
 // Logic to generate valid signals for data coming from BRAM B
 //////////////////////////////////////////////////////////////////////////
-    reg [7:0] b_mem_access_counter;
-    always @(posedge clk) 
+    logic [7:0] b_mem_access_counter;
+    always_ff @(posedge clk) 
     begin
         if (reset || ~start_mat_mul) 
             b_mem_access_counter <= 0;
@@ -653,7 +565,7 @@ module systolic_data_setup(
             b_mem_access_counter <= 0;
     end
 
-    wire b_data_valid; //flag that tells whether the data from memory is valid
+    logic b_data_valid; //flag that tells whether the data from memory is valid
     assign b_data_valid = 
         ((validity_mask_a_cols_b_rows[0]==1'b0 && b_mem_access_counter==1) ||
         (validity_mask_a_cols_b_rows[1]==1'b0 && b_mem_access_counter==2) ||
@@ -672,14 +584,14 @@ module systolic_data_setup(
     assign b3_data = b_data[4*`DWIDTH-1:3*`DWIDTH] & {`DWIDTH{b_data_valid}} & {`DWIDTH{validity_mask_b_cols[3]}};
 
 //For larger matmuls, more such delaying flops will be needed
-    reg [`DWIDTH-1:0] b1_data_delayed_1;
-    reg [`DWIDTH-1:0] b2_data_delayed_1;
-    reg [`DWIDTH-1:0] b2_data_delayed_2;
-    reg [`DWIDTH-1:0] b3_data_delayed_1;
-    reg [`DWIDTH-1:0] b3_data_delayed_2;
-    reg [`DWIDTH-1:0] b3_data_delayed_3;
+    logic [`DWIDTH-1:0] b1_data_delayed_1;
+    logic [`DWIDTH-1:0] b2_data_delayed_1;
+    logic [`DWIDTH-1:0] b2_data_delayed_2;
+    logic [`DWIDTH-1:0] b3_data_delayed_1;
+    logic [`DWIDTH-1:0] b3_data_delayed_2;
+    logic [`DWIDTH-1:0] b3_data_delayed_3;
     
-    always @(posedge clk) 
+    always_ff @(posedge clk) 
     begin
         if (reset || ~start_mat_mul || clk_cnt==0) 
         begin
@@ -766,17 +678,17 @@ module systolic_pe_matrix(
     output [`MAT_MUL_SIZE*`DWIDTH-1:0] a_data_out;
     output [`MAT_MUL_SIZE*`DWIDTH-1:0] b_data_out;
 
-    wire [`DWIDTH-1:0] a00to01, a01to02, a02to03, a03to04;
-    wire [`DWIDTH-1:0] a10to11, a11to12, a12to13, a13to14;
-    wire [`DWIDTH-1:0] a20to21, a21to22, a22to23, a23to24;
-    wire [`DWIDTH-1:0] a30to31, a31to32, a32to33, a33to34;
+    logic [`DWIDTH-1:0] a00to01, a01to02, a02to03, a03to04;
+    logic [`DWIDTH-1:0] a10to11, a11to12, a12to13, a13to14;
+    logic [`DWIDTH-1:0] a20to21, a21to22, a22to23, a23to24;
+    logic [`DWIDTH-1:0] a30to31, a31to32, a32to33, a33to34;
     
-    wire [`DWIDTH-1:0] b00to10, b10to20, b20to30, b30to40; 
-    wire [`DWIDTH-1:0] b01to11, b11to21, b21to31, b31to41;
-    wire [`DWIDTH-1:0] b02to12, b12to22, b22to32, b32to42;
-    wire [`DWIDTH-1:0] b03to13, b13to23, b23to33, b33to43;
+    logic [`DWIDTH-1:0] b00to10, b10to20, b20to30, b30to40; 
+    logic [`DWIDTH-1:0] b01to11, b11to21, b21to31, b31to41;
+    logic [`DWIDTH-1:0] b02to12, b12to22, b22to32, b32to42;
+    logic [`DWIDTH-1:0] b03to13, b13to23, b23to33, b33to43;
     
-    wire effective_rst;
+    logic effective_rst;
     assign effective_rst = reset | pe_reset;
     
     
@@ -837,16 +749,16 @@ module processing_element(
     output [`DWIDTH-1:0] out_b;
     output [`DWIDTH-1:0] out_c;  //reduced precision
 
-    reg [`DWIDTH-1:0] out_a;
-    reg [`DWIDTH-1:0] out_b;
-    wire [`DWIDTH-1:0] out_c;
-    wire [`DWIDTH-1:0] out_mac;
+    logic [`DWIDTH-1:0] out_a;
+    logic [`DWIDTH-1:0] out_b;
+    logic [`DWIDTH-1:0] out_c;
+    logic [`DWIDTH-1:0] out_mac;
 
     assign out_c = out_mac;
     
     seq_mac u_mac(.a(in_a), .b(in_b), .out(out_mac), .reset(reset), .clk(clk));
 
-    always @(posedge clk)
+    always_ff @(posedge clk)
     begin
         if(reset) 
         begin
@@ -859,7 +771,7 @@ module processing_element(
             out_b<=in_b;
         end
     end
- 
+
 endmodule
 
 //////////////////////////////////////////////////////////////////////////
@@ -872,10 +784,10 @@ module seq_mac(a, b, out, reset, clk);
     input clk;
     output [`DWIDTH-1:0] out;
 
-    reg [`DWIDTH-1:0] out;
-    reg [`DWIDTH-1:0] a_flop, b_flop, mult;
+    logic [`DWIDTH-1:0] out;
+    logic [`DWIDTH-1:0] a_flop, b_flop, mult;
 
-    always @(posedge clk)
+    always_ff @(posedge clk)
     begin
         if(reset)
         begin
