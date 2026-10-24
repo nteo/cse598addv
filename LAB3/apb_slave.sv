@@ -14,8 +14,8 @@
 // 0x1C    STRIDE_C   R/W     address_stride_c
 
 
-`define REG_ADDRWIDTH 8
-`define REG_DATAWIDTH 16
+`define APB_ADDRWIDTH 8
+`define APB_DATAWIDTH 16
 `define REG_CTRL_ADDR     8'h00
 `define REG_STATUS_ADDR   8'h04
 `define REG_ADDR_A_ADDR   8'h08
@@ -33,12 +33,12 @@ module apb_slave #(
     (
     input logic                             PCLK,
     input logic                             PRESETn,
-    input logic        [`REG_ADDRWIDTH-1:0] PADDR,
+    input logic        [`APB_ADDRWIDTH-1:0] PADDR,
     input logic                             PWRITE,
     input logic                             PSEL,
     input logic                             PENABLE,
-    input logic        [`REG_DATAWIDTH-1:0] PWDATA,
-    output logic   [`REG_DATAWIDTH-1:0] PRDATA,
+    input logic        [`APB_DATAWIDTH-1:0] PWDATA,
+    output logic   [`APB_DATAWIDTH-1:0] PRDATA,
     output logic                        PREADY,
     output logic start,
     output logic pe_clear, // 1-cycle pulse: clears PE accumulators for a new run
