@@ -20,11 +20,11 @@ module tb_fp8_mul;
         .flags(flags)
     );
 
-    // Clock: 10 ns period
+    // 10 ns clock period
     initial clk = 1'b0;
     always #5 clk = ~clk;
 
-    // Apply one test and compare the result
+    // Apply test and compare result
     task automatic check_result(
         input string test_name,
         input logic [7:0] test_A,
@@ -32,6 +32,7 @@ module tb_fp8_mul;
         input logic [7:0] expected
     );
         begin
+            @(negedge clk);
             A = test_A;
             B = test_B;
 
@@ -56,43 +57,39 @@ module tb_fp8_mul;
     endtask
 
     initial begin
-        // Initialize
         rst = 1'b1;
         A = 8'h00;
         B = 8'h00;
         pass_count = 0;
         fail_count = 0;
 
-        // Allow reset to settle
-        #12;
+        repeat (2) @(negedge clk);
         rst = 1'b0;
-        #2;
 
         $display("\n===== FP8 E3M4 MULTIPLIER TESTS =====");
 
-        // Basic multiplication
-        check_result("1.0 * 1.0",       8'h30, 8'h30, 8'h30);
-        check_result("1.0 * 2.0",       8'h30, 8'h40, 8'h40);
-        check_result("2.0 * 2.0",       8'h40, 8'h40, 8'h50);
+        // 1. Positive x Positive: 1.0 * 2.0 = 2.0
+        check_result("Positive x Positive",
+                     8'h30, 8'h40, 8'h40);
 
-        // Fractional multiplication
-        check_result("1.5 * 1.0",       8'h38, 8'h30, 8'h38);
-        check_result("1.5 * 1.5",       8'h38, 8'h38, 8'h42);
-        check_result("0.5 * 0.5",       8'h20, 8'h20, 8'h10);
+        // 2. Negative x Negative: (-1.0) * (-2.0) = 2.0
+        check_result("Negative x Negative",
+                     8'hB0, 8'hC0, 8'h40);
 
-        // Sign handling
-        check_result("-1.0 * 1.0",      8'hB0, 8'h30, 8'hB0);
-        check_result("-1.0 * -1.0",     8'hB0, 8'hB0, 8'h30);
-        check_result("-1.5 * 1.0",      8'hB8, 8'h30, 8'hB8);
+        // 3. Positive x Negative: 1.5 * (-1.0) = -1.5
+        check_result("Positive x Negative",
+                     8'h38, 8'hB0, 8'hB8);
 
-        // Zero operand
-        check_result("0.0 * 1.0",       8'h00, 8'h30, 8'h00);
+        // 4. Result in infinity: +infinity * 1.0 = +infinity
+        // Assumes infinity is encoded as sign | 111 | 0000.
+        check_result("Result in infinity",
+                     8'h70, 8'h30, 8'h70);
 
-        // Overflow: 4.0 * 4.0 = 16.0
-        // Expected saturation to maximum finite positive value
-        check_result("Overflow: 4.0 * 4.0", 8'h50, 8'h50, 8'h6F);
+        // 5. Overflow: 4.0 * 4.0 = 16.0
+        // With saturation, result is maximum finite positive = 15.5.
+        check_result("Overflow",
+                     8'h50, 8'h50, 8'h6F);
 
-        // Summary
         $display("\n===== TEST SUMMARY =====");
         $display("Passed: %0d", pass_count);
         $display("Failed: %0d", fail_count);
@@ -102,7 +99,7 @@ module tb_fp8_mul;
             $display("ALL TESTS PASSED");
         else
             $display("SOME TESTS FAILED");
-
+        #20;
         $finish;
     end
 

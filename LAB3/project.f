@@ -1,6 +1,7 @@
 // Include file list
 $PROJECT_ROOT/apb_slave.sv
-$PROJECT_ROOT/example_tb.v
+$PROJECT_ROOT/apb_top.sv
+$PROJECT_ROOT/apb_matmul_tb.sv
 $PROJECT_ROOT/matmul_with_ram_tb.sv
 $PROJECT_ROOT/matmul.sv
 $PROJECT_ROOT/matmul_tb.sv
@@ -16,7 +17,7 @@ $PROJECT_ROOT/FP8/fp8_add/fp8_add_normalize.sv
 $PROJECT_ROOT/FP8/fp8_add/fp8_add_round.sv
 $PROJECT_ROOT/FP8/fp8_add/fp8_add_exception.sv
 $PROJECT_ROOT/FP8/fp8_add/fp8_add.sv
-// $PROJECT_ROOT/FP8/fp8_add/tb_fp8_add.sv
+//$PROJECT_ROOT/FP8/fp8_add/tb_fp8_add.sv
 // x MUL
 $PROJECT_ROOT/FP8/fp8_mul/fp8_mul_prep.sv
 $PROJECT_ROOT/FP8/fp8_mul/fp8_mul_execute.sv
