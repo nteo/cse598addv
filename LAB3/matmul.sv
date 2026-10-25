@@ -660,6 +660,30 @@ module seq_mac (
     logic [DWIDTH-1:0] a_flop, b_flop, mult, mult_reg, add;
     logic [4:0] mult_flag, add_flag, flag_reg;
 
+    // exponent==0 -> zero (no denormals); exponent==7 -> inf/NaN
+    logic a_z, b_z, mr_z, o_z, a_s, b_s, mr_s, o_s;
+    logic mult_exact, add_exact;
+
+    // checks if any operands are zero
+    assign a_z  = (a_flop[6:4]   == 3'd0);
+    assign b_z  = (b_flop[6:4]   == 3'd0);
+    assign mult_z = (mult_reg[6:4] == 3'd0);
+    assign out_z  = (out[6:4]      == 3'd0);
+
+    // checks if any operands are special (inf/NaN)
+    assign a_s  = (a_flop[6:4]   == 3'd7);
+    assign b_s  = (b_flop[6:4]   == 3'd7);
+    assign mult_s = (mult_reg[6:4] == 3'd7);
+    assign out_s  = (out[6:4]      == 3'd7);
+
+    assign mult_exact = (a_z  | b_z) & ~(a_s  | b_s);   // 0*x is exact
+    assign add_exact  = (mult_z | out_z) & ~(mult_s | out_s);   // 0+x is exact
+
+    // in the always_ff else-branch:
+    flag_reg <= flag_reg                      // sticky, see below
+              | (mult_exact ? 5'b0 : mult_flag)
+              | (add_exact  ? 5'b0 : add_flag);
+
     fp8_mul multiplier (.clk(clk), .rst(reset), .A(a_flop),   .B(b_flop), .result(mult), .flags(mult_flag));
     fp8_add  adder      (.A(mult_reg), .B(out),    .Result(add),  .Flags(add_flag));
 
@@ -670,7 +694,8 @@ module seq_mac (
             mult_reg <= '0;
             out      <= '0;
             flag_reg <= 1'b0;
-        end else begin
+        end
+        else begin
             a_flop   <= a;
             b_flop   <= b;
             mult_reg <= mult;
