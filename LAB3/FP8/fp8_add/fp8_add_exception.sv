@@ -33,12 +33,12 @@ module fp8_add_exception(
 	assign DivideByZero = 0;
 	
 	// Invalid inputs or operation
-	assign Invalid = |(InputExc[4:2]) ;
+	assign Invalid = |(InputExc[4:2]);
 	
 	// Inexact answer due to rounding, overflow or underflow
 	assign Inexact = (DiscardedAlign | DiscardedNormalize) | Overflow | Underflow;
 	
 	// Collect exception flags	
-	assign Flags = {Overflow, Underflow, DivideByZero, Invalid, Inexact} ; 	
+	assign Flags = {Overflow, Underflow, DivideByZero, Invalid, Inexact};
 	
 endmodule
