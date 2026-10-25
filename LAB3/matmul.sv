@@ -679,11 +679,6 @@ module seq_mac (
     assign mult_exact = (a_z  | b_z) & ~(a_s  | b_s);   // 0*x is exact
     assign add_exact  = (mult_z | out_z) & ~(mult_s | out_s);   // 0+x is exact
 
-    // in the always_ff else-branch:
-    flag_reg <= flag_reg                      // sticky, see below
-              | (mult_exact ? 5'b0 : mult_flag)
-              | (add_exact  ? 5'b0 : add_flag);
-
     fp8_mul multiplier (.clk(clk), .rst(reset), .A(a_flop),   .B(b_flop), .result(mult), .flags(mult_flag));
     fp8_add  adder      (.A(mult_reg), .B(out),    .Result(add),  .Flags(add_flag));
 
@@ -700,7 +695,9 @@ module seq_mac (
             b_flop   <= b;
             mult_reg <= mult;
             out      <= add;
-            flag_reg <= mult_flag | add_flag;
+            flag_reg <= flag_reg
+                      | (mult_exact ? 5'b0 : mult_flag)
+                      | (add_exact  ? 5'b0 : add_flag);
         end
     end
 
