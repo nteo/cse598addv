@@ -464,4 +464,9 @@ module matmul_tb;
         $fatal(1, "tb_matmul_fp8 watchdog timeout");
     end
 
+    // Dump waves
+    initial begin
+        $fsdbDumpfile("novas.fsdb");
+        $fsdbDumpvars(0, matmul_tb);
+    end
 endmodule

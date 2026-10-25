@@ -38,7 +38,8 @@ module matmul_8x8 #(
     output logic [AWIDTH-1:0] c_addr_top,
     output logic [AWIDTH-1:0] c_addr_bottom,
     output logic done_mat_mul,
-    output logic c_data_available
+    output logic c_data_available,
+    output logic [4:0] flags
 );
 
 // Internal signals
@@ -55,6 +56,7 @@ logic [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out10;
 
 logic c_valid00, c_valid01, c_valid10, c_valid11;
 logic done00, done01, done10, done11;
+logic [4:0] flag00, flag01, flag10, flag11;
 
 //////////////////////////////////////////////////////////////////////////
 // Instantiation of 4 matmul_4x4_systolic blocks
@@ -67,6 +69,7 @@ matmul_4x4_systolic matmul_4x4_systolic_00(
     .pe_reset(pe_reset),
     .start_mat_mul(start_mat_mul),
     .done_mat_mul(done00),
+    .flag(flag00),
     .address_mat_a(address_mat_a_top),
     .address_mat_b(address_mat_b_left),
     .address_mat_c(address_mat_c_top),
@@ -100,6 +103,7 @@ matmul_4x4_systolic matmul_4x4_systolic_01(
     .pe_reset(pe_reset),
     .start_mat_mul(start_mat_mul),
     .done_mat_mul(done01),
+    .flag(flag01),
     .address_mat_a(address_mat_a_top),
     .address_mat_b(address_mat_b_right),
     .address_mat_c(address_mat_c_top),
@@ -133,6 +137,7 @@ matmul_4x4_systolic matmul_4x4_systolic_10(
     .pe_reset(pe_reset),
     .start_mat_mul(start_mat_mul),
     .done_mat_mul(done10),
+    .flag(flag10),
     .address_mat_a(address_mat_a_bottom),
     .address_mat_b(address_mat_b_left),
     .address_mat_c(address_mat_c_bottom),
@@ -166,6 +171,7 @@ matmul_4x4_systolic matmul_4x4_systolic_11(
     .pe_reset(pe_reset),
     .start_mat_mul(start_mat_mul),
     .done_mat_mul(done11),
+    .flag(flag11),
     .address_mat_a(address_mat_a_bottom),
     .address_mat_b(address_mat_b_right),
     .address_mat_c(address_mat_c_bottom),
@@ -194,5 +200,6 @@ matmul_4x4_systolic matmul_4x4_systolic_11(
 
 assign done_mat_mul = done00 & done01 & done10 & done11;
 assign c_data_available = c_valid01 | c_valid11;
+assign flags = flag00 | flag01 | flag10 | flag11;
 
 endmodule
