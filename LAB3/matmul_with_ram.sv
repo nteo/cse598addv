@@ -9,18 +9,6 @@ module matrix_multiplication #(
     input logic clk,
     input logic resetn,
     input logic pe_resetn,
-    input logic [AWIDTH-1:0] address_mat_a_top,
-    input logic [AWIDTH-1:0] address_mat_a_bottom,
-    input logic [AWIDTH-1:0] address_mat_b_left,
-    input logic [AWIDTH-1:0] address_mat_b_right,
-    input logic [AWIDTH-1:0] address_mat_c_top,
-    input logic [AWIDTH-1:0] address_mat_c_bottom,
-    input logic [ADDR_STRIDE_WIDTH-1:0] address_stride_a_top,
-    input logic [ADDR_STRIDE_WIDTH-1:0] address_stride_a_bottom,
-    input logic [ADDR_STRIDE_WIDTH-1:0] address_stride_b_left,
-    input logic [ADDR_STRIDE_WIDTH-1:0] address_stride_b_right,
-    input logic [ADDR_STRIDE_WIDTH-1:0] address_stride_c_top,
-    input logic [ADDR_STRIDE_WIDTH-1:0] address_stride_c_bottom,
     input logic [AWIDTH-1:0] bram_addr_a_top_ext,
     output logic [MAT_MUL_SIZE*DWIDTH-1:0] bram_rdata_a_top_ext,
     input logic [MAT_MUL_SIZE*DWIDTH-1:0] bram_wdata_a_top_ext,
@@ -45,8 +33,13 @@ module matrix_multiplication #(
     output logic [MAT_MUL_SIZE*DWIDTH-1:0] bram_rdata_c_bottom_ext,
     input logic [MAT_MUL_SIZE*DWIDTH-1:0] bram_wdata_c_bottom_ext,
     input logic [MASK_WIDTH-1:0] bram_we_c_bottom_ext,
-    input logic start,
-    output logic done
+    input logic [`APB_ADDRWIDTH-1:0] PADDR,
+    input logic PWRITE,
+    input logic PSEL,
+    input logic PENABLE,
+    input logic [`APB_DATAWIDTH-1:0] PWDATA,
+    output logic [`APB_DATAWIDTH-1:0] PRDATA,
+    output logic PREADY
 );
 
     localparam int DATA_WIDTH = MAT_MUL_SIZE * DWIDTH;
@@ -61,6 +54,16 @@ module matrix_multiplication #(
     logic done_mat_mul;
     logic c_data_available;
 
+    logic start, done, pe_clear, exception_flag;
+    logic [AWIDTH-1:0] address_mat_a_top, address_mat_a_bottom;
+    logic [AWIDTH-1:0] address_mat_b_left, address_mat_b_right;
+    logic [AWIDTH-1:0] address_mat_c_top, address_mat_c_bottom;
+    logic [ADDR_STRIDE_WIDTH-1:0] address_stride_a_top, address_stride_a_bottom;
+    logic [ADDR_STRIDE_WIDTH-1:0] address_stride_b_left, address_stride_b_right;
+    logic [ADDR_STRIDE_WIDTH-1:0] address_stride_c_top, address_stride_c_bottom;
+
+    assign exception_flag = 1'b0; // connect to the OR of the FP8 flags from u_matmul_8x8
+
     logic [AWIDTH-1:0] a_addr_top, a_addr_bottom;
     logic [AWIDTH-1:0] b_addr_left, b_addr_right;
     logic [AWIDTH-1:0] c_addr_top, c_addr_bottom;
@@ -69,7 +72,20 @@ module matrix_multiplication #(
     logic [DATA_WIDTH-1:0] c_data_out_top, c_data_out_bottom;
 
     assign reset = ~resetn;
-    assign pe_reset = ~pe_resetn;
+    assign pe_reset = ~pe_resetn | pe_clear;
+
+    apb_slave #(.AW(AWIDTH), .SW(ADDR_STRIDE_WIDTH)) u_apb_slave (
+        .PCLK(clk), .PRESETn(resetn),
+        .PADDR(PADDR), .PWRITE(PWRITE), .PSEL(PSEL), .PENABLE(PENABLE),
+        .PWDATA(PWDATA), .PRDATA(PRDATA), .PREADY(PREADY),
+        .start(start), .pe_clear(pe_clear), .done(done), .flags(exception_flag),
+        .address_mat_a_top(address_mat_a_top), .address_mat_a_bottom(address_mat_a_bottom),
+        .address_mat_b_left(address_mat_b_left), .address_mat_b_right(address_mat_b_right),
+        .address_mat_c_top(address_mat_c_top), .address_mat_c_bottom(address_mat_c_bottom),
+        .address_stride_a_top(address_stride_a_top), .address_stride_a_bottom(address_stride_a_bottom),
+        .address_stride_b_left(address_stride_b_left), .address_stride_b_right(address_stride_b_right),
+        .address_stride_c_top(address_stride_c_top), .address_stride_c_bottom(address_stride_c_bottom)
+    );
     //Connections for bram c (output matrix)
     //bram_addr_c_top and bram_addr_c_bottom -> connected to u_matmul_8x8
     //bram_rdata_c_top and bram_rdata_c_bottom -> not used
