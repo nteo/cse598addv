@@ -2,10 +2,10 @@
 // APB slave: control/status registers for the matrix multiplier.
 // 16-bit data, word-aligned register map, PREADY always 1 (no wait states).
 
-// Offset  Name       Access  Contents
-// 0x00    CTRL       W       [0] start (write 1 to launch a matmul; also clears the PE accumulators, done and the exception flag)
+// Offset  Name          Access      Contents
+// 0x00    CTRL           W       [0] start (write 1 to launch a matmul; also clears the PE accumulators, done and the exception flag)
                                                                   
-// 0x04    STATUS     R       [0] done, [1] exception flag (sticky), [2] busy
+// 0x04    STATUS         R       [0] done, [1] any exception (flags[4:1], sticky), [2] busy
 // 0x08    ADDR_A_TOP     R/W     address_mat_a_top
 // 0x0C    ADDR_A_BOTTOM  R/W     address_mat_a_bottom
 // 0x10    ADDR_B_LEFT    R/W     address_mat_b_left
@@ -18,6 +18,7 @@
 // 0x2C    STRIDE_B_RIGHT R/W     address_stride_b_right
 // 0x30    STRIDE_C_TOP   R/W     address_stride_c_top
 // 0x34    STRIDE_C_BOTTOM R/W     address_stride_c_bottom
+// 0x38    FLAGS           R       [4:0] {overflow, underflow, divide-by-zero, invalid, inexact} (sticky)
 
 
 `define APB_ADDRWIDTH 8
@@ -36,6 +37,7 @@
 `define REG_STRIDE_B_RIGHT_ADDR 8'h2C
 `define REG_STRIDE_C_TOP_ADDR 8'h30
 `define REG_STRIDE_C_BOTTOM_ADDR 8'h34
+`define REG_FLAGS_ADDR 8'h38
 
 module apb_slave #(
 
@@ -69,7 +71,7 @@ module apb_slave #(
     output logic [SW-1:0]                address_stride_c_bottom,
 
     input logic done, // one-cycle pulse from matmul
-	input logic flags // exception flag from matmul
+	input logic [4:0] flags // exception flags from matmul
 );
 
 assign PREADY = 1'b1; // No wait states: every transfer completes in its access phase
@@ -106,14 +108,15 @@ always_ff @(posedge PCLK) begin
     end
 end
 
-logic busy, done_r, flags_r; // done and flags are sticky so the CPU can poll them after the pulse
+logic busy, done_r; // done and flags are sticky so the CPU can poll them after the pulse
+logic [4:0] flags_r;
 
 always_ff @(posedge PCLK) begin
         if (!PRESETn) begin
             start            <= 1'b0;
             pe_clear         <= 1'b0;
             done_r           <= 1'b0;
-            flags_r          <= 1'b0;
+            flags_r          <= '0;
             busy             <= 1'b0;
             address_mat_a_top    <= '0;
             address_mat_a_bottom <= '0;
@@ -136,7 +139,7 @@ always_ff @(posedge PCLK) begin
                 busy  <= 1'b0;
                 done_r <= 1'b1;
             end
-            if (flags) flags_r <= 1'b1;
+            if (busy && !pe_clear) flags_r <= flags_r | flags;
  
             // CPU side: register writes (a start write clears old status)
             if (wr_en) begin
@@ -147,7 +150,7 @@ always_ff @(posedge PCLK) begin
                                 pe_clear <= 1'b1;
                                 busy     <= 1'b1;
                                 done_r  <= 1'b0;
-                                flags_r <= 1'b0;
+                                flags_r <= '0;
                         end
                     end
                     `REG_ADDR_A_TOP_ADDR:   address_mat_a_top    <= PWDATA[AW-1:0];
@@ -174,7 +177,7 @@ always_ff @(posedge PCLK) begin
         PRDATA <= '0;
     else if (rd_en) begin
         case (PADDR)
-            `REG_STATUS_ADDR:   PRDATA <= {{(`APB_DATAWIDTH-3){1'b0}}, busy, flags_r, done_r};
+            `REG_STATUS_ADDR:   PRDATA <= {{(`APB_DATAWIDTH-3){1'b0}}, busy, |flags_r[4:1], done_r};
             `REG_ADDR_A_TOP_ADDR:   PRDATA <= `APB_DATAWIDTH'(address_mat_a_top);
             `REG_ADDR_A_BOTTOM_ADDR:   PRDATA <= `APB_DATAWIDTH'(address_mat_a_bottom);
             `REG_ADDR_B_LEFT_ADDR:   PRDATA <= `APB_DATAWIDTH'(address_mat_b_left);
@@ -188,6 +191,7 @@ always_ff @(posedge PCLK) begin
             `REG_STRIDE_C_TOP_ADDR: PRDATA <= `APB_DATAWIDTH'(address_stride_c_top);
             `REG_STRIDE_C_BOTTOM_ADDR: PRDATA <= `APB_DATAWIDTH'(address_stride_c_bottom);
 
+            `REG_FLAGS_ADDR: PRDATA <= `APB_DATAWIDTH'(flags_r);
             default:            PRDATA <= '0;
         endcase
     end

@@ -32,9 +32,17 @@ module fp8_mul_round(
         Inexact = Overflow | Underflow | DiscardedExecute;
 
         if (InputExc[4]) begin
-            // Special input handling must be defined by your
-            // InputExc encoding and FP8 special-value policy.
-            Z = 8'h00;
+            if (InputExc[3] || InputExc[2]) begin
+                // NaN input: return a quiet NaN
+                Z = 8'h78;
+            end
+            else if (InputExc[1] || InputExc[0]) begin
+                // Infinity input: return infinity with product sign
+                Z = {Sp, 3'b111, 4'b0000};
+            end
+            else begin
+                Z = 8'h00;
+            end
         end
         else if (Overflow) begin
             // Saturate to maximum finite value

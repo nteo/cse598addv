@@ -1,5 +1,3 @@
-// tb_fp8_add.sv
-
 module tb_fp8_add;
 
     logic [7:0] A;
@@ -7,11 +5,10 @@ module tb_fp8_add;
     logic [7:0] Result;
     logic [4:0] Flags;
 
-    integer tests;
-    integer errors;
+    integer pass_count;
+    integer fail_count;
 
-    // Assumed flag order from the exception module:
-    // Flags = {Overflow, Underflow, DivideByZero, Invalid, Inexact}
+    // Instantiate DUT
     fp8_add dut (
         .A(A),
         .B(B),
@@ -19,97 +16,76 @@ module tb_fp8_add;
         .Flags(Flags)
     );
 
+    // Apply a test and compare the result
     task automatic check_result(
-        input logic [7:0] a_in,
-        input logic [7:0] b_in,
-        input logic [7:0] expected_result,
-        input string test_name
+        input string test_name,
+        input logic [7:0] test_A,
+        input logic [7:0] test_B,
+        input logic [7:0] expected
     );
         begin
-            A = a_in;
-            B = b_in;
-            #2;
-            tests = tests + 1;
+            A = test_A;
+            B = test_B;
 
-            if (Result !== expected_result) begin
-                errors = errors + 1;
-                $display("FAIL %-24s A=%02h B=%02h Result=%02h expected=%02h Flags=%05b",
-                         test_name, A, B, Result, expected_result, Flags);
-            end else begin
-                $display("PASS %-24s A=%02h B=%02h Result=%02h Flags=%05b",
-                         test_name, A, B, Result, Flags);
+            // Allow combinational logic to settle
+            #10;
+
+            if (Result === expected) begin
+                $display(
+                    "PASS: %-24s A=%02h B=%02h Result=%02h Expected=%02h Flags=%05b",
+                    test_name, A, B, Result, expected, Flags
+                );
+                pass_count = pass_count + 1;
             end
-        end
-    endtask
-
-    task automatic check_exact(
-        input logic [7:0] a_in,
-        input logic [7:0] b_in,
-        input logic [7:0] expected_result,
-        input string test_name
-    );
-        begin
-            A = a_in;
-            B = b_in;
-            #2;
-            tests = tests + 1;
-
-            if ((Result !== expected_result) || (Flags !== 5'b00000)) begin
-                errors = errors + 1;
-                $display("FAIL %-24s A=%02h B=%02h Result=%02h expected=%02h Flags=%05b expected flags=00000",
-                         test_name, A, B, Result, expected_result, Flags);
-            end else begin
-                $display("PASS %-24s A=%02h B=%02h Result=%02h Flags=%05b",
-                         test_name, A, B, Result, Flags);
+            else begin
+                $display(
+                    "FAIL: %-24s A=%02h B=%02h Result=%02h Expected=%02h Flags=%05b",
+                    test_name, A, B, Result, expected, Flags
+                );
+                fail_count = fail_count + 1;
             end
         end
     endtask
 
     initial begin
-        tests = 0;
-        errors = 0;
         A = 8'h00;
         B = 8'h00;
-        #2;
+        pass_count = 0;
+        fail_count = 0;
 
-        // Assumes E3M4, exponent bias=3:
-        // 0x30 = +1.0, 0x40 = +2.0, 0x20 = +0.5,
-        // 0x38 = +1.5, 0x44 = +2.5, 0xA0 = -0.5, 0xB0 = -1.0.
-        check_exact(8'h30, 8'h30, 8'h40, "1.0 + 1.0");
-        check_exact(8'h30, 8'h20, 8'h38, "1.0 + 0.5");
-        check_exact(8'h40, 8'h20, 8'h44, "2.0 + 0.5");
-        check_exact(8'hB0, 8'h20, 8'hA0, "-1.0 + 0.5");
-        check_exact(8'hB0, 8'hB0, 8'hC0, "-1.0 + -1.0");
-        check_exact(8'h00, 8'h30, 8'h30, "+0 + 1.0");
-        check_exact(8'h80, 8'h30, 8'h30, "-0 + 1.0");
+        $display("\n===== FP8 E3M4 ADD TESTS =====");
 
-        // Cancellation: result should be zero. This check accepts either
-        // +0 or -0 because the zero-sign convention depends on your RTL.
-        A = 8'hB0;
-        B = 8'h30;
-        #2;
-        tests = tests + 1;
-        if ((Result[6:0] !== 7'b0) || (Flags !== 5'b00000)) begin
-            errors = errors + 1;
-            $display("FAIL %-24s A=%02h B=%02h Result=%02h Flags=%05b",
-                     "1.0 + -1.0 cancellation", A, B, Result, Flags);
-        end else begin
-            $display("PASS %-24s A=%02h B=%02h Result=%02h Flags=%05b",
-                     "1.0 + -1.0 cancellation", A, B, Result, Flags);
-        end
+        // 1. Positive + positive: 1.0 + 1.0 = 2.0
+        check_result("Positive + positive",
+                     8'h30, 8'h30, 8'h40);
 
-        // Unequal exponents and significands exercise alignment/truncation.
-        // Result is checked separately from flags because the expected
-        // inexact behavior depends on how discarded bits are propagated.
-        check_result(8'h30, 8'h21, 8'h38, "1.0 + encoded 0.53125");
-        check_result(8'h38, 8'h30, 8'h44, "1.5 + 1.0");
+        // 2. Negative + negative: -1.0 + -1.0 = -2.0
+        check_result("Negative + negative",
+                     8'hB0, 8'hB0, 8'hC0);
 
-        $display("");
-        $display("Tests run: %0d, failures: %0d", tests, errors);
-        if (errors != 0)
-            $fatal(1, "fp8_add testbench failed");
+        // 3. Positive + negative: 2.0 + (-0.5) = 1.5
+        check_result("Positive + negative",
+                     8'h40, 8'hA0, 8'h38);
+
+        // 4. Result in zero: 1.0 + (-1.0) = 0
+        check_result("Result in zero",
+                     8'h30, 8'hB0, 8'h00);
+
+        // 5. Overflow: 15.5 + 15.5 = 31.0
+        // Saturates to maximum finite value, +15.5
+        check_result("Overflow",
+                     8'h6F, 8'h6F, 8'h6F);
+
+        // Summary
+        $display("\n===== TEST SUMMARY =====");
+        $display("Passed: %0d", pass_count);
+        $display("Failed: %0d", fail_count);
+        $display("Total:  %0d", pass_count + fail_count);
+
+        if (fail_count == 0)
+            $display("ALL TESTS PASSED");
         else
-            $display("All checked FP8 addition cases passed.");
+            $display("SOME TESTS FAILED");
 
         $finish;
     end

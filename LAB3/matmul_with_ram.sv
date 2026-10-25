@@ -46,8 +46,9 @@ module matrix_multiplication #(
     input logic [MAT_MUL_SIZE*DWIDTH-1:0] bram_wdata_c_bottom_ext,
     input logic [MASK_WIDTH-1:0] bram_we_c_bottom_ext,
     input logic start,
-    output logic done
-);
+    output logic done,
+    output logic [4:0] flags
+    );
 
     localparam int DATA_WIDTH = MAT_MUL_SIZE * DWIDTH;
 
@@ -225,7 +226,8 @@ module matrix_multiplication #(
         .a_addr_top(a_addr_top), .a_addr_bottom(a_addr_bottom),
         .b_addr_left(b_addr_left), .b_addr_right(b_addr_right),
         .c_addr_top(c_addr_top), .c_addr_bottom(c_addr_bottom),
-        .done_mat_mul(done_mat_mul), .c_data_available(c_data_available)
+        .done_mat_mul(done_mat_mul), .c_data_available(c_data_available),
+        .flags(flags)
     );
 
 endmodule
