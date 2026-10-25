@@ -15,7 +15,7 @@ $PROJECT_ROOT/FP8/fp8_add/fp8_add_normalize.sv
 $PROJECT_ROOT/FP8/fp8_add/fp8_add_round.sv
 $PROJECT_ROOT/FP8/fp8_add/fp8_add_exception.sv
 $PROJECT_ROOT/FP8/fp8_add/fp8_add.sv
-// $PROJECT_ROOT/FP8/fp8_add/tb_fp8_add.sv
+//$PROJECT_ROOT/FP8/fp8_add/tb_fp8_add.sv
 // x MUL
 $PROJECT_ROOT/FP8/fp8_mul/fp8_mul_prep.sv
 $PROJECT_ROOT/FP8/fp8_mul/fp8_mul_execute.sv
