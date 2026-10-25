@@ -2,6 +2,8 @@
 
 module matmul_tb;
 
+    // FP8 format: 1 sign bit, 3 exponent bits, 4 fraction bits, bias 3.
+
     localparam int DWIDTH = 8;
     localparam int AWIDTH = 10;
     localparam int MAT_MUL_SIZE = 4;
@@ -13,6 +15,7 @@ module matmul_tb;
     logic pe_resetn;
     logic start;
     logic done;
+    logic [4:0] flags;
 
     logic [AWIDTH-1:0] address_mat_a_top;
     logic [AWIDTH-1:0] address_mat_a_bottom;
@@ -123,40 +126,40 @@ module matmul_tb;
         end
 
         // A is stored by column: each word contains four rows.
-        u_matmul.matrix_a_top.memory[0] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_top.memory[1] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_top.memory[2] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_top.memory[3] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_top.memory[4] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_top.memory[5] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_top.memory[6] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_top.memory[7] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[0] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[1] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[2] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[3] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[4] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[5] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[6] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_a_bottom.memory[7] = {8'd1, 8'd1, 8'd1, 8'd1};
+        u_matmul.matrix_a_top.memory[0] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_top.memory[1] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_top.memory[2] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_top.memory[3] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_top.memory[4] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_top.memory[5] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_top.memory[6] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_top.memory[7] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[0] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[1] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[2] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[3] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[4] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[5] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[6] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_a_bottom.memory[7] = {8'h30, 8'h30, 8'h30, 8'h30};
 
         // B is stored by row: each word contains four columns.
-        u_matmul.matrix_b_left.memory[0] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_left.memory[1] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_left.memory[2] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_left.memory[3] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_left.memory[4] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_left.memory[5] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_left.memory[6] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_left.memory[7] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[0] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[1] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[2] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[3] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[4] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[5] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[6] = {8'd1, 8'd1, 8'd1, 8'd1};
-        u_matmul.matrix_b_right.memory[7] = {8'd1, 8'd1, 8'd1, 8'd1};
+        u_matmul.matrix_b_left.memory[0] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[1] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[2] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[3] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[4] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[5] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[6] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[7] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[0] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[1] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[2] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[3] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[4] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[5] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[6] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[7] = {8'h30, 8'h30, 8'h30, 8'h30};
     end
 
     //Perform test    
@@ -179,41 +182,41 @@ module matmul_tb;
             $display("C_bottom[%0d] = %h", word_index,
                      u_matmul.matrix_c_bottom.memory[word_index]);
 
-        // Second test: every A and B element has a distinct value.
-        // A remains row-major; B remains column-major.
-        u_matmul.matrix_a_top.memory[0] = {8'd25, 8'd17, 8'd9, 8'd1};
-        u_matmul.matrix_a_top.memory[1] = {8'd26, 8'd18, 8'd10, 8'd2};
-        u_matmul.matrix_a_top.memory[2] = {8'd27, 8'd19, 8'd11, 8'd3};
-        u_matmul.matrix_a_top.memory[3] = {8'd28, 8'd20, 8'd12, 8'd4};
-        u_matmul.matrix_a_top.memory[4] = {8'd29, 8'd21, 8'd13, 8'd5};
-        u_matmul.matrix_a_top.memory[5] = {8'd30, 8'd22, 8'd14, 8'd6};
-        u_matmul.matrix_a_top.memory[6] = {8'd31, 8'd23, 8'd15, 8'd7};
-        u_matmul.matrix_a_top.memory[7] = {8'd32, 8'd24, 8'd16, 8'd8};
-        u_matmul.matrix_a_bottom.memory[0] = {8'd57, 8'd49, 8'd41, 8'd33};
-        u_matmul.matrix_a_bottom.memory[1] = {8'd58, 8'd50, 8'd42, 8'd34};
-        u_matmul.matrix_a_bottom.memory[2] = {8'd59, 8'd51, 8'd43, 8'd35};
-        u_matmul.matrix_a_bottom.memory[3] = {8'd60, 8'd52, 8'd44, 8'd36};
-        u_matmul.matrix_a_bottom.memory[4] = {8'd61, 8'd53, 8'd45, 8'd37};
-        u_matmul.matrix_a_bottom.memory[5] = {8'd62, 8'd54, 8'd46, 8'd38};
-        u_matmul.matrix_a_bottom.memory[6] = {8'd63, 8'd55, 8'd47, 8'd39};
-        u_matmul.matrix_a_bottom.memory[7] = {8'd64, 8'd56, 8'd48, 8'd40};
+        // Second test: simple FP8 values with no expected exceptions.
+        // A = 0.5 and B = 1.0, so every output element is 8 * 0.5 * 1.0 = 4.0.
+        u_matmul.matrix_a_top.memory[0] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_top.memory[1] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_top.memory[2] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_top.memory[3] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_top.memory[4] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_top.memory[5] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_top.memory[6] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_top.memory[7] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[0] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[1] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[2] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[3] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[4] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[5] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[6] = {8'h20, 8'h20, 8'h20, 8'h20};
+        u_matmul.matrix_a_bottom.memory[7] = {8'h20, 8'h20, 8'h20, 8'h20};
 
-        u_matmul.matrix_b_left.memory[0] = {8'd68, 8'd67, 8'd66, 8'd65};
-        u_matmul.matrix_b_left.memory[1] = {8'd72, 8'd71, 8'd70, 8'd69};
-        u_matmul.matrix_b_left.memory[2] = {8'd76, 8'd75, 8'd74, 8'd73};
-        u_matmul.matrix_b_left.memory[3] = {8'd80, 8'd79, 8'd78, 8'd77};
-        u_matmul.matrix_b_left.memory[4] = {8'd84, 8'd83, 8'd82, 8'd81};
-        u_matmul.matrix_b_left.memory[5] = {8'd88, 8'd87, 8'd86, 8'd85};
-        u_matmul.matrix_b_left.memory[6] = {8'd92, 8'd91, 8'd90, 8'd89};
-        u_matmul.matrix_b_left.memory[7] = {8'd96, 8'd94, 8'd95, 8'd93};
-        u_matmul.matrix_b_right.memory[0] = {8'd100, 8'd99, 8'd98, 8'd97};
-        u_matmul.matrix_b_right.memory[1] = {8'd104, 8'd103, 8'd102, 8'd101};
-        u_matmul.matrix_b_right.memory[2] = {8'd108, 8'd107, 8'd106, 8'd105};
-        u_matmul.matrix_b_right.memory[3] = {8'd112, 8'd111, 8'd110, 8'd109};
-        u_matmul.matrix_b_right.memory[4] = {8'd116, 8'd115, 8'd114, 8'd113};
-        u_matmul.matrix_b_right.memory[5] = {8'd120, 8'd119, 8'd118, 8'd117};
-        u_matmul.matrix_b_right.memory[6] = {8'd124, 8'd123, 8'd122, 8'd121};
-        u_matmul.matrix_b_right.memory[7] = {8'd128, 8'd127, 8'd126, 8'd125};
+        u_matmul.matrix_b_left.memory[0] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[1] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[2] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[3] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[4] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[5] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[6] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_left.memory[7] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[0] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[1] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[2] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[3] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[4] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[5] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[6] = {8'h30, 8'h30, 8'h30, 8'h30};
+        u_matmul.matrix_b_right.memory[7] = {8'h30, 8'h30, 8'h30, 8'h30};
 
         resetn = 1'b0;
         pe_resetn = 1'b0;
@@ -226,7 +229,7 @@ module matmul_tb;
         start = 1'b0;
         #100;
 
-        $display("\nC matrix output for distinct-value test:");
+        $display("\nC matrix output for simple-value test:");
         for (word_index = 0; word_index < 8; word_index = word_index + 1)
             $display("C_top[%0d]    = %h", word_index,
                      u_matmul.matrix_c_top.memory[word_index]);
