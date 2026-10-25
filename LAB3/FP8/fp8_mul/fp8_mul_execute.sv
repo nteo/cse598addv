@@ -27,10 +27,7 @@ module fp8_mul_execute(
 
     // If there is overflow and the MSB needs a right shift, increment the exponent
     // this involves adding the two exponents, subtracting the bias (3), and incrementing if there is OF
-    assign NormE = $signed({2'b00, ExpA})
-                + $signed({2'b00, ExpB})
-                - 5'sd3
-                + $signed({4'b0000, Mp[9]});
+    assign NormE = (Mp == 10'd0) ? 5'sd0 : $signed({2'b00, ExpA}) + $signed({2'b00, ExpB}) - 5'sd3 + $signed({4'b0000, Mp[9]});
 
 	assign DiscardedExecute = Mp[9] ? (|Mp[4:0]) : (|Mp[3:0]);
 	
