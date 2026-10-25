@@ -54,7 +54,8 @@ module matrix_multiplication #(
     logic done_mat_mul;
     logic c_data_available;
 
-    logic start, done, pe_clear, exception_flag;
+    logic start, done, pe_clear;
+    logic [4:0] exception_flag;
     logic [AWIDTH-1:0] address_mat_a_top, address_mat_a_bottom;
     logic [AWIDTH-1:0] address_mat_b_left, address_mat_b_right;
     logic [AWIDTH-1:0] address_mat_c_top, address_mat_c_bottom;
@@ -62,7 +63,7 @@ module matrix_multiplication #(
     logic [ADDR_STRIDE_WIDTH-1:0] address_stride_b_left, address_stride_b_right;
     logic [ADDR_STRIDE_WIDTH-1:0] address_stride_c_top, address_stride_c_bottom;
 
-    assign exception_flag = 1'b0; // connect to the OR of the FP8 flags from u_matmul_8x8
+    assign exception_flag = 5'b0; // connect to the OR of the FP8 flags from u_matmul_8x8
 
     logic [AWIDTH-1:0] a_addr_top, a_addr_bottom;
     logic [AWIDTH-1:0] b_addr_left, b_addr_right;
