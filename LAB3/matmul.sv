@@ -21,7 +21,7 @@ module matmul_4x4_systolic(
     input   logic   pe_reset,
     input   logic   start_mat_mul,
     output  logic   done_mat_mul,
-    output  logic   flag,
+    output  logic   [4:0] flag,
     input   logic   [AWIDTH-1:0] address_mat_a,
     input   logic   [AWIDTH-1:0] address_mat_b,
     input   logic   [AWIDTH-1:0] address_mat_c,
@@ -563,10 +563,10 @@ module systolic_pe_matrix(
     logic [DWIDTH-1:0] b02to12, b12to22, b22to32, b32to42;
     logic [DWIDTH-1:0] b03to13, b13to23, b23to33, b33to43;
     
-    logic flag00, flag10, flag20, flag30; 
-    logic flag01, flag11, flag21, flag31;
-    logic flag02, flag12, flag22, flag32;
-    logic flag03, flag13, flag23, flag33;
+    logic [4:0] flag00, flag10, flag20, flag30; 
+    logic [4:0] flag01, flag11, flag21, flag31;
+    logic [4:0] flag02, flag12, flag22, flag32;
+    logic [4:0] flag03, flag13, flag23, flag33;
     
     logic effective_rst;
     assign effective_rst = reset | pe_reset;
@@ -601,10 +601,10 @@ module systolic_pe_matrix(
 
     assign a_data_out = {a33to34,a23to24,a13to14,a03to04};
     assign b_data_out = {b33to43,b32to42,b31to41,b30to40};
-    assign flag = (flag00 || flag01 || flag02 || flag03 ||
-                   flag10 || flag11 || flag12 || flag13 ||
-                   flag20 || flag21 || flag22 || flag23 ||
-                   flag30 || flag31 || flag32 || flag33);
+    assign flag = (flag00 | flag01 | flag02 | flag03 |
+                   flag10 | flag11 | flag12 | flag13 |
+                   flag20 | flag21 | flag22 | flag23 |
+                   flag30 | flag31 | flag32 | flag33);
 
 endmodule
 
@@ -620,7 +620,7 @@ module processing_element(
     output  logic   [DWIDTH-1:0] out_a,
     output  logic   [DWIDTH-1:0] out_b,
     output  logic   [DWIDTH-1:0] out_c,  //reduced precision
-    output  logic   flag
+    output  logic   [4:0] flag
     );
 
     logic [DWIDTH-1:0] out_mac;
@@ -654,11 +654,11 @@ module seq_mac (
     input  logic [DWIDTH-1:0] a,
     input  logic [DWIDTH-1:0] b,
     output logic [DWIDTH-1:0] out,
-    output logic              flag
+    output logic [4:0]        flag
 );
 
     logic [DWIDTH-1:0] a_flop, b_flop, mult, mult_reg, add;
-    logic mult_flag, add_flag, flag_reg;
+    logic [4:0] mult_flag, add_flag, flag_reg;
 
     fp_8_mult multiplier (.a(a_flop),   .b(b_flop), .out(mult), .flag(mult_flag));
     fp_8_add  adder      (.a(mult_reg), .b(out),    .out(add),  .flag(add_flag));
