@@ -5,10 +5,12 @@
 #/*                                                */
 #/* OSU FreePDK 45nm                               */
 #/* LAB3 Part 2: synthesize matmul_4x4_systolic    */
+#/* LAB3 Part 3: synthesize matmul_8x8             */
 #/**************************************************/
 
 #/* All verilog files, separated by spaces         */
-#/* Leaf modules first, then matmul.sv.            */
+#/* Leaf modules first, then matmul.sv and         */
+#/* matmul_8x8.sv.                                */
 #/* Do NOT include testbenches or matmul_with_ram. */
 set my_verilog_files [list \
     ../FP8/fp8_add/fp8_add_prealign.sv \
@@ -23,14 +25,17 @@ set my_verilog_files [list \
     ../FP8/fp8_mul/fp8_mul_execute.sv \
     ../FP8/fp8_mul/fp8_mul_round.sv \
     ../FP8/fp8_mul/fp8_mul.sv \
-    ../matmul.sv ]
+    ../matmul.sv \
+    ../matmul_8x8.sv ]
 
 # For the BASELINE integer run, replace the list above with just the
 # original integer matmul (plus a defines file if it uses `DWIDTH etc.):
 # set my_verilog_files [list ../defines.vh ../matmul_int.v]
 
 #/* Top-level Module                               */
-set my_toplevel   matmul_4x4_systolic
+# Modified: matmul_8x8.sv is the design being synthesized
+# set my_toplevel   matmul_4x4_systolic
+set my_toplevel   matmul_8x8
 
 #/* The name of the clock pin. If no clock-pin     */
 #/* exists, pick anything                          */
