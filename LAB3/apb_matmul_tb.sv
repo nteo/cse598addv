@@ -166,6 +166,7 @@ module apb_matmul_tb;
         $display("== Test 4: new start clears done and flags");
         for (r = 0; r < 8; r++) for (c = 0; c < 8; c++) begin A[r][c] = 8'h30; B[r][c] = 8'h30; C[r][c] = 8'h60; end
         load;
+        configure(0, 1);
         run_matmul;
         check("STATUS done", rdata, 16'h1);
         read(`REG_FLAGS_ADDR, rdata);

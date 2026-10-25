@@ -86,7 +86,7 @@ module apb_top #(
         .bram_wdata_c_top_ext(bram_wdata_c_top_ext), .bram_we_c_top_ext(bram_we_c_top_ext),
         .bram_addr_c_bottom_ext(bram_addr_c_bottom_ext), .bram_rdata_c_bottom_ext(bram_rdata_c_bottom_ext),
         .bram_wdata_c_bottom_ext(bram_wdata_c_bottom_ext), .bram_we_c_bottom_ext(bram_we_c_bottom_ext),
-        .start(start), .done(done), .exception_flag(exception_flag)
+        .start(start), .done(done), .flags(exception_flag)
     );
 
 endmodule

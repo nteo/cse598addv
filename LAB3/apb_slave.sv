@@ -1,4 +1,4 @@
-
+`timescale 1ns/1ns
 // APB slave: control/status registers for the matrix multiplier.
 // 16-bit data, word-aligned register map, PREADY always 1 (no wait states).
 

@@ -1,11 +1,12 @@
 // Include file list
 $PROJECT_ROOT/apb_slave.sv
+$PROJECT_ROOT/matmul.sv
+$PROJECT_ROOT/matmul_8x8.sv
+$PROJECT_ROOT/matmul_with_ram.sv
 $PROJECT_ROOT/apb_top.sv
 $PROJECT_ROOT/apb_matmul_tb.sv
-$PROJECT_ROOT/matmul_with_ram_tb.sv
-$PROJECT_ROOT/matmul.sv
-$PROJECT_ROOT/matmul_tb.sv
-$PROJECT_ROOT/matmul_8x8.sv
+//$PROJECT_ROOT/matmul_with_ram_tb.sv
+//$PROJECT_ROOT/matmul_tb.sv
 
 // FP8
 // + ADD
