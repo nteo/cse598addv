@@ -30,10 +30,10 @@ module matmul_4x4_systolic(
     input   logic   [ADDR_STRIDE_WIDTH-1:0] address_stride_c,
     input   logic   [MAT_MUL_SIZE*DWIDTH-1:0] a_data,
     input   logic   [MAT_MUL_SIZE*DWIDTH-1:0] b_data,
-    input   logic   [MAT_MUL_SIZE*DWIDTH-1:0] a_data_in; //Data values coming in from previous matmul - systolic connections
+    input   logic   [MAT_MUL_SIZE*DWIDTH-1:0] a_data_in, //Data values coming in from previous matmul - systolic connections
     input   logic   [MAT_MUL_SIZE*DWIDTH-1:0] b_data_in,
-    input   logic   [MAT_MUL_SIZE*DWIDTH-1:0] c_data_in; //Data values coming in from previous matmul - systolic shifting
-    output  logic   [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out; //Data values going out to next matmul - systolic shifting
+    input   logic   [MAT_MUL_SIZE*DWIDTH-1:0] c_data_in, //Data values coming in from previous matmul - systolic shifting
+    output  logic   [MAT_MUL_SIZE*DWIDTH-1:0] c_data_out, //Data values going out to next matmul - systolic shifting
     output  logic   [MAT_MUL_SIZE*DWIDTH-1:0] a_data_out,
     output  logic   [MAT_MUL_SIZE*DWIDTH-1:0] b_data_out,
     output  logic   [AWIDTH-1:0] a_addr,
@@ -193,7 +193,7 @@ module matmul_4x4_systolic(
 //////////////////////////////////////////////////////////////////////////
 // Instantiation of the output logic
 //////////////////////////////////////////////////////////////////////////
-    output_logic u_output_logic(.*);
+    output_logic u_output_logic(.*, .row_latch_en());
 
 //////////////////////////////////////////////////////////////////////////
 // Instantiations of the actual PEs
@@ -550,7 +550,7 @@ module systolic_pe_matrix(
     output  logic   [DWIDTH-1:0] matrixC33,
     output  logic   [MAT_MUL_SIZE*DWIDTH-1:0] a_data_out,
     output  logic   [MAT_MUL_SIZE*DWIDTH-1:0] b_data_out,
-    output  logic   flag
+    output  logic   [4:0] flag
     );
 
     logic [DWIDTH-1:0] a00to01, a01to02, a02to03, a03to04;
@@ -660,8 +660,8 @@ module seq_mac (
     logic [DWIDTH-1:0] a_flop, b_flop, mult, mult_reg, add;
     logic [4:0] mult_flag, add_flag, flag_reg;
 
-    fp_8_mult multiplier (.a(a_flop),   .b(b_flop), .out(mult), .flag(mult_flag));
-    fp_8_add  adder      (.a(mult_reg), .b(out),    .out(add),  .flag(add_flag));
+    fp8_mul multiplier (.clk(clk), .rst(reset), .A(a_flop),   .B(b_flop), .result(mult), .flags(mult_flag));
+    fp8_add  adder      (.A(mult_reg), .B(out),    .Result(add),  .Flags(add_flag));
 
     always_ff @(posedge clk) begin
         if (reset) begin

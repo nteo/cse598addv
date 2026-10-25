@@ -110,14 +110,17 @@ module matmul_tb;
     logic [N*DW-1:0] ram_b [0:(1<<AW)-1];
     logic [N*DW-1:0] ram_c [0:(1<<AW)-1];
 
-    always_ff @(posedge clk) begin
+    // Plain "always" (not always_ff): a_data/b_data are only written here.
+    always @(posedge clk) begin
         a_data <= ram_a[a_addr];
         b_data <= ram_b[b_addr];
     end
 
     // Only the first N words after c_data_available rises are real results;
     // the block keeps shifting afterwards, so bound the write window.
-    always_ff @(posedge clk) begin
+    // Plain "always" (not always_ff): ram_c is also written by load_rams (initial block),
+    // and always_ff forbids any other driver.
+    always @(posedge clk) begin
         if (c_data_available &&
             (c_addr >= address_mat_c) && (c_addr < address_mat_c + N))
             ram_c[c_addr] <= c_data_out;
@@ -290,8 +293,6 @@ module matmul_tb;
         address_stride_a = 8'd1;
         address_stride_b = 8'd1;
         address_stride_c = 8'd1;
-        a_data           = '0;
-        b_data           = '0;
         repeat (5) @(posedge clk);
         reset = 1'b0;
         repeat (2) @(posedge clk);
