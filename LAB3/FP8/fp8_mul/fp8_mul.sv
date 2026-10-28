@@ -44,7 +44,7 @@ module fp8_mul(
         .InputExc(InputExc)
     );
 	
-	// Perform (unsigned) mantissa multiplication
+	// Perform (unsigned) mantissa multiplication and normalize
 	fp8_mul_execute fp8_mul_execute(
         // Inputs
         .Mp(Mp),

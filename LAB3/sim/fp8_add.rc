@@ -2,7 +2,7 @@ Magic 271485
 Revision Verdi_W-2024.09-SP2-3
 
 ; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
-viewPort 0 11 994 367 100 65
+viewPort 0 11 994 303 100 65
 
 ; File list:
 ; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
@@ -16,8 +16,8 @@ signalSpacing 5
 
 ; windowTimeUnit is used for zoom, cursor & marker
 ; waveform viewport range
-zoom 0.000000 50.500000
-cursor 40.000000
+zoom 0.000000 50500.000000
+cursor 50000.000000
 marker 0.000000
 
 ; user define markers
@@ -47,10 +47,10 @@ curSTATUS ByChange
 
 addGroup "G1"
 activeDirFile "" "/home/a34263_asu/CSE598/LAB3/sim/inter.fsdb"
-addSignal -h 16 -UNSIGNED -HEX /fp8_add_tb/A[7:0]
-addSignal -h 16 -UNSIGNED -HEX /fp8_add_tb/B[7:0]
-addSignal -h 16 -UNSIGNED -HEX /fp8_add_tb/Result[7:0]
-addSignal -h 16 -UNSIGNED -HEX /fp8_add_tb/Flags[4:0]
+addSignal -h 16 -UNSIGNED -HEX /tb_fp8_add/A[7:0]
+addSignal -h 16 -UNSIGNED -HEX /tb_fp8_add/B[7:0]
+addSignal -h 16 -UNSIGNED -HEX /tb_fp8_add/Result[7:0]
+addSignal -h 16 -UNSIGNED -HEX /tb_fp8_add/Flags[4:0]
 addGroup "G2"
 
 ; getSignalForm Scope Hierarchy Status
