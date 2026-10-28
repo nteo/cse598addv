@@ -4,7 +4,7 @@ $PROJECT_ROOT/matmul.sv
 $PROJECT_ROOT/matmul_8x8.sv
 $PROJECT_ROOT/matmul_with_ram.sv
 $PROJECT_ROOT/apb_top.sv
-$PROJECT_ROOT/apb_matmul_tb.sv
+//$PROJECT_ROOT/apb_matmul_tb.sv
 //$PROJECT_ROOT/matmul_with_ram_tb.sv
 //$PROJECT_ROOT/matmul_tb.sv
 
@@ -24,4 +24,4 @@ $PROJECT_ROOT/FP8/fp8_mul/fp8_mul_prep.sv
 $PROJECT_ROOT/FP8/fp8_mul/fp8_mul_execute.sv
 $PROJECT_ROOT/FP8/fp8_mul/fp8_mul_round.sv
 $PROJECT_ROOT/FP8/fp8_mul/fp8_mul.sv
-// $PROJECT_ROOT/FP8/fp8_mul/tb_fp8_mul.sv
+$PROJECT_ROOT/FP8/fp8_mul/tb_fp8_mul.sv
