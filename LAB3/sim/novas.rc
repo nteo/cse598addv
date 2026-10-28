@@ -221,6 +221,8 @@ Selection-LineColor = ID_BLUE3
 Selection-LineWidth = 1
 [FSM_Dlg-Print]
 Orientation = Landscape
+[FileBrowser]
+nWaveRestoreRCDirHistory = "\"/home/a34282_asu/cse598addv/LAB3/sim/mm8x8_signal.rc\""
 [Form]
 version = Verdi_W-2024.09-SP2-3
 [General]
@@ -231,8 +233,8 @@ SyncBrowserDir = TRUE
 FindBarVisible = 
 ColorThemeModern = bright
 version = Verdi_W-2024.09-SP2-3
-recent_commands_Verdi = tbvDebugRunContinue,tbvRunDebugMode
-recent_commands_nWave = saveSignal,zoomAll,editCut
+recent_commands_Verdi = nsFullScreen,tbvDebugRunContinue,tbvRunDebugMode
+recent_commands_nWave = zoomAll,restoreSignal,saveSignal,editCut
 prevColorThemeModern = bright
 SignalCaseInSensitive = FALSE
 [GlobalProp]
@@ -285,12 +287,12 @@ bScpecifyCellNameCase = False
 bSpecifyPinNameCase = False
 [InteractiveDebug]
 tbvLocalWatchArrayLimit = 50
-Watch_0 = 150 80 80 0 
-Watch_1 = 150 80 80 200 
-Watch_2 = 150 80 80 200 
-Watch_3 = 150 80 80 200 
-Watch_4 = 150 80 80 200 
-Watch_5 = 150 80 80 200 
+Watch_0 = 150 80 80 0
+Watch_1 = 150 80 80 200
+Watch_2 = 150 80 80 200
+Watch_3 = 150 80 80 200
+Watch_4 = 150 80 80 200
+Watch_5 = 150 80 80 200
 [Language]
 EditWindow_Font = COURIER12
 Background = ID_WHITE
@@ -394,8 +396,10 @@ savePropStat = FALSE
 savePropDtl = TRUE
 [QtDialog]
 QwWarnMsgDlg = 330,467,600,250
-saveSigDlg = 472,237,551,386
-QwUserAskDlg = 586,404,324,128
+saveSigDlg = 364,162,551,386
+restoreSigDlg = 364,136,551,438
+QwUserAskDlg = 478,328,324,128
+unknownSave = 409,232,461,245
 [Relationship]
 hideRecursiceNode = FALSE
 [Safety]
@@ -411,7 +415,7 @@ HighlightSafetyObject = TRUE
 3 = string (session file name)
 4 = string (session file name)
 5 = string (session file name)
-1 = /home/a34263_asu/CSE598/LAB3/sim/verdiLog/novas_autosave.ses
+1 = /home/a34282_asu/cse598addv/LAB3/sim/verdiLog/novas_autosave.ses
 [Signal List]
 sigListBackgroundColor = ID_WHITE
 [Simulation]
@@ -477,16 +481,16 @@ ScsDebugAll = FALSE
 NoAppendOption = FALSE
 invokeSimPath = work
 vcs_svOption = -sml=verdi
+smartlog = TRUE
 simType = vcssv
 bSVTBMode = TRUE
 SimMode = TRUE
 interactiveDebugging = TRUE
 KeepBreakPoints = FALSE
 vcs_svPath = ./simv
-smartlog = TRUE
 [SimulationPlus2]
-eventDumpUnfinish = FALSE
 dumpPowerRoot = FALSE
+eventDumpUnfinish = FALSE
 [Source]
 wordWrapOn = TRUE
 viewReuse = TRUE
@@ -512,14 +516,14 @@ annotateFSMLimitNum = -1
 restoredItemsLimitNum = 100000
 [SourceVHDL]
 vhSimType = ModelSim
-ohSimType = VerilogXL
+ohSimType = VCS
 [TclShell]
 nLineSize = 1024
 [Test]
 verbose_progress = FALSE
 [TestBenchBrowser]
--showUVMDynamicHierTreeWin = FALSE
 DataViewTooltip = TRUE
+-showUVMDynamicHierTreeWin = FALSE
 [Text]
 hdlTypeName = blue4
 hdlLibrary = blue4
@@ -603,7 +607,7 @@ pdmlMacro = ID_BLACK
 font = COURIER12
 annotFont = FIXED12
 [Text.1]
-viewport = 0 27 1496 807 45
+viewport = 0 27 1280 656 45
 [TextPrinter]
 Orientation = Landscape
 Indicator = FALSE
@@ -685,8 +689,8 @@ Button3 = "Next ? Time" "#${Arg:Next Time} $stop;.\n"
 Button2 = "Next 1000 Time" "#1000 $stop;.\n"
 Button1 = "Dump All Signals" "$fsdbDumpvars;\n"
 [VIA]
-viaLogViewerDefaultRuleOneSearchForm = "share/VIA/Apps/PredefinedRules/Misc/Onesearch_rule.rc"
 viaLogViewerDefaultRuleInterForm = "share/VIA/Apps/PredefinedRules/UVM_OVM_i_rule.rc"
+viaLogViewerDefaultRuleOneSearchForm = "share/VIA/Apps/PredefinedRules/Misc/Onesearch_rule.rc"
 [VIA.interactiveDebug.preference]
 DefaultDisplayTimeUnit = "1.000000ns"
 DefaultLogTimeUnit = "1.000000ns"
@@ -751,52 +755,52 @@ isOneSearchVisible = TRUE
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0]
 parRuleSets = ""
 [VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column0]
-name = "Time"
-width = 60
-visualIndex = 0
-isHidden = FALSE
-isUserChangeColumnVisible = FALSE
-isColFilterColorCoding = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column1]
-name = "Message"
-width = 2000
-visualIndex = 5
-isHidden = FALSE
-isUserChangeColumnVisible = FALSE
-isColFilterColorCoding = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column2]
-name = "Block's First Line"
-width = 120
-visualIndex = 1
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-isColFilterColorCoding = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column3]
-name = "Code"
-width = 60
-visualIndex = 3
-isHidden = TRUE
-isUserChangeColumnVisible = FALSE
-isColFilterColorCoding = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column4]
 name = "Severity"
 width = 60
 visualIndex = 2
 isHidden = FALSE
 isUserChangeColumnVisible = FALSE
 isColFilterColorCoding = FALSE
-[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column5]
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column1]
+name = "Code"
+width = 60
+visualIndex = 3
+isHidden = TRUE
+isUserChangeColumnVisible = FALSE
+isColFilterColorCoding = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column2]
 name = "Type"
 width = 60
 visualIndex = 4
 isHidden = TRUE
 isUserChangeColumnVisible = FALSE
 isColFilterColorCoding = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column3]
+name = "Time"
+width = 60
+visualIndex = 0
+isHidden = FALSE
+isUserChangeColumnVisible = FALSE
+isColFilterColorCoding = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column4]
+name = "Message"
+width = 2000
+visualIndex = 5
+isHidden = FALSE
+isUserChangeColumnVisible = FALSE
+isColFilterColorCoding = FALSE
+[VIA.oneSearch.preference.vgifColumnSettingRC.setting0.column5]
+name = "Block's First Line"
+width = 120
+visualIndex = 1
+isHidden = TRUE
+isUserChangeColumnVisible = FALSE
+isColFilterColorCoding = FALSE
 [VIA.parRule]
 parRulePathInterForm = ""
 [VIA.ruleHistory]
-/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/VIA/Apps/PredefinedRules/UVM_OVM_i_rule.rc = 
 /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/VIA/Apps/PredefinedRules/Misc/Onesearch_rule.rc = 
+/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/VIA/Apps/PredefinedRules/UVM_OVM_i_rule.rc = 
 [Vi]
 ViFont = "Clean 14"
 ViBG = white
@@ -872,7 +876,7 @@ scope_to_save_with_macro
 open_file_dir
 open_rc_file_dir
 getSignalForm = 0 0 800 479 100 30 100 30
-viewPort = 0 11 994 312 100 65
+viewPort = 0 11 1280 316 100 65
 legendBackground = -c ID_BLACK
 valueBackground = -c ID_BLACK
 curveBackground = -c ID_BLACK
@@ -1038,6 +1042,8 @@ printBasic = 1 0 0 TRUE FALSE
 printDest = -printer {}
 printSignature = {%f %h %t} {}
 curveWindow_Drag&Drop_Mode = TRUE
+RecentFile1 = "\"/home/a34282_asu/cse598addv/LAB3/sim/mm8x8_signal.rc\""
+RecentFile2 = "\"/home/a34282_asu/cse598addv/LAB3/sim/novas.fsdb\""
 open_file_time_range = FALSE
 legend_window_font = -f COURIER12 -c ID_CYAN5
 value_window_font = -f COURIER12 -c ID_CYAN5
@@ -1146,7 +1152,7 @@ InputPinStatus = 1
 OutputPinStatus = 2
 RevisedComponentColor = ID_BLUE5
 SpareCellColor = ID_RED5
-UserName = a34263_asu
+UserName = a34282_asu
 CommentFormat = Novas ECO updated by ${UserName} ${Date} ${Time} 
 PrefixN = eco_n
 PrefixP = eco_p
@@ -1673,7 +1679,7 @@ AddImportArgument = FALSE
 LineBreakWithScope = TRUE
 StopAfterCompileOption = -s
 [wave.0]
-viewPort = 0 11 994 312 100 65
+viewPort = 0 11 1280 316 100 65
 [wave.1]
 viewPort = 127 219 960 332 100 65
 [wave.2]
