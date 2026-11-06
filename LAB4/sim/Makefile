@@ -1,3 +1,4 @@
+VERBOSE ?= 0
 
 all: sim clean
 
@@ -22,7 +23,7 @@ compile_uvm:
 
 # This runs simulation
 sim:
-	./simv
+	./simv +VERBOSE=$(VERBOSE)
 
 # This launches Verdi
 verdi:
