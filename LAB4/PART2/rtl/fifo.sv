@@ -23,8 +23,8 @@ module fifo #(
       write_counter <= 0;
     end
     else if (fifo_wi.winc && !fifo_wi.full) begin
-      // Drop the write if INSERT_BUG is set to 1 and the write_counter equals 5
-      if (INSERT_BUG == 1'b1 && write_counter == 5) begin
+      // Drop the write if insert_bug is set to 1 and the write_counter equals 5
+      if (insert_bug == 1'b1 && write_counter == 5) begin
         write_counter <= 0; // Reset the write counter
       end
       else begin

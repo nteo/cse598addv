@@ -28,12 +28,6 @@ class fifo_write_driver #(int DATA_WIDTH = 8);
         @(negedge vif.wclk);
         vif.wdata <= data;
         vif.winc  <= 1'b1;
-
-        @(posedge vif.wclk);
-
-        @(negedge vif.wclk);
-        vif.wdata <= '0;
-        vif.winc  <= 1'b0;
     endtask
 
     task stall();
