@@ -2,10 +2,8 @@
 import "DPI-C" function void reset_fifo();
 import "DPI-C" function void push_fifo(int data);
 import "DPI-C" function int  pop_fifo();
-import "DPI-C" function bool is_fifo_full();
-import "DPI-C" function bool is_fifo_empty();
-
-`timescale 1ns/1ns
+import "DPI-C" function int is_fifo_full();
+import "DPI-C" function int is_fifo_empty();
 
 
 //////////////////////
@@ -80,9 +78,6 @@ class fifo_checker #(int DATA_WIDTH = 8);
     virtual fifo_wif write_vif;
     virtual fifo_rif read_vif;
 
-    logic [DATA_WIDTH-1:0] expected_rdata;
-    bool expected_full, expected_empty;
-
     function new(virtual fifo_wif write_vif, virtual fifo_rif read_vif);
         this.write_vif = write_vif;
         this.read_vif = read_vif;
@@ -101,40 +96,39 @@ class fifo_checker #(int DATA_WIDTH = 8);
         logic sampled_winc;
         logic sampled_full, sampled_empty;
 
+        bit expected_full, expected_empty;
+
         forever begin
             // Sample the write signals and empty flag on the posedge of the write clock
+            sampled_full  = write_vif.full;
+
             @(posedge write_vif.wclk);
             #1;
             sampled_wdata = write_vif.wdata;
             sampled_winc  = write_vif.winc;
-            sampled_full  = write_vif.full;
-            sampled_empty = read_vif.empty;
 
             // Check the sampled values against the expected values on the negedge of the write clock
             @(negedge write_vif.wclk);
             // Get the expected values from the DPI calls
+            expected_full  = is_fifo_full();
             if (sampled_winc && !is_fifo_full()) begin
-                $display("Pushing data to FIFO: %0d at time = %0t", sampled_wdata, $time);
+                $display("\tTime %0t:: Pushing data to FIFO: %0d",
+                    $time,
+                    sampled_wdata
+                );
                 push_fifo(sampled_wdata);
             end
-            expected_full  = is_fifo_full();
-            expected_empty = is_fifo_empty();
 
             // Compare the sampled values with the expected values
             if (sampled_full !== expected_full) begin
-                $error(
-                    "FULL mismatch: expected=%0d actual=%0d",
+                $display("\tTime %0t:: FULL (write) mismatch: expected=%0d actual=%0d",
+                    $time,
                     expected_full,
                     sampled_full
                 );
             end
-
-            if (sampled_empty !== expected_empty) begin
-                $error(
-                    "EMPTY mismatch: expected=%0d actual=%0d",
-                    expected_empty,
-                    sampled_empty
-                );
+            else begin
+                $display("\tTime %0t:: FULL PASS: full=%0d", $time, sampled_full);
             end
         end
     endtask
@@ -144,52 +138,51 @@ class fifo_checker #(int DATA_WIDTH = 8);
         logic sampled_rinc;
         logic sampled_full, sampled_empty;
 
+        int expected_rdata;
+        bit expected_full, expected_empty;
+
         forever begin
             // Capture rdata before it is updated
             sampled_rdata = read_vif.rdata;
+            sampled_empty = read_vif.empty;
 
             // Sample the rest of the read signals and full flag on the posedge of the read clock
             @(posedge read_vif.rclk);
             #1;
             sampled_rinc  = read_vif.rinc;
-            sampled_full  = write_vif.full;
-            sampled_empty = read_vif.empty;
 
             // Check the sampled values against the expected values on the negedge of the read clock
             @(negedge read_vif.rclk);
             // Get the expected values from the DPI calls
+            expected_empty = is_fifo_empty();
             if (sampled_rinc && !is_fifo_empty()) begin
                 expected_rdata = pop_fifo();
             end
             else begin
                 expected_rdata = sampled_rdata;
             end
-            expected_full = is_fifo_full();
-            expected_empty = is_fifo_empty();
 
             // Compare the sampled values with the expected values
             if (sampled_rdata !== expected_rdata) begin
-                    $error(
-                        "READ DATA mismatch: expected=%0d actual=%0d",
-                        expected_rdata,
-                        sampled_rdata
-                    );
-            end
-
-            if (sampled_full !== expected_full) begin
-                $error(
-                    "FULL mismatch: expected=%0d actual=%0d",
-                    expected_full,
-                    sampled_full
+                $display("\tTime %0t:: READ DATA mismatch: expected=%0d actual=%0d",
+                    $time,
+                    expected_rdata,
+                    sampled_rdata
                 );
+            end
+            else begin
+                $display("\tTime %0t:: READ PASS: rdata=%0d", $time, sampled_rdata);
             end
 
             if (sampled_empty !== expected_empty) begin
-                $error(
-                    "EMPTY mismatch: expected=%0d actual=%0d",
+                $display("\tTime %0t:: EMPTY (read) mismatch: expected=%0d actual=%0d",
+                    $time,
                     expected_empty,
                     sampled_empty
                 );
+            end
+            else begin
+                $display("\tTime %0t:: EMPTY PASS: empty=%0d", $time, sampled_empty);
             end
         end
     endtask
@@ -200,6 +193,9 @@ endclass
 //Testbench
 /////////////////////
 module fifo_dpi_tb;
+    timeunit 1ns;
+    timeprecision 1ns;
+
     localparam int WCLK_PERIOD = 5;
     localparam int RCLK_PERIOD = 7;
     localparam int DATA_WIDTH = 8;

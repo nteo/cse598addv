@@ -1,3 +1,5 @@
+`timescale 1ns/1ns
+
 module fifo #(
   parameter DATA_WIDTH = 8,
   parameter ADDR_WIDTH = 4

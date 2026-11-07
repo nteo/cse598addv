@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 #define DEPTH 16
 
@@ -36,10 +35,10 @@ int pop_fifo() {
     return data;
 }
 
-bool is_fifo_full() {
+int is_fifo_full() {
     return count == DEPTH;
 }
 
-bool is_fifo_empty() {
+int is_fifo_empty() {
     return count == 0;
 }
