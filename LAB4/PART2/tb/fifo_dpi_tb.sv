@@ -87,9 +87,13 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
         this.read_vif  = read_vif;
     endfunction
 
-    function void err(string msg);
+    function void report_fail(string msg);
         errors++;
-        $error("[CHK] %s (model count=%0d)", msg, fifo_count());
+        $error("[FAIL] %s (model count=%0d)", msg, fifo_count());
+    endfunction
+
+    function void report_pass(string msg);
+        $display("[PASS] %s (model count=%0d)", msg, fifo_count());
     endfunction
 
     function bit in_reset();
@@ -116,6 +120,7 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
     endtask
 
     task check_writes();
+        bit valid_write;
         int cnt;
         forever begin
             @(posedge write_vif.wclk);
@@ -126,26 +131,35 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
             cnt = fifo_count();
 
             if ($isunknown(write_vif.full))
-                err("full is X/Z");
+                report_fail("full is X/Z");
 
             // Safety: a truly full FIFO must report full
             if (cnt == DEPTH && write_vif.full !== 1'b1)
-                err("full NOT asserted while model is full");
+                report_fail("full NOT asserted while model is full");
+            else if (cnt == DEPTH && write_vif.full === 1'b1)
+                report_pass("full asserted while model is full");
 
             // Latency bound: full may linger after reads, but only briefly
             if (write_vif.full === 1'b1 && cnt < DEPTH) begin
                 wlag++;
                 if (wlag == FLAG_LAG + 1)
-                    err($sformatf("full stuck high > %0d wclk edges after space was freed", FLAG_LAG));
+                    report_fail($sformatf("full stuck high > %0d wclk edges after space was freed", FLAG_LAG));
             end
             else wlag = 0;
 
             // Transaction: accepted by the DUT -> accepted by the model
             if (write_vif.winc === 1'b1 && write_vif.full === 1'b0) begin
-                if ($isunknown(write_vif.wdata))
-                    err("wdata is X/Z on an accepted write");
-                if (push_fifo(int'(write_vif.wdata)))
-                    err("DUT accepted a write while model is full (overflow)");
+                valid_write = 1;
+                if ($isunknown(write_vif.wdata)) begin
+                    report_fail("wdata is X/Z on an accepted write");
+                    valid_write = 0;
+                end
+                if (push_fifo(int'(write_vif.wdata))) begin
+                    report_fail("DUT accepted a write while model is full (overflow)");
+                    valid_write = 0;
+                end
+                if (valid_write)
+                    report_pass($sformatf("DUT successfully accepted a write: wdata=%0d", write_vif.wdata));
                 writes++;
             end
         end
@@ -163,17 +177,19 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
             cnt = fifo_count();
 
             if ($isunknown(read_vif.empty))
-                err("empty is X/Z");
+                report_fail("empty is X/Z");
 
             // Safety: a truly empty FIFO must report empty
             if (cnt == 0 && read_vif.empty !== 1'b1)
-                err("empty NOT asserted while model is empty");
+                report_fail("empty NOT asserted while model is empty");
+            else if (cnt == 0 && read_vif.empty === 1'b1)
+                report_pass("empty asserted while model is empty");
 
             // Latency bound: empty may linger after writes, but only briefly
             if (read_vif.empty === 1'b1 && cnt > 0) begin
                 rlag++;
                 if (rlag == FLAG_LAG + 1)
-                    err($sformatf("empty stuck high > %0d rclk edges after data was written", FLAG_LAG));
+                    report_fail($sformatf("empty stuck high > %0d rclk edges after data was written", FLAG_LAG));
             end
             else rlag = 0;
 
@@ -181,10 +197,13 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
             // value sampled on this edge is the word being consumed.
             if (read_vif.rinc === 1'b1 && read_vif.empty === 1'b0) begin
                 if (pop_fifo(expd))
-                    err("DUT accepted a read while model is empty (underflow)");
+                    report_fail("DUT accepted a read while model is empty (underflow)");
                 else if (read_vif.rdata !== DATA_WIDTH'(expd))
-                    err($sformatf("READ DATA mismatch: expected=%0d actual=%0d",
+                    report_fail($sformatf("READ DATA mismatch: expected=%0d actual=%0d",
                                   DATA_WIDTH'(expd), read_vif.rdata));
+                else begin
+                    report_pass($sformatf("READ DATA match: value=%0d", read_vif.rdata));
+                end
                 reads++;
             end
         end
@@ -393,29 +412,35 @@ module fifo_dpi_tb;
 
         case (test_num)
             1: begin
-                $display("Running Test #1: Simultaneous Read and Write");
+                $display("Running Test #1: Simultaneous Read and Write...");
                 test_simultaneous_read_write();
+                checker.report();
             end
 
             2: begin
-                $display("Running Test #2: Full Condition");
+                $display("Running Test #2: Full Condition...");
                 test_full_condition();
+                checker.report();
             end
 
             3: begin
-                $display("Running Test #3: Empty Condition");
+                $display("Running Test #3: Empty Condition...");
                 test_empty_condition();
+                checker.report();
             end
 
             default: begin
-                $display("Running Test #1: Simultaneous Read and Write");
+                $display("Running Test #1: Simultaneous Read and Write...");
                 test_simultaneous_read_write();
+                checker.report();
 
-                $display("Running Test #2: Full Condition");
+                $display("\nRunning Test #2: Full Condition...");
                 test_full_condition();
+                checker.report();
 
-                $display("Running Test #3: Empty Condition");
+                $display("\nRunning Test #3: Empty Condition...");
                 test_empty_condition();
+                checker.report();
             end
         endcase
 
