@@ -1,9 +1,8 @@
 // Import the C function using DPI
 import "DPI-C" function void reset_fifo();
-import "DPI-C" function void push_fifo(int data);
-import "DPI-C" function int  pop_fifo();
-import "DPI-C" function int is_fifo_full();
-import "DPI-C" function int is_fifo_empty();
+import "DPI-C" function int  push_fifo(int data);        // returns 1 on model overflow
+import "DPI-C" function int  pop_fifo(output int data);  // returns 1 on model underflow
+import "DPI-C" function int  fifo_count();
 
 
 //////////////////////
@@ -74,118 +73,128 @@ endclass
 //////////////////////
 //Checker
 /////////////////////
-class fifo_checker #(int DATA_WIDTH = 8);
+class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
     virtual fifo_wif write_vif;
     virtual fifo_rif read_vif;
 
+    localparam int FLAG_LAG = SYNC_STAGES + 2;   // +1 slack for coincident edges
+
+    int unsigned errors = 0, writes = 0, reads = 0;
+    int wlag = 0, rlag = 0;
+
     function new(virtual fifo_wif write_vif, virtual fifo_rif read_vif);
         this.write_vif = write_vif;
-        this.read_vif = read_vif;
+        this.read_vif  = read_vif;
+    endfunction
+
+    function void err(string msg);
+        errors++;
+        $error("[CHK] %s (model count=%0d)", msg, fifo_count());
+    endfunction
+
+    function bit in_reset();
+        return (write_vif.wrst_n !== 1'b1) || (read_vif.rrst_n !== 1'b1);
     endfunction
 
     task run();
         reset_fifo();
         fork
+            watch_reset();
             check_writes();
             check_reads();
         join_none
     endtask
 
-    task check_writes();
-        logic [DATA_WIDTH-1:0] sampled_wdata;
-        logic sampled_winc;
-        logic sampled_full, sampled_empty;
-
-        bit expected_full, expected_empty;
-
+    // The test tasks re-reset the DUT; the model must follow.
+    task watch_reset();
         forever begin
-            // Sample the write signals and empty flag on the posedge of the write clock
-            sampled_full  = write_vif.full;
+            @(negedge write_vif.wrst_n or negedge read_vif.rrst_n);
+            reset_fifo();
+            wlag = 0;
+            rlag = 0;
+        end
+    endtask
 
+    task check_writes();
+        int cnt;
+        forever begin
             @(posedge write_vif.wclk);
-            #1;
-            sampled_wdata = write_vif.wdata;
-            sampled_winc  = write_vif.winc;
-
-            // Check the sampled values against the expected values on the negedge of the write clock
-            @(negedge write_vif.wclk);
-            // Get the expected values from the DPI calls
-            expected_full  = is_fifo_full();
-            if (sampled_winc && !is_fifo_full()) begin
-                $display("\tTime %0t:: Pushing data to FIFO: %0d",
-                    $time,
-                    sampled_wdata
-                );
-                push_fifo(sampled_wdata);
+            if (in_reset()) begin
+                wlag = 0;
+                continue;
             end
+            cnt = fifo_count();
 
-            // Compare the sampled values with the expected values
-            if (sampled_full !== expected_full) begin
-                $display("\tTime %0t:: FULL (write) mismatch: expected=%0d actual=%0d",
-                    $time,
-                    expected_full,
-                    sampled_full
-                );
+            if ($isunknown(write_vif.full))
+                err("full is X/Z");
+
+            // Safety: a truly full FIFO must report full
+            if (cnt == DEPTH && write_vif.full !== 1'b1)
+                err("full NOT asserted while model is full");
+
+            // Latency bound: full may linger after reads, but only briefly
+            if (write_vif.full === 1'b1 && cnt < DEPTH) begin
+                wlag++;
+                if (wlag == FLAG_LAG + 1)
+                    err($sformatf("full stuck high > %0d wclk edges after space was freed", FLAG_LAG));
             end
-            else begin
-                $display("\tTime %0t:: FULL PASS: full=%0d", $time, sampled_full);
+            else wlag = 0;
+
+            // Transaction: accepted by the DUT -> accepted by the model
+            if (write_vif.winc === 1'b1 && write_vif.full === 1'b0) begin
+                if ($isunknown(write_vif.wdata))
+                    err("wdata is X/Z on an accepted write");
+                if (push_fifo(int'(write_vif.wdata)))
+                    err("DUT accepted a write while model is full (overflow)");
+                writes++;
             end
         end
     endtask
 
     task check_reads();
-        logic [DATA_WIDTH-1:0] sampled_rdata;
-        logic sampled_rinc;
-        logic sampled_full, sampled_empty;
-
-        int expected_rdata;
-        bit expected_full, expected_empty;
-
+        int cnt;
+        int expd;
         forever begin
-            // Capture rdata before it is updated
-            sampled_rdata = read_vif.rdata;
-            sampled_empty = read_vif.empty;
-
-            // Sample the rest of the read signals and full flag on the posedge of the read clock
             @(posedge read_vif.rclk);
-            #1;
-            sampled_rinc  = read_vif.rinc;
+            if (in_reset()) begin
+                rlag = 0;
+                continue;
+            end
+            cnt = fifo_count();
 
-            // Check the sampled values against the expected values on the negedge of the read clock
-            @(negedge read_vif.rclk);
-            // Get the expected values from the DPI calls
-            expected_empty = is_fifo_empty();
-            if (sampled_rinc && !is_fifo_empty()) begin
-                expected_rdata = pop_fifo();
-            end
-            else begin
-                expected_rdata = sampled_rdata;
-            end
+            if ($isunknown(read_vif.empty))
+                err("empty is X/Z");
 
-            // Compare the sampled values with the expected values
-            if (sampled_rdata !== expected_rdata) begin
-                $display("\tTime %0t:: READ DATA mismatch: expected=%0d actual=%0d",
-                    $time,
-                    expected_rdata,
-                    sampled_rdata
-                );
-            end
-            else begin
-                $display("\tTime %0t:: READ PASS: rdata=%0d", $time, sampled_rdata);
-            end
+            // Safety: a truly empty FIFO must report empty
+            if (cnt == 0 && read_vif.empty !== 1'b1)
+                err("empty NOT asserted while model is empty");
 
-            if (sampled_empty !== expected_empty) begin
-                $display("\tTime %0t:: EMPTY (read) mismatch: expected=%0d actual=%0d",
-                    $time,
-                    expected_empty,
-                    sampled_empty
-                );
+            // Latency bound: empty may linger after writes, but only briefly
+            if (read_vif.empty === 1'b1 && cnt > 0) begin
+                rlag++;
+                if (rlag == FLAG_LAG + 1)
+                    err($sformatf("empty stuck high > %0d rclk edges after data was written", FLAG_LAG));
             end
-            else begin
-                $display("\tTime %0t:: EMPTY PASS: empty=%0d", $time, sampled_empty);
+            else rlag = 0;
+
+            // Transaction. rdata is first-word-fall-through (ex_mem[rptr]), so the
+            // value sampled on this edge is the word being consumed.
+            if (read_vif.rinc === 1'b1 && read_vif.empty === 1'b0) begin
+                if (pop_fifo(expd))
+                    err("DUT accepted a read while model is empty (underflow)");
+                else if (read_vif.rdata !== DATA_WIDTH'(expd))
+                    err($sformatf("READ DATA mismatch: expected=%0d actual=%0d",
+                                  DATA_WIDTH'(expd), read_vif.rdata));
+                reads++;
             end
         end
     endtask
+ 
+    function void report();
+        $display("[CHK] writes=%0d reads=%0d errors=%0d residual_model_count=%0d",
+                 writes, reads, errors, fifo_count());
+        $display("[CHK] %s", (errors == 0) ? "PASS" : "FAIL");
+    endfunction
 endclass
 
 
@@ -215,7 +224,7 @@ module fifo_dpi_tb;
     fifo dut(.*);
     fifo_write_driver #(DATA_WIDTH) write_driver;
     fifo_read_driver read_driver;
-    fifo_checker #(DATA_WIDTH) checker;
+    fifo_checker #(DATA_WIDTH, DEPTH) checker;
 
 
     // <<<<< TEST CASES >>>>>
