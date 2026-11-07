@@ -29,6 +29,10 @@ compile_uvm:
 sim:
 	./simv $(SIM_ARGS)
 
+# This runs simulation with the bug
+sim_bug:
+	./simv $(SIM_ARGS) +INSERT_BUG
+
 # This launches Verdi
 verdi:
 	$(VERDI_HOME)/bin/verdi -dbdir ./simv.daidir -nologo

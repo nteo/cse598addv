@@ -5,20 +5,33 @@ module fifo #(
   parameter ADDR_WIDTH = 4
 ) (
   fifo_rif.FIFO fifo_ri,
-  fifo_wif.FIFO fifo_wi
+  fifo_wif.FIFO fifo_wi,
+  input logic insert_bug
 );  
   localparam MEMDEPTH = 1<<ADDR_WIDTH;
   
   logic [ADDR_WIDTH:0]   wptr, wrptr1, wrptr2, wrptr3;
   logic [ADDR_WIDTH:0]   rptr, rwptr1, rwptr2, rwptr3;
   logic [DATA_WIDTH-1:0] ex_mem [0:MEMDEPTH-1];
+
+  logic [ADDR_WIDTH-1:0] write_counter;
   
   always @(posedge fifo_wi.wclk or negedge fifo_wi.wrst_n)
   begin
-    if      (!fifo_wi.wrst_n)        wptr <= 0;
+    if      (!fifo_wi.wrst_n) begin
+      wptr <= 0;
+      write_counter <= 0;
+    end
     else if (fifo_wi.winc && !fifo_wi.full) begin
-      ex_mem[wptr[ADDR_WIDTH-1:0]] <= fifo_wi.wdata;
-      wptr                    <= wptr+1;
+      // Drop the write if INSERT_BUG is set to 1 and the write_counter equals 5
+      if (INSERT_BUG == 1'b1 && write_counter == 5) begin
+        write_counter <= 0; // Reset the write counter
+      end
+      else begin
+        ex_mem[wptr[ADDR_WIDTH-1:0]] <= fifo_wi.wdata;
+        wptr                    <= wptr+1;
+        write_counter <= write_counter + 1;
+      end
     end
   end
   

@@ -222,7 +222,7 @@ endclass
 /////////////////////
 module fifo_dpi_tb;
     timeunit 1ns;
-    timeprecision 1ns;
+    timeprecision 1ps;
 
     localparam int WCLK_PERIOD = 5;
     localparam int RCLK_PERIOD = 7;
@@ -233,6 +233,7 @@ module fifo_dpi_tb;
 
     // <<<<< TESTBENCH SIGNALS >>>>>
     logic wclk, rclk;
+    logic insert_bug;
     int test_num;   // define the test number (1, 2, or 3)
 
     fifo_wif #(DATA_WIDTH) fifo_wi(.*);
@@ -379,13 +380,13 @@ module fifo_dpi_tb;
     // Set up the clock signals for the write interface
     initial begin
         wclk = 1'b0;
-        forever #(WCLK_PERIOD / 2) wclk = ~wclk;
+        forever #(WCLK_PERIOD / 2.0) wclk = ~wclk;
     end
 
     // Set up the clock signals for the read interface
     initial begin
         rclk = 1'b0;
-        forever #(RCLK_PERIOD / 2) rclk = ~rclk;
+        forever #(RCLK_PERIOD / 2.0) rclk = ~rclk;
     end
 
 
@@ -405,6 +406,9 @@ module fifo_dpi_tb;
         // Run the checker
         checker.run();
 
+        // Check if there is an insert_bug flag from command line arguments
+        insert_bug = $test$plusargs("INSERT_BUG");
+        
         // Get the test number from command line arguments (default to running all tests if not provided)
         if (!$value$plusargs("TEST=%d", test_num)) begin
             test_num = 0; // Default to running all tests
