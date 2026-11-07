@@ -15,6 +15,9 @@ First,
 1. To compile, run simulation, and open Verdi waveforms:
    % cd sim
    % make run
+   To run one test, pass its number through the Makefile:
+   % make run TEST=1
+   Tests 1, 2, and 3 select the individual tests; the default `TEST=0` runs all tests.
 2. To run synthesis, change compile_dc.tcl accordingly, then:
    % cd synth
    % make synth
@@ -38,4 +41,3 @@ The below steps show the recommended workflow for pushing a file to the main rem
 5. git checkout main (switches branch to main)
 6. git merge <branch> (merges your branch changes to the main branch. ONLY DO ONCE EVERYTHING IS STABLE IN YOUR BRANCH)
 7. git branch -d <branch> (delete your branch. Not a necessary step, just here to show you how to do it)
-
