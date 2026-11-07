@@ -1,15 +1,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define DEPTH 8
+#define DEPTH 16
 
 int fifo[DEPTH];
 
-int write_ptr = 0;
-int read_ptr = 0;
-int count = 0;
+int write_ptr;
+int read_ptr;
+int count;
 
-void push(int data) {
+void reset_fifo() {
+    write_ptr = 0;
+    read_ptr = 0;
+    count = 0;
+}
+
+void push_fifo(int data) {
     if (count < DEPTH) {
         fifo[write_ptr] = data;
         write_ptr = (write_ptr + 1) % DEPTH;
@@ -17,7 +23,7 @@ void push(int data) {
     }
 }
 
-int pop() {
+int pop_fifo() {
     int data;
     if (count > 0) {
         data = fifo[read_ptr];
@@ -30,10 +36,10 @@ int pop() {
     return data;
 }
 
-bool is_full() {
+bool is_fifo_full() {
     return count == DEPTH;
 }
 
-bool is_empty() {
+bool is_fifo_empty() {
     return count == 0;
 }
