@@ -1,0 +1,58 @@
+
+Warning-[DEBUG_DEP] Option will be deprecated
+  The option '-debug_pp' will be deprecated in a future release.  Please use 
+  '-debug_acc+pp+dmptf -debug_region+cell+encrypt' instead.
+
+
+Warning-[DBGACC_DBG] Multiple debug options being used
+  The debug switches '-debug_access' and '-debug_pp' are being used together. 
+  For better performance, consider using only '-debug_access'.
+
+                         Chronologic VCS (TM)
+      Version W-2024.09-SP2-3_Full64 -- Sun Nov  8 07:08:28 2026
+
+                    Copyright (c) 1991 - 2025 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+
+Warning-[LCA_FEATURES_ENABLED] Usage warning
+  LCA features enabled by '-lca' argument on the command line.  For more 
+  information regarding list of LCA features please refer to Chapter "LCA 
+  features" in the VCS Release Notes
+
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_if.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_tb.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_rif.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_wif.sv'
+Top Level Modules:
+       even_odd_sorter_tb
+No TimeScale specified
+Notice: Ports coerced to inout, use -notice for details
+Starting vcs inline pass...
+4 modules and 0 UDP read.
+	However, due to incremental compilation, no re-compilation is necessary.
+make[1]: Entering directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+make[1]: Leaving directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+make[1]: Entering directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x ../simv ]; then chmod a-x ../simv; fi
+g++  -o ../simv      -rdynamic  -Wl,-rpath='$ORIGIN'/simv.daidir -Wl,-rpath=./simv.daidir -Wl,-rpath=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib -L/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib  -Wl,-rpath-link=./  /usr/lib64/libnuma.so.1     _351932_archive_1.so _prev_archive_1.so _cuarc0.so   SIM_l.o      rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o            -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -ldistsimclient -lsimprofile -luclinative /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcs_tls.o   -Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive        _vcs_pli_stub_.o   /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcs_save_restore_new.o /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/pli.a -ldl  -lc -lm -lpthread -ldl 
+../simv up to date
+make[1]: Leaving directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+CPU time: .253 seconds to compile + .178 seconds to elab + .159 seconds to link
+Verdi KDB elaboration done and the database successfully generated

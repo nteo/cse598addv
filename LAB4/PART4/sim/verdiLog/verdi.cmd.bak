@@ -1,0 +1,9 @@
+verdiSetActWin -dock widgetDock_<Watch>
+simSetSimulator "-vcssv" -exec "./simv" -args "+VERBOSE=0"
+debImport "-dbdir" "./simv.daidir"
+debLoadSimResult /home/a34263_asu/CSE598/LAB4/PART4/sim/novas.fsdb
+wvCreateWindow
+verdiSetActWin -win $_nWave2
+verdiWindowResize -win $_Verdi_1 "0" "27" "1496" "807"
+verdiWindowResize -win $_Verdi_1 "0" "27" "1496" "807"
+verdiSetActWin -dock widgetDock_MTB_SOURCE_TAB_1
