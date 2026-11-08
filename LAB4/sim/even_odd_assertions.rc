@@ -1,0 +1,64 @@
+Magic 271485
+Revision Verdi_W-2024.09-SP2-3
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 11 1277 423 100 65
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/a34263_asu/CSE598/LAB4/sim/novas.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 4.845991 325.154009
+cursor 155.000000
+marker 165.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 0
+; marker line index
+markerPos 4
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/a34263_asu/CSE598/LAB4/sim/novas.fsdb"
+addSignal -h 16 /even_odd_sorter_tb/dut/even_odd_sorter_i/read_en
+addSignal -h 16 -holdScope clk
+addSignal -h 16 -UNSIGNED -HEX /even_odd_sorter_tb/dut/output_selector_inst/data_out[7:0]
+addSignal -h 16 -UNSIGNED -HEX -holdScope next_data_out[7:0]
+addSubGroup "odd_fifo_ri(fifo_rif)"
+addSignal -h 16 /even_odd_sorter_tb/dut/odd_fifo_ri/rinc
+endSubGroup "odd_fifo_ri(fifo_rif)"
+addSubGroup "even_fifo_ri(fifo_rif)"
+addSignal -h 16 /even_odd_sorter_tb/dut/even_fifo_ri/rinc
+endSubGroup "even_fifo_ri(fifo_rif)"
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+

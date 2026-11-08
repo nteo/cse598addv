@@ -4,41 +4,47 @@ module even_odd_sorter #(
     parameter int DATA_WIDTH = 8
 )
     (
-    input   logic                    clk,
-    input   logic                    rst_n,
-    input   logic [DATA_WIDTH-1:0]   data_in,
-    input   logic                    write_en,
-    output  logic [DATA_WIDTH-1:0]   data_out,
-    input   logic                    read_en
+    even_odd_sorter_if.EVEN_ODD even_odd_sorter_i
 );
     
     // Interface instantiatons
-    fifo_rif even_fifo_ri();
-    fifo_wif even_fifo_wi();
-    fifo_rif odd_fifo_ri();
-    fifo_wif odd_fifo_wi();
+    fifo_rif even_fifo_ri(even_odd_sorter_i.clk);
+    fifo_wif even_fifo_wi(even_odd_sorter_i.clk);
+    fifo_rif odd_fifo_ri(even_odd_sorter_i.clk);
+    fifo_wif odd_fifo_wi(even_odd_sorter_i.clk);
 
     // Module instantiations
-    input_sorter #(.DATA_WIDTH(DATA_WIDTH)) input_sorter_inst (.*);
+    input_sorter #(.DATA_WIDTH(DATA_WIDTH)) input_sorter_inst (
+        .even_fifo_ri(even_fifo_ri),
+        .even_fifo_wi(even_fifo_wi),
+        .odd_fifo_ri(odd_fifo_ri),
+        .odd_fifo_wi(odd_fifo_wi),
+        .data_in(even_odd_sorter_i.data_in),
+        .write_en(even_odd_sorter_i.write_en));
+
     fifo #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(FIFO_DEPTH)) even_fifo (
         .fifo_ri(even_fifo_ri),
         .fifo_wi(even_fifo_wi));
+    
     fifo #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(FIFO_DEPTH)) odd_fifo (
         .fifo_ri(odd_fifo_ri),
         .fifo_wi(odd_fifo_wi));
-    output_selector #(.DATA_WIDTH(DATA_WIDTH)) output_selector_inst (.*);
-
-    // Assign the input clock to the read and write clocks for both fifo's
-    assign even_fifo_wi.wclk = clk;
-    assign even_fifo_ri.rclk = clk;
-    assign odd_fifo_wi.wclk = clk;
-    assign odd_fifo_ri.rclk = clk;
+    
+    output_selector #(.DATA_WIDTH(DATA_WIDTH)) output_selector_inst (
+        .even_fifo_ri(even_fifo_ri),
+        .even_fifo_wi(even_fifo_wi),
+        .odd_fifo_ri(odd_fifo_ri),
+        .odd_fifo_wi(odd_fifo_wi),
+        .clk(even_odd_sorter_i.clk),
+        .rst_n(even_odd_sorter_i.rst_n),
+        .read_en(even_odd_sorter_i.read_en),
+        .data_out(even_odd_sorter_i.data_out));
 
     // Assign the reset to the read and write resets for both fifo's
-    assign even_fifo_wi.wrst_n = rst_n;
-    assign even_fifo_ri.rrst_n = rst_n;
-    assign odd_fifo_wi.wrst_n = rst_n;
-    assign odd_fifo_ri.rrst_n = rst_n;
+    assign even_fifo_wi.wrst_n = even_odd_sorter_i.rst_n;
+    assign even_fifo_ri.rrst_n = even_odd_sorter_i.rst_n;
+    assign odd_fifo_wi.wrst_n = even_odd_sorter_i.rst_n;
+    assign odd_fifo_ri.rrst_n = even_odd_sorter_i.rst_n;
 
 endmodule
 

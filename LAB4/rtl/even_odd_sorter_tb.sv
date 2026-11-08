@@ -4,32 +4,29 @@ module even_odd_sorter_tb;
     localparam int FIFO_DEPTH = 6;  // depth is 40 but the address width is 6
 
     // DUT signals
-    logic                   clk;
-    logic                   rst_n;
-    logic [DATA_WIDTH-1:0]  data_in;
-    logic                   write_en;
-    logic [DATA_WIDTH-1:0]  data_out;
-    logic                   read_en;
+    even_odd_sorter_if even_odd_sorter_i();
 
     initial begin
-        clk = 1'b0;
-        forever #5 clk = ~clk;
+        even_odd_sorter_i.clk = 1'b0;
+        forever #5 even_odd_sorter_i.clk = ~even_odd_sorter_i.clk;
     end
 
     even_odd_sorter #(
         .FIFO_DEPTH(FIFO_DEPTH),
         .DATA_WIDTH(DATA_WIDTH)
-    ) dut (.*);
+    ) dut (
+        .even_odd_sorter_i(even_odd_sorter_i)
+    );
 
     // Reset the dut
     task automatic apply_reset();
-        write_en = 1'b0;
-        data_in  = '0;
-        read_en  = 1'b0;
-        rst_n    = 1'b0;
-        repeat (4) @(negedge clk);
-        rst_n = 1'b1;
-        @(negedge clk);
+        even_odd_sorter_i.write_en = 1'b0;
+        even_odd_sorter_i.data_in  = '0;
+        even_odd_sorter_i.read_en  = 1'b0;
+        even_odd_sorter_i.rst_n    = 1'b0;
+        repeat (4) @(negedge even_odd_sorter_i.clk);
+        even_odd_sorter_i.rst_n = 1'b1;
+        @(negedge even_odd_sorter_i.clk);
     endtask
 
 
@@ -58,12 +55,12 @@ module even_odd_sorter_tb;
         apply_reset();
         for (int i = 0; i < 100; i++) begin
             // Update the stimulus on the negedge since the output updates on the posedge
-            @(negedge clk);
-            write_en = we[i];
-            data_in  = din[i];
-            read_en  = re[i];
+            @(negedge even_odd_sorter_i.clk);
+            even_odd_sorter_i.write_en = we[i];
+            even_odd_sorter_i.data_in  = din[i];
+            even_odd_sorter_i.read_en  = re[i];
         end
-        @(negedge clk);
+        @(negedge even_odd_sorter_i.clk);
     endtask
 
     // Execute each test case
@@ -76,9 +73,17 @@ module even_odd_sorter_tb;
         $finish;
     end
 
+    initial begin
+        if ($test$plusargs("INJECT_ERROR")) begin
+            $display("Error injected");
+            force dut.odd_fifo_ri.rinc = 1'b1;
+        end
+    end
+
     // Dump waves
     initial begin
         $fsdbDumpfile("novas.fsdb");
         $fsdbDumpvars(0, even_odd_sorter_tb);
+        $fsdbDumpSVA(0, even_odd_sorter_tb);
     end
 endmodule

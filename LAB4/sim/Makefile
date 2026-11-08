@@ -1,4 +1,11 @@
 VERBOSE ?= 0
+INJECT_ERROR ?= 0
+
+PLUSARGS = +VERBOSE=$(VERBOSE)
+
+ifeq ($(INJECT_ERROR),1)
+    PLUSARGS += +INJECT_ERROR
+endif
 
 all: sim clean
 
@@ -15,7 +22,7 @@ compile:
 
 # This compiles with VCS and also generates the database for Verdi
 compile_verdi:
-	${VCS_HOME}/bin/vcs -full64 -sverilog -f ../project.f -debug_access+all -kdb -lca  |& tee compile_verdi.log
+	${VCS_HOME}/bin/vcs -full64 -sverilog -debug_pp -debug_access+all -kdb -lca -assert enable_diag -f ../project.f |& tee compile_verdi.log
 
 #This compiles UVM as well, but we are not using it for now
 compile_uvm:
@@ -23,7 +30,7 @@ compile_uvm:
 
 # This runs simulation
 sim:
-	./simv +VERBOSE=$(VERBOSE)
+	./simv $(PLUSARGS) +fsdb+sva_success/sva_vacuous
 
 # This launches Verdi
 verdi:
