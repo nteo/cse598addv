@@ -3,6 +3,8 @@ import "DPI-C" function void reset_fifo();
 import "DPI-C" function int  push_fifo(int data);        // returns 1 on model overflow
 import "DPI-C" function int  pop_fifo(output int data);  // returns 1 on model underflow
 import "DPI-C" function int  fifo_count();
+import "DPI-C" function int  is_fifo_empty();
+import "DPI-C" function int  is_fifo_full();
 
 
 //////////////////////
@@ -115,26 +117,24 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
 
     task check_writes();
         bit valid_write;
-        int cnt;
         forever begin
             @(posedge write_vif.wclk);
             if (in_reset()) begin
                 wlag = 0;
                 continue;
             end
-            cnt = fifo_count();
 
             if ($isunknown(write_vif.full))
                 report_fail("full is X/Z");
 
             // Safety: a truly full FIFO must report full
-            if (cnt == DEPTH && write_vif.full !== 1'b1)
+            if (is_fifo_full() && write_vif.full !== 1'b1)
                 report_fail("full NOT asserted while model is full");
-            else if (cnt == DEPTH && write_vif.full === 1'b1)
+            else if (is_fifo_full() && write_vif.full === 1'b1)
                 report_pass("full asserted while model is full");
 
             // Latency bound: full may linger after reads, but only briefly
-            if (write_vif.full === 1'b1 && cnt < DEPTH) begin
+            if (write_vif.full === 1'b1 && !is_fifo_full()) begin
                 wlag++;
                 if (wlag == FLAG_LAG + 1)
                     report_fail($sformatf("full stuck high > %0d wclk edges after space was freed", FLAG_LAG));
@@ -160,7 +160,6 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
     endtask
 
     task check_reads();
-        int cnt;
         int expd;
         forever begin
             @(posedge read_vif.rclk);
@@ -168,19 +167,18 @@ class fifo_checker #(int DATA_WIDTH = 8, int DEPTH = 16, int SYNC_STAGES = 3);
                 rlag = 0;
                 continue;
             end
-            cnt = fifo_count();
 
             if ($isunknown(read_vif.empty))
                 report_fail("empty is X/Z");
 
             // Safety: a truly empty FIFO must report empty
-            if (cnt == 0 && read_vif.empty !== 1'b1)
+            if (is_fifo_empty() && read_vif.empty !== 1'b1)
                 report_fail("empty NOT asserted while model is empty");
-            else if (cnt == 0 && read_vif.empty === 1'b1)
+            else if (is_fifo_empty() && read_vif.empty === 1'b1)
                 report_pass("empty asserted while model is empty");
 
             // Latency bound: empty may linger after writes, but only briefly
-            if (read_vif.empty === 1'b1 && cnt > 0) begin
+            if (read_vif.empty === 1'b1 && !is_fifo_empty()) begin
                 rlag++;
                 if (rlag == FLAG_LAG + 1)
                     report_fail($sformatf("empty stuck high > %0d rclk edges after data was written", FLAG_LAG));
