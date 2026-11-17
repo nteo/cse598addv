@@ -61,12 +61,12 @@ class instruction_generator;
     instr_list[instr_list.size() - 1] = instr;
 
     case (instr.opcode)
-      ADD: $display("\tADD $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
-      AND: $display("\tAND $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
-      ADDI: $display("\tADDI $%0d, $%0d, %0h", instr.rt, instr.rs, instr.imm);
-      LW:  $display("\tLW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
-      SW:  $display("\tSW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
-      BEQ: $display("\tBEQ $%0d, $%0d, %0h", instr.rs, instr.rt, instr.imm);
+      ADD: $display("\t\tADD $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
+      AND: $display("\t\tAND $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
+      ADDI: $display("\t\tADDI $%0d, $%0d, %0h", instr.rt, instr.rs, instr.imm);
+      LW:  $display("\t\tLW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
+      SW:  $display("\t\tSW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
+      BEQ: $display("\t\tBEQ $%0d, $%0d, %0h", instr.rs, instr.rt, instr.imm);
     endcase
   endfunction
 
@@ -168,21 +168,21 @@ class instruction_generator;
     else
       $fatal(1, "Gap size must be non-negative");
 
-    $display("\t\t\tInserting %0d gap(s) into instruction sequence.", num_gaps);
+    $display("\t\tInserting %0d gap(s) into instruction sequence.", num_gaps);
     instr_list = new[instr_list.size() + num_gaps] (instr_list);
     for (int i = 0; i < num_gaps; i++) begin
       instruction gap_instr = new();
       assert(gap_instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
       instr_list[instr_list.size() - num_gaps + i] = gap_instr;
       case (gap_instr.opcode)
-        ADD: $display("\t\t\t\tADD $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
-        AND: $display("\t\t\t\tAND $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
-        LW:  $display("\t\t\t\tLW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
-        SW:  $display("\t\t\t\tSW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
-        BEQ: $display("\t\t\t\tBEQ $%0d, $%0d, %0h", gap_instr.rs, gap_instr.rt, gap_instr.imm);
+        ADD: $display("\t\tADD $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
+        AND: $display("\t\tAND $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
+        LW:  $display("\t\tLW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
+        SW:  $display("\t\tSW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
+        BEQ: $display("\t\tBEQ $%0d, $%0d, %0h", gap_instr.rs, gap_instr.rt, gap_instr.imm);
       endcase
     end
-    $display("\t\t\tDone inserting gap(s) into instruction sequence.");
+    $display("\t\tDone inserting gap(s) into instruction sequence.");
   endfunction
 
   function void generate_sequence();
@@ -195,10 +195,10 @@ class instruction_generator;
     for (int i = 1; i <= 4; i++) begin
       instruction init_reg_instr = new();
       assert(init_reg_instr.randomize() with {
-        opcode inside {ADD, AND};
+        opcode == ADDI;
         rs == 0;
-        rt == 0;
-        rd == i;
+        rt == i;
+        imm == $urandom_range(16'h0000, 16'hFFFF);
       });
       append_instruction(init_reg_instr);
     end
@@ -207,9 +207,9 @@ class instruction_generator;
     for (int i = 1; i <= 4; i++) begin
       instruction init_mem_instr = new();
       assert(init_mem_instr.randomize() with {
-        opcode inside {SW};
+        opcode == SW;
         rs == 0;
-        rt == 1;
+        rt == i;
         imm inside {16'h0000, 16'h0004, 16'h0008, 16'h000C};
       });
       append_instruction(init_mem_instr);
