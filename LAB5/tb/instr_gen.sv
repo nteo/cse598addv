@@ -5,7 +5,7 @@ typedef enum bit [2:0] { ADD, AND, LW, SW, BEQ } opcode_t;
 
 class instruction extends uvm_transaction;
   rand opcode_t opcode;
-  rand bit [5:0] rs, rt, rd;
+  rand bit [4:0] rs, rt, rd;
   rand bit [15:0] imm;
 
   function new(string name = "instruction");
@@ -17,7 +17,7 @@ class instruction extends uvm_transaction;
   }
 
   constraint valid_regs {
-    if ((opcode == AND) || (opcode == AND)) {
+    if ((opcode == ADD) || (opcode == AND)) {
       rs inside {[1:4]};
       rt inside {[1:4]};
       rd inside {[1:4]};
@@ -267,11 +267,10 @@ module instr_gen;
     machine_code_list = new[gen.machine_code_list.size()];
 
     // Load the generated instructions after imem's initialization block has
-    // completed. Writing memfile.dat alone cannot update an already-loaded
-    // memory array.
+    // completed.
     #1;
     $readmemh("instr_gen_mem.dat", machine_code_list);
-    $writememh("$PROJECT_ROOT/rtl/memfile.dat", machine_code_list);
+    $readmemh("instr_gen_mem.dat", dut.imem.RAM);
 
     repeat (2) @(posedge clk);
     reset = 0;
