@@ -13,7 +13,7 @@ class instruction extends uvm_transaction;
   endfunction
 
   constraint valid_opcode {
-    opcode inside {ADD, AND, LW, SW, BEQ};
+    opcode inside {ADD, AND, ADDI, LW, SW, BEQ};
   }
 
   constraint valid_regs {
@@ -22,8 +22,13 @@ class instruction extends uvm_transaction;
       rt inside {[1:4]};
       rd inside {[1:4]};
     }
-    else if ((opcode == LW) || (opcode == SW) || (opcode == BEQ) || (opcode == ADDI)) {
-      rs inside {[1:4]};
+    else if (opcode == ADDI) {
+      rs inside {[0:4]};
+      rt inside {[1:4]};
+      rd == 0;            // not used for this instruction
+    }
+    else if ((opcode == LW) || (opcode == SW) || (opcode == BEQ)) {
+      rs inside {[0:4]};
       rt inside {[1:4]};
       rd == 0;            // not used for these instructions
     }
@@ -36,6 +41,9 @@ class instruction extends uvm_transaction;
     else if ((opcode == LW) || (opcode == SW)) {
       imm inside {16'h0000, 16'h0004, 16'h0008, 16'h000C};
     }
+    else if (opcode == ADDI) {
+      imm inside {[16'h0000:16'h000F]};
+    }
     else if (opcode == BEQ) {
       imm inside {16'd1, 16'd2, 16'd3, 16'd4};
     }
@@ -45,6 +53,7 @@ class instruction extends uvm_transaction;
     case (opcode)
       ADD: $display("ADD $%0d, $%0d, $%0d", rd, rs, rt);
       AND: $display("AND $%0d, $%0d, $%0d", rd, rs, rt);
+      ADDI: $display("ADDI $%0d, $%0d, %0h", rt, rs, imm);
       LW:  $display("LW $%0d, %0h($%0d)", rt, imm, rs);
       SW:  $display("SW $%0d, %0h($%0d)", rt, imm, rs);
       BEQ: $display("BEQ $%0d, $%0d, %0h", rs, rt, imm);
@@ -191,7 +200,6 @@ class instruction_generator;
 
     $display("Generating a sequence of %0d instructions.", num_instr);
     $display("\tInitializing registers.");
-    // Initialize the registers and memory
     for (int i = 1; i <= 4; i++) begin
       instruction init_reg_instr = new();
       assert(init_reg_instr.randomize() with {
@@ -242,6 +250,7 @@ class instruction_generator;
         // I-type instruction format: opcode (6 bits), rs (5 bits), rt (5 bits), immediate (16 bits)
         ADD: machine_code = {6'b000000, instr.rs, instr.rt, instr.rd, 5'b00000, 6'b100000};
         AND: machine_code = {6'b000000, instr.rs, instr.rt, instr.rd, 5'b00000, 6'b100100};
+        ADDI: machine_code = {6'b001000, instr.rs, instr.rt, instr.imm};
         LW:  machine_code = {6'b100011, instr.rs, instr.rt, instr.imm};
         SW:  machine_code = {6'b101011, instr.rs, instr.rt, instr.imm};
         BEQ: machine_code = {6'b000100, instr.rs, instr.rt, instr.imm};
