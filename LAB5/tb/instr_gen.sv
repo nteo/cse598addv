@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 // Add -ntb_opts uvm to the VCS command line.
 import uvm_pkg::*;
 
@@ -235,9 +237,6 @@ class instruction_generator;
 endclass
 
 module instr_gen;
-  timeunit 1ns;
-  timeprecision 1ps;
-
   instruction_generator gen;
   bit [31:0] machine_code_list[];
 
