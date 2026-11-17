@@ -53,10 +53,10 @@ class instruction extends uvm_transaction;
     case (opcode)
       ADD: $display("ADD $%0d, $%0d, $%0d", rd, rs, rt);
       AND: $display("AND $%0d, $%0d, $%0d", rd, rs, rt);
-      ADDI: $display("ADDI $%0d, $%0d, %0h", rt, rs, imm);
-      LW:  $display("LW $%0d, %0h($%0d)", rt, imm, rs);
-      SW:  $display("SW $%0d, %0h($%0d)", rt, imm, rs);
-      BEQ: $display("BEQ $%0d, $%0d, %0h", rs, rt, imm);
+      ADDI: $display("ADDI $%0d, $%0d, 0x%0d", rt, rs, imm);
+      LW:  $display("LW $%0d, 0x%0h($%0d)", rt, imm, rs);
+      SW:  $display("SW $%0d, 0x%0h($%0d)", rt, imm, rs);
+      BEQ: $display("BEQ $%0d, $%0d, %0d", rs, rt, imm);
     endcase
   endfunction
 endclass
@@ -72,10 +72,10 @@ class instruction_generator;
     case (instr.opcode)
       ADD: $display("\t\tADD $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
       AND: $display("\t\tAND $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
-      ADDI: $display("\t\tADDI $%0d, $%0d, %0h", instr.rt, instr.rs, instr.imm);
-      LW:  $display("\t\tLW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
-      SW:  $display("\t\tSW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
-      BEQ: $display("\t\tBEQ $%0d, $%0d, %0h", instr.rs, instr.rt, instr.imm);
+      ADDI: $display("\t\tADDI $%0d, $%0d, 0x%0d", instr.rt, instr.rs, instr.imm);
+      LW:  $display("\t\tLW $%0d, 0x%0h($%0d)", instr.rt, instr.imm, instr.rs);
+      SW:  $display("\t\tSW $%0d, 0x%0h($%0d)", instr.rt, instr.imm, instr.rs);
+      BEQ: $display("\t\tBEQ $%0d, $%0d, %0d", instr.rs, instr.rt, instr.imm);
     endcase
   endfunction
 
@@ -195,9 +195,9 @@ class instruction_generator;
       case (gap_instr.opcode)
         ADD: $display("\t\tADD $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
         AND: $display("\t\tAND $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
-        LW:  $display("\t\tLW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
-        SW:  $display("\t\tSW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
-        BEQ: $display("\t\tBEQ $%0d, $%0d, %0h", gap_instr.rs, gap_instr.rt, gap_instr.imm);
+        LW:  $display("\t\tLW $%0d, 0x%0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
+        SW:  $display("\t\tSW $%0d, 0x%0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
+        BEQ: $display("\t\tBEQ $%0d, $%0d, %0d", gap_instr.rs, gap_instr.rt, gap_instr.imm);
       endcase
     end
     $display("\t\tDone inserting gap(s) into instruction sequence.");
@@ -220,13 +220,13 @@ class instruction_generator;
     end
 
     $display("\tInitializing memory.");
-    for (int i = 1; i <= 4; i++) begin
+    for (int i = 0; i < 4; i++) begin
       instruction init_mem_instr = new();
       assert(init_mem_instr.randomize() with {
         opcode == SW;
         rs == 0;
-        rt == i;
-        imm inside {16'h0000, 16'h0004, 16'h0008, 16'h000C};
+        rt inside {[0:4]};
+        imm == ({16'h0000, 16'h0004, 16'h0008, 16'h000C}[i]);
       });
       append_instruction(init_mem_instr);
     end
