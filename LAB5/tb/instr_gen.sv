@@ -18,8 +18,8 @@ class instruction extends uvm_transaction;
 
   constraint valid_regs {
     if ((opcode == ADD) || (opcode == AND)) {
-      rs inside {[1:4]};
-      rt inside {[1:4]};
+      rs inside {[0:4]};
+      rt inside {[0:4]};
       rd inside {[1:4]};
     }
     else if (opcode == ADDI) {
@@ -28,8 +28,8 @@ class instruction extends uvm_transaction;
       rd == 0;            // not used for this instruction
     }
     else if (opcode == LW) {
-      rs inside {[1:4]};
-      rt inside {[0:4]};
+      rs inside {[0:4]};
+      rt inside {[1:4]};
       rd == 0;            // not used for this instruction
     }
     else if ((opcode == SW) || (opcode == BEQ)) {
@@ -321,6 +321,7 @@ module instr_gen;
     #1;
     $readmemh("instr_gen_mem.dat", machine_code_list);
     $writememh("../rtl/memfile.dat", machine_code_list);
+    $readmemh("../rtl/memfile.dat", dut.imem.mem);
 
     repeat (2) @(posedge clk);
     reset = 0;
