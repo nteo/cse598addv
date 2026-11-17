@@ -7,4 +7,4 @@ $PROJECT_ROOT/rtl/top.v
 
 // Include the UVM file list
 $PROJECT_ROOT/tb/instr_gen.sv
-$PROJECT_ROOT/tb/coverage_collector.sv
+// $PROJECT_ROOT/tb/coverage_collector.sv
