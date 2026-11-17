@@ -268,7 +268,7 @@ module instr_gen_tb;
     // memory array.
     #1;
     $readmemh("instr_gen_mem.dat", machine_code_list);
-    $writememh("memfile.dat", machine_code_list);
+    $writememh("$PROJECT_ROOT/rtl/memfile.dat", machine_code_list);
 
     repeat (2) @(posedge clk);
     reset = 0;
