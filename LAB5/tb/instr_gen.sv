@@ -1,7 +1,7 @@
 // Add -ntb_opts uvm to the VCS command line.
 import uvm_pkg::*;
 
-typedef enum bit [2:0] { ADD, AND, LW, SW, BEQ } opcode_t;
+typedef enum bit [2:0] { ADD, AND, ADDI, LW, SW, BEQ } opcode_t;
 
 class instruction extends uvm_transaction;
   rand opcode_t opcode;
@@ -59,10 +59,21 @@ class instruction_generator;
   function void append_instruction(instruction instr);
     instr_list = new[instr_list.size() + 1] (instr_list);
     instr_list[instr_list.size() - 1] = instr;
+
+    case (opcode)
+      ADD: $display("\tADD $%0d, $%0d, $%0d", rd, rs, rt);
+      AND: $display("\tAND $%0d, $%0d, $%0d", rd, rs, rt);
+      ADDI: $display("\tADDI $%0d, $%0d, %0h", rt, rs, imm);
+      LW:  $display("\tLW $%0d, %0h($%0d)", rt, imm, rs);
+      SW:  $display("\tSW $%0d, %0h($%0d)", rt, imm, rs);
+      BEQ: $display("\tBEQ $%0d, $%0d, %0h", rs, rt, imm);
+    endcase
   endfunction
 
   function void generate_individual();
     instruction instr = new();
+
+    $display("\t\tGenerating individual instruction:");
     randcase
       4: begin
         assert(instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
@@ -85,6 +96,7 @@ class instruction_generator;
     instruction txn1 = new();
     instruction txn2 = new();
 
+    $display("\t\tGenerating instruction pair:");
     randcase
       // AND/ADD -> AND/ADD/BEQ: the consumer reads txn1.rd.
       1: begin
@@ -143,6 +155,7 @@ class instruction_generator;
         append_instruction(txn2);
       end
     endcase
+    $display("\t\tDone generating instruction pair.");
   endfunction
 
   function void insert_gaps(int gap_size = -1);
@@ -155,18 +168,29 @@ class instruction_generator;
     else
       $fatal(1, "Gap size must be non-negative");
 
+    $display("\t\t\tInserting %0d gap(s) into instruction sequence.", num_gaps);
     instr_list = new[instr_list.size() + num_gaps] (instr_list);
     for (int i = 0; i < num_gaps; i++) begin
       instruction gap_instr = new();
       assert(gap_instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
       instr_list[instr_list.size() - num_gaps + i] = gap_instr;
+      case (opcode)
+        ADD: $display("\t\t\t\tADD $%0d, $%0d, $%0d", rd, rs, rt);
+        AND: $display("\t\t\t\tAND $%0d, $%0d, $%0d", rd, rs, rt);
+        LW:  $display("\t\t\t\tLW $%0d, %0h($%0d)", rt, imm, rs);
+        SW:  $display("\t\t\t\tSW $%0d, %0h($%0d)", rt, imm, rs);
+        BEQ: $display("\t\t\t\tBEQ $%0d, $%0d, %0h", rs, rt, imm);
+      endcase
     end
+    $display("\t\t\tDone inserting gap(s) into instruction sequence.");
   endfunction
 
   function void generate_sequence();
     integer num_instr = $urandom_range(10, 15);
     instr_list = new[0];
 
+    $display("Generating a sequence of %0d instructions.", num_instr);
+    $display("\tInitializing registers.");
     // Initialize the registers and memory
     for (int i = 1; i <= 4; i++) begin
       instruction init_reg_instr = new();
@@ -179,6 +203,7 @@ class instruction_generator;
       append_instruction(init_reg_instr);
     end
 
+    $display("\tInitializing memory.");
     for (int i = 1; i <= 4; i++) begin
       instruction init_mem_instr = new();
       assert(init_mem_instr.randomize() with {
@@ -190,6 +215,7 @@ class instruction_generator;
       append_instruction(init_mem_instr);
     end
 
+    $display("\tGenerating instruction sequence.");
     // Generate a sequence of instructions with a mix of individual and paired instructions.
     for (int i = 0; i < num_instr; i++) begin
       randcase
@@ -198,6 +224,7 @@ class instruction_generator;
       endcase
     end
 
+    $display("\tInserting gaps.");
     // Pad the sequence with five instructions to cover the maximum branch
     // offset when a branch is placed at the end of the sequence.
     insert_gaps(5);
