@@ -1,4 +1,3 @@
-
 // Add -ntb_opts uvm to the VCS command line.
 import uvm_pkg::*;
 
@@ -18,26 +17,28 @@ class instruction extends uvm_transaction;
   }
 
   constraint valid_regs {
-    case (opcode)
-      ADD, AND: begin
-            rs inside {[1:4]};
-            rt inside {[1:4]};
-            rd inside {[1:4]};
-      end
-      LW, SW, BEQ: begin
-            rs inside {[1:4]};
-            rt inside {[1:4]};
-            rd == 0;            // not used for these instructions
-      end
-    endcase
+    if ((opcode == AND) || (opcode == AND)) {
+      rs inside {[1:4]};
+      rt inside {[1:4]};
+      rd inside {[1:4]};
+    }
+    else if ((opcode == LW) || (opcode == SW) || (opcode == BEQ)) {
+      rs inside {[1:4]};
+      rt inside {[1:4]};
+      rd == 0;            // not used for these instructions
+    }
   }
 
   constraint valid_imm {
-    case (opcode)
-      ADD, AND: imm == 16'h0000; // not used for these instructions
-      LW, SW:   imm inside {16'h0000, 16'h0004, 16'h0008, 16'h000C};
-      BEQ:      imm inside {16'd1, 16'd2, 16'd3, 16'd4};
-    endcase
+    if ((opcode == ADD) || (opcode == AND)) {
+      imm == 16'h0000; // not used for these instructions
+    }
+    else if ((opcode == LW) || (opcode == SW)) {
+      imm inside {16'h0000, 16'h0004, 16'h0008, 16'h000C};
+    }
+    else if (opcode == BEQ) {
+      imm inside {16'd1, 16'd2, 16'd3, 16'd4};
+    }
   }
 
   function void print_me();
@@ -64,7 +65,7 @@ class instruction_generator;
     instruction instr = new();
     randcase
       4: begin
-        assert(instr.randomize() with {opcode inside {ADD, AND, LW, SW};});
+        assert(instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
         append_instruction(instr);
       end
 
@@ -276,4 +277,3 @@ module instr_gen_tb;
     $finish;
   end
 endmodule
-
