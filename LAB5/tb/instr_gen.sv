@@ -1,29 +1,23 @@
-`timescale 1ns/1ps
-
 // Add -ntb_opts uvm to the VCS command line.
-`include "uvm_macros.svh"
 import uvm_pkg::*;
 
-typedef enum bit [2:0] { ADD, AND, ADDI, LW, SW, BEQ } opcode_t;
+typedef enum bit [2:0] { ADD, AND, LW, SW, BEQ } opcode_t;
 
 class instruction extends uvm_transaction;
   rand opcode_t opcode;
-  rand bit [4:0] rs, rt, rd;
+  rand bit [5:0] rs, rt, rd;
   rand bit [15:0] imm;
 
   function new(string name = "instruction");
     super.new(name);
   endfunction
 
-  // Only use ADD, AND, LW, SW, and BEQ opcodes
   constraint valid_opcode {
     opcode inside {ADD, AND, LW, SW, BEQ};
   }
 
-  // Only use registers $1-$4
-  // If the instruction is LW, SW, or BEQ, then rd is not used and should be 0.
   constraint valid_regs {
-    if ((opcode == ADD) || (opcode == AND)) {
+    if ((opcode == AND) || (opcode == AND)) {
       rs inside {[1:4]};
       rt inside {[1:4]};
       rd inside {[1:4]};
@@ -35,8 +29,6 @@ class instruction extends uvm_transaction;
     }
   }
 
-  // Only use memory addresses 0x0000, 0x0004, 0x0008, and 0x000C for LW and SW instructions.
-  // Only use branch targets 1, 2, 3, and 4 for BEQ instructions.
   constraint valid_imm {
     if ((opcode == ADD) || (opcode == AND)) {
       imm == 16'h0000; // not used for these instructions
@@ -64,27 +56,13 @@ class instruction_generator;
   instruction instr_list[];
   bit [31:0] machine_code_list[];
 
-  // Append an instruction to the end of the instruction list
   function void append_instruction(instruction instr);
-    // Because a dynamic array is used, instr_list's size has to be set explicitly when adding an instruction
     instr_list = new[instr_list.size() + 1] (instr_list);
     instr_list[instr_list.size() - 1] = instr;
-
-    case (instr.opcode)
-      ADD: $display("ADD $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
-      AND: $display("AND $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
-      LW:  $display("LW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
-      SW:  $display("SW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
-      BEQ: $display("BEQ $%0d, $%0d, %0h", instr.rs, instr.rt, instr.imm);
-    endcase
   endfunction
 
-  // Generate a single instruction with a random opcode and operands
-  // Include a branch taken and branch not taken case for BEQ instructions
   function void generate_individual();
     instruction instr = new();
-
-    $display("\t\tGenerate Individual Instruction");
     randcase
       4: begin
         assert(instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
@@ -103,12 +81,10 @@ class instruction_generator;
     endcase
   endfunction
 
-  // Generate a pair of instructions where the second instruction depends on the first instruction
   function void generate_pairs();
     instruction txn1 = new();
     instruction txn2 = new();
 
-    $display("\t\tGenerate First Paired Instruction");
     randcase
       // AND/ADD -> AND/ADD/BEQ: the consumer reads txn1.rd.
       1: begin
@@ -167,8 +143,6 @@ class instruction_generator;
         append_instruction(txn2);
       end
     endcase
-
-    $display("\t\tFinished Generated Paired Instructions");
   endfunction
 
   function void insert_gaps(int gap_size = -1);
@@ -181,49 +155,41 @@ class instruction_generator;
     else
       $fatal(1, "Gap size must be non-negative");
 
-    $display("\t\t\tInserting Gap: %d", gap_size);
     instr_list = new[instr_list.size() + num_gaps] (instr_list);
     for (int i = 0; i < num_gaps; i++) begin
       instruction gap_instr = new();
       assert(gap_instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
       instr_list[instr_list.size() - num_gaps + i] = gap_instr;
     end
-
-    $display("\t\t\tFinished Inserting Gap");
   endfunction
-  
+
   function void generate_sequence();
-    integer num_instr = $urandom_range(5, 8);
+    integer num_instr = $urandom_range(10, 15);
     instr_list = new[0];
 
-    $display("Generating Instruction Sequence of Length: %d", num_instr);
-    $display("\tInitializing Registers");
     // Initialize the registers and memory
     for (int i = 1; i <= 4; i++) begin
       instruction init_reg_instr = new();
       assert(init_reg_instr.randomize() with {
-        opcode == ADDI;
+        opcode inside {ADD, AND};
         rs == 0;
-        rt == i;
-        rd == 0;
-        imm == $urandom_range(16'h0000, 16'hFFFF);
+        rt == 0;
+        rd == i;
       });
       append_instruction(init_reg_instr);
     end
 
-    $display("\tInitializing Memory");
     for (int i = 1; i <= 4; i++) begin
       instruction init_mem_instr = new();
       assert(init_mem_instr.randomize() with {
-        opcode == SW;
+        opcode inside {SW};
         rs == 0;
-        rt == $urandom_range(16'h0000, 16'hFFFF);
+        rt == 1;
         imm inside {16'h0000, 16'h0004, 16'h0008, 16'h000C};
       });
       append_instruction(init_mem_instr);
     end
 
-    $display("\tGenerating Random Instructions");
     // Generate a sequence of instructions with a mix of individual and paired instructions.
     for (int i = 0; i < num_instr; i++) begin
       randcase
@@ -232,7 +198,6 @@ class instruction_generator;
       endcase
     end
 
-    $display("\tPadding the sequence with five instructions.");
     // Pad the sequence with five instructions to cover the maximum branch
     // offset when a branch is placed at the end of the sequence.
     insert_gaps(5);
@@ -251,11 +216,9 @@ class instruction_generator;
         // I-type instruction format: opcode (6 bits), rs (5 bits), rt (5 bits), immediate (16 bits)
         ADD: machine_code = {6'b000000, instr.rs, instr.rt, instr.rd, 5'b00000, 6'b100000};
         AND: machine_code = {6'b000000, instr.rs, instr.rt, instr.rd, 5'b00000, 6'b100100};
-        ADDI: machine_code = {6'b001000, instr.rs, instr.rt, instr.imm};
         LW:  machine_code = {6'b100011, instr.rs, instr.rt, instr.imm};
         SW:  machine_code = {6'b101011, instr.rs, instr.rt, instr.imm};
         BEQ: machine_code = {6'b000100, instr.rs, instr.rt, instr.imm};
-        default: $fatal(1, "Invalid opcode: %0d", instr.opcode);
       endcase
 
       machine_code_list[i] = machine_code;
@@ -272,6 +235,9 @@ class instruction_generator;
 endclass
 
 module instr_gen;
+  timeunit 1ns;
+  timeprecision 1ps;
+
   instruction_generator gen;
   bit [31:0] machine_code_list[];
 
@@ -298,10 +264,11 @@ module instr_gen;
     gen = new();
     gen.generate_machine_code();
     gen.display_all();
-    machine_code_list = new[64];
+    machine_code_list = new[gen.machine_code_list.size()];
 
     // Load the generated instructions after imem's initialization block has
-    // completed.
+    // completed. Writing memfile.dat alone cannot update an already-loaded
+    // memory array.
     #1;
     $readmemh("instr_gen_mem.dat", machine_code_list);
     $writememh("../rtl/memfile.dat", machine_code_list);
