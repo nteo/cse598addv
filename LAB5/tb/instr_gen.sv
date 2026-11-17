@@ -295,7 +295,7 @@ module instr_gen;
     #1;
     $readmemh("instr_gen_mem.dat", machine_code_list);
     $writememh("../rtl/memfile.dat", machine_code_list);
-    $readmemh("../rtl/memfile.dat", dut.imem.mem);
+    $readmemh("../rtl/memfile.dat", dut.imem.RAM);
 
     repeat (2) @(posedge clk);
     reset = 0;
