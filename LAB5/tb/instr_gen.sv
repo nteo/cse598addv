@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 
 // Add -ntb_opts uvm to the VCS command line.
+`include "uvm_macros.svh"
 import uvm_pkg::*;
 
 typedef enum bit [2:0] { ADD, AND, LW, SW, BEQ } opcode_t;

@@ -16,9 +16,9 @@ compile:
 compile_verdi:
 	${VCS_HOME}/bin/vcs -full64 -sverilog -f ../project.f -debug_access+all -kdb -lca  |& tee compile_verdi.log
 
-#This compiles UVM as well, but we are not using it for now
+# This compiles the RTL and generator with UVM 1.2 enabled
 compile_uvm:
-	${VCS_HOME}/bin/vcs -full64 -sverilog -f ../project.f -debug_access+all -ntb_opts uvm |& tee compile_uvm.log
+	${VCS_HOME}/bin/vcs -full64 -sverilog -timescale=1ns/1ps -f ../project.f -debug_access+all -ntb_opts uvm-1.2 +incdir+${VCS_HOME}/etc/uvm-1.2/src |& tee compile_uvm.log
 
 # This runs simulation
 sim:
