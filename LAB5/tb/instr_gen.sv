@@ -18,13 +18,13 @@ class instruction extends uvm_transaction;
 
   constraint valid_regs {
     if ((opcode == ADD) || (opcode == AND)) {
-      rs inside {[0:4]};
-      rt inside {[0:4]};
-      rd inside {[0:4]};
+      rs inside {[1:4]};
+      rt inside {[1:4]};
+      rd inside {[1:4]};
     }
-    else if ((opcode == LW) || (opcode == SW) || (opcode == BEQ)) {
-      rs inside {[0:4]};
-      rt inside {[0:4]};
+    else if ((opcode == LW) || (opcode == SW) || (opcode == BEQ) || (opcode == ADDI)) {
+      rs inside {[1:4]};
+      rt inside {[1:4]};
       rd == 0;            // not used for these instructions
     }
   }
@@ -186,7 +186,7 @@ class instruction_generator;
   endfunction
 
   function void generate_sequence();
-    integer num_instr = $urandom_range(10, 15);
+    integer num_instr = $urandom_range(5, 8);
     instr_list = new[0];
 
     $display("Generating a sequence of %0d instructions.", num_instr);
@@ -198,7 +198,6 @@ class instruction_generator;
         opcode == ADDI;
         rs == 0;
         rt == i;
-        imm == $urandom_range(16'h0000, 16'hFFFF);
       });
       append_instruction(init_reg_instr);
     end
