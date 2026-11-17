@@ -27,9 +27,14 @@ class instruction extends uvm_transaction;
       rt inside {[1:4]};
       rd == 0;            // not used for this instruction
     }
-    else if ((opcode == LW) || (opcode == SW) || (opcode == BEQ)) {
+    else if (opcode == LW) {
+      rs inside {[1:4]};
+      rt inside {[0:4]};
+      rd == 0;            // not used for this instruction
+    }
+    else if ((opcode == SW) || (opcode == BEQ)) {
       rs inside {[0:4]};
-      rt inside {[1:4]};
+      rt inside {[0:4]};
       rd == 0;            // not used for these instructions
     }
   }
@@ -226,7 +231,7 @@ class instruction_generator;
         opcode == SW;
         rs == 0;
         rt inside {[0:4]};
-        imm == ({16'h0000, 16'h0004, 16'h0008, 16'h000C}[i]);
+        imm == (i * 16'h0004);
       });
       append_instruction(init_mem_instr);
     end
