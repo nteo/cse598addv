@@ -234,7 +234,7 @@ class instruction_generator;
   endfunction
 endclass
 
-module instr_gen_tb;
+module instr_gen;
   timeunit 1ns;
   timeprecision 1ps;
 
