@@ -270,7 +270,7 @@ module instr_gen;
     // completed.
     #1;
     $readmemh("instr_gen_mem.dat", machine_code_list);
-    $readmemh("instr_gen_mem.dat", dut.imem.RAM);
+    $writememh("../rtl/memfile.dat", machine_code_list);
 
     repeat (2) @(posedge clk);
     reset = 0;
