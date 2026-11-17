@@ -235,6 +235,9 @@ class instruction_generator;
 endclass
 
 module instr_gen_tb;
+  timeunit 1ns;
+  timeprecision 1ps;
+
   instruction_generator gen;
   bit [31:0] machine_code_list[];
 
