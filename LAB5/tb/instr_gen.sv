@@ -118,7 +118,7 @@ class instruction_generator;
         });
 
         append_instruction(txn1);
-        insert_gaps();
+        insert_gaps(-1, txn1.rd);
         append_instruction(txn2);
       end
 
@@ -132,7 +132,7 @@ class instruction_generator;
           rs == txn1.rd;
         });
         append_instruction(txn1);
-        insert_gaps();
+        insert_gaps(-1, txn1.rd);
         append_instruction(txn2);
       end
 
@@ -146,7 +146,7 @@ class instruction_generator;
           (rs == txn1.rt) || (rt == txn1.rt);
         });
         append_instruction(txn1);
-        insert_gaps();
+        insert_gaps(-1, txn1.rt);
         append_instruction(txn2);
       end
 
@@ -160,14 +160,14 @@ class instruction_generator;
           rs == txn1.rt;
         });
         append_instruction(txn1);
-        insert_gaps();
+        insert_gaps(-1, txn1.rt);
         append_instruction(txn2);
       end
     endcase
     $display("\t\tDone generating instruction pair.");
   endfunction
 
-  function void insert_gaps(int gap_size = -1);
+  function void insert_gaps(int gap_size = -1, int avoid_reg = -1);
     int num_gaps;
 
     if (gap_size == -1)
@@ -181,7 +181,16 @@ class instruction_generator;
     instr_list = new[instr_list.size() + num_gaps] (instr_list);
     for (int i = 0; i < num_gaps; i++) begin
       instruction gap_instr = new();
-      assert(gap_instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
+      if (avoid_reg != -1) begin
+        assert(gap_instr.randomize() with {
+          opcode inside {ADD, AND, LW, SW};
+          (rs != avoid_reg) && (rt != avoid_reg) && (rd != avoid_reg);
+        });
+      end
+      else begin
+        assert(gap_instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
+      end
+
       instr_list[instr_list.size() - num_gaps + i] = gap_instr;
       case (gap_instr.opcode)
         ADD: $display("\t\tADD $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
