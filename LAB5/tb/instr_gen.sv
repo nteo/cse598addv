@@ -60,13 +60,13 @@ class instruction_generator;
     instr_list = new[instr_list.size() + 1] (instr_list);
     instr_list[instr_list.size() - 1] = instr;
 
-    case (opcode)
-      ADD: $display("\tADD $%0d, $%0d, $%0d", rd, rs, rt);
-      AND: $display("\tAND $%0d, $%0d, $%0d", rd, rs, rt);
-      ADDI: $display("\tADDI $%0d, $%0d, %0h", rt, rs, imm);
-      LW:  $display("\tLW $%0d, %0h($%0d)", rt, imm, rs);
-      SW:  $display("\tSW $%0d, %0h($%0d)", rt, imm, rs);
-      BEQ: $display("\tBEQ $%0d, $%0d, %0h", rs, rt, imm);
+    case (instr.opcode)
+      ADD: $display("\tADD $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
+      AND: $display("\tAND $%0d, $%0d, $%0d", instr.rd, instr.rs, instr.rt);
+      ADDI: $display("\tADDI $%0d, $%0d, %0h", instr.rt, instr.rs, instr.imm);
+      LW:  $display("\tLW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
+      SW:  $display("\tSW $%0d, %0h($%0d)", instr.rt, instr.imm, instr.rs);
+      BEQ: $display("\tBEQ $%0d, $%0d, %0h", instr.rs, instr.rt, instr.imm);
     endcase
   endfunction
 
@@ -174,12 +174,12 @@ class instruction_generator;
       instruction gap_instr = new();
       assert(gap_instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
       instr_list[instr_list.size() - num_gaps + i] = gap_instr;
-      case (opcode)
-        ADD: $display("\t\t\t\tADD $%0d, $%0d, $%0d", rd, rs, rt);
-        AND: $display("\t\t\t\tAND $%0d, $%0d, $%0d", rd, rs, rt);
-        LW:  $display("\t\t\t\tLW $%0d, %0h($%0d)", rt, imm, rs);
-        SW:  $display("\t\t\t\tSW $%0d, %0h($%0d)", rt, imm, rs);
-        BEQ: $display("\t\t\t\tBEQ $%0d, $%0d, %0h", rs, rt, imm);
+      case (gap_instr.opcode)
+        ADD: $display("\t\t\t\tADD $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
+        AND: $display("\t\t\t\tAND $%0d, $%0d, $%0d", gap_instr.rd, gap_instr.rs, gap_instr.rt);
+        LW:  $display("\t\t\t\tLW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
+        SW:  $display("\t\t\t\tSW $%0d, %0h($%0d)", gap_instr.rt, gap_instr.imm, gap_instr.rs);
+        BEQ: $display("\t\t\t\tBEQ $%0d, $%0d, %0h", gap_instr.rs, gap_instr.rt, gap_instr.imm);
       endcase
     end
     $display("\t\t\tDone inserting gap(s) into instruction sequence.");
