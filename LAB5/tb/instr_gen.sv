@@ -5,7 +5,7 @@ typedef enum bit [2:0] { ADD, AND, LW, SW, BEQ } opcode_t;
 
 class instruction extends uvm_transaction;
   rand opcode_t opcode;
-  rand bit [5:0] rs, rt, rd;
+  rand bit [4:0] rs, rt, rd;
   rand bit [15:0] imm;
 
   function new(string name = "instruction");
@@ -17,14 +17,14 @@ class instruction extends uvm_transaction;
   }
 
   constraint valid_regs {
-    if ((opcode == AND) || (opcode == AND)) {
-      rs inside {[1:4]};
-      rt inside {[1:4]};
-      rd inside {[1:4]};
+    if ((opcode == ADD) || (opcode == AND)) {
+      rs inside {[0:4]};
+      rt inside {[0:4]};
+      rd inside {[0:4]};
     }
     else if ((opcode == LW) || (opcode == SW) || (opcode == BEQ)) {
-      rs inside {[1:4]};
-      rt inside {[1:4]};
+      rs inside {[0:4]};
+      rt inside {[0:4]};
       rd == 0;            // not used for these instructions
     }
   }
