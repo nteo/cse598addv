@@ -303,4 +303,9 @@ module instr_gen;
     repeat (gen.instr_list.size() + 5) @(posedge clk);
     $finish;
   end
+
+  initial begin
+    $fsdbDumpfile("novas.fsdb");
+    $fsdbDumpvars(0, instr_gen);
+  end
 endmodule
