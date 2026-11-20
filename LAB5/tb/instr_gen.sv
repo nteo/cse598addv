@@ -391,5 +391,7 @@ module instr_gen;
   initial begin
     $fsdbDumpfile("novas.fsdb");
     $fsdbDumpvars(0, instr_gen);
+    $fsdbDumpMDA(instr_gen.dut.dmem.RAM);
+    $fsdbDumpMDA(instr_gen.dut.mips.dp.rf);
   end
 endmodule
