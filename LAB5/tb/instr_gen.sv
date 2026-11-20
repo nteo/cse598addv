@@ -1,10 +1,23 @@
 // Add -ntb_opts uvm to the VCS command line.
 import uvm_pkg::*;
 
-typedef enum bit [2:0] { ADD, AND, ADDI, LW, SW, BEQ } opcode_t;
+typedef enum bit [5:0] {
+  RTYPE = 6'b000000,
+  ADDI = 6'b001000,
+  LW = 6'b100011,
+  SW = 6'b101011,
+  BEQ = 6'b000100
+} opcode_t;
+
+typedef enum bit [5:0] {
+  NO_FUNCT = 6'b000000,
+  ADD = 6'b100000,
+  AND = 6'b100100
+} funct_t;
 
 class instruction extends uvm_transaction;
   rand opcode_t opcode;
+  rand funct_t funct;
   rand bit [4:0] rs, rt, rd;
   rand bit [15:0] imm;
 
@@ -13,11 +26,20 @@ class instruction extends uvm_transaction;
   endfunction
 
   constraint valid_opcode {
-    opcode inside {ADD, AND, ADDI, LW, SW, BEQ};
+    opcode inside {RTYPE, ADDI, LW, SW, BEQ};
+  }
+
+  constraint valid_funct {
+    if (opcode == RTYPE) {
+      funct inside {ADD, AND};
+    }
+    else {
+      funct == NO_FUNCT; // not used for these instructions
+    }
   }
 
   constraint valid_regs {
-    if ((opcode == ADD) || (opcode == AND)) {
+    if (opcode == RTYPE) {
       rs inside {[0:4]};
       rt inside {[0:4]};
       rd inside {[1:4]};
@@ -40,7 +62,7 @@ class instruction extends uvm_transaction;
   }
 
   constraint valid_imm {
-    if ((opcode == ADD) || (opcode == AND)) {
+    if (opcode == RTYPE) {
       imm == 16'h0000; // not used for these instructions
     }
     else if ((opcode == LW) || (opcode == SW)) {
@@ -56,8 +78,12 @@ class instruction extends uvm_transaction;
 
   function void print_me();
     case (opcode)
-      ADD: $display("ADD $%0d, $%0d, $%0d", rd, rs, rt);
-      AND: $display("AND $%0d, $%0d, $%0d", rd, rs, rt);
+      RTYPE: begin
+        if (funct == ADD)
+          $display("ADD $%0d, $%0d, $%0d", rd, rs, rt);
+        else if (funct == AND)
+          $display("AND $%0d, $%0d, $%0d", rd, rs, rt);
+      end
       ADDI: $display("ADDI $%0d, $%0d, %0d", rt, rs, imm);
       LW:  $display("LW $%0d, 0x%0h($%0d)", rt, imm, rs);
       SW:  $display("SW $%0d, 0x%0h($%0d)", rt, imm, rs);
@@ -80,7 +106,7 @@ class instruction_generator;
 
     randcase
       4: begin
-        assert(instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
+        assert(instr.randomize() with {opcode inside {RTYPE, LW, SW}; });
         append_instruction(instr);
       end
 
@@ -101,13 +127,13 @@ class instruction_generator;
     instruction txn2 = new();
 
     randcase
-      // AND/ADD -> AND/ADD/BEQ: the consumer reads txn1.rd.
+      // RTYPE -> RTYPE/BEQ: the consumer reads txn1.rd.
       1: begin
         assert(txn1.randomize() with {
-          opcode inside {ADD, AND};
+          opcode inside {RTYPE};
         });
         assert(txn2.randomize() with {
-          opcode inside {ADD, AND, BEQ};
+          opcode inside {RTYPE, BEQ};
           (rs == txn1.rd) || (rt == txn1.rd);
         });
 
@@ -116,10 +142,10 @@ class instruction_generator;
         append_instruction(txn2);
       end
 
-      // ADD/AND -> LW/SW: the consumer uses txn1.rd as its base register.
+      // RTYPE -> LW/SW: the consumer uses txn1.rd as its base register.
       1: begin
         assert(txn1.randomize() with {
-          opcode inside {ADD, AND};
+          opcode inside {RTYPE};
         });
         assert(txn2.randomize() with {
           opcode inside {LW, SW};
@@ -130,13 +156,13 @@ class instruction_generator;
         append_instruction(txn2);
       end
 
-      // LW -> ADD/AND/BEQ: the consumer reads the register loaded by txn1.
+      // LW -> RTYPE/BEQ: the consumer reads the register loaded by txn1.
       1: begin
         assert(txn1.randomize() with {
           opcode == LW;
         });
         assert(txn2.randomize() with {
-          opcode inside {ADD, AND, BEQ};
+          opcode inside {RTYPE, BEQ};
           (rs == txn1.rt) || (rt == txn1.rt);
         });
         append_instruction(txn1);
@@ -175,12 +201,12 @@ class instruction_generator;
       instruction gap_instr = new();
       if (avoid_reg != -1) begin
         assert(gap_instr.randomize() with {
-          opcode inside {ADD, AND, LW, SW};
+          opcode inside {RTYPE, LW, SW};
           (rs != avoid_reg) && (rt != avoid_reg) && (rd != avoid_reg);
         });
       end
       else begin
-        assert(gap_instr.randomize() with {opcode inside {ADD, AND, LW, SW}; });
+        assert(gap_instr.randomize() with {opcode inside {RTYPE, LW, SW}; });
       end
 
       instr_list[instr_list.size() - num_gaps + i] = gap_instr;
@@ -236,8 +262,7 @@ class instruction_generator;
       case (instr.opcode)
         // R-type instruction format: opcode (6 bits), rs (5 bits), rt (5 bits), rd (5 bits), shamt (5 bits), funct (6 bits)
         // I-type instruction format: opcode (6 bits), rs (5 bits), rt (5 bits), immediate (16 bits)
-        ADD: machine_code = {6'b000000, instr.rs, instr.rt, instr.rd, 5'b00000, 6'b100000};
-        AND: machine_code = {6'b000000, instr.rs, instr.rt, instr.rd, 5'b00000, 6'b100100};
+        RTYPE: machine_code = {6'b000000, instr.rs, instr.rt, instr.rd, 5'b00000, instr.funct};
         ADDI: machine_code = {6'b001000, instr.rs, instr.rt, instr.imm};
         LW:  machine_code = {6'b100011, instr.rs, instr.rt, instr.imm};
         SW:  machine_code = {6'b101011, instr.rs, instr.rt, instr.imm};
