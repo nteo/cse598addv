@@ -382,7 +382,7 @@ module instr_gen;
     reset = 0;
 
     // Wait until the trickbox value is stored in memory before finishing the simulation
-    while (dut.dmem.RAM[gen.TRICKBOX_MEM_ADDR[7:2]] != {16'h0000, gen.TRICKBOX_VALUE})
+    while (dut.dmem.RAM[16'h8800] != 16'hDEAD)
       @(posedge clk);
 
     $finish;
