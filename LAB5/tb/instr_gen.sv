@@ -17,9 +17,9 @@ typedef enum bit [5:0] {
 
 class instruction extends uvm_transaction;
   rand opcode_t opcode;
-  rand funct_t funct;
   rand bit [4:0] rs, rt, rd;
   rand bit [15:0] imm;
+  rand funct_t funct;
 
   function new(string name = "instruction");
     super.new(name);
@@ -40,36 +40,36 @@ class instruction extends uvm_transaction;
 
   constraint valid_regs {
     if (opcode == RTYPE) {
-      rs inside {[0:4]};
-      rt inside {[0:4]};
+      rs inside {[1:4]};
+      rt inside {[1:4]};
       rd inside {[1:4]};
     }
     else if (opcode == ADDI) {
-      rs inside {[0:4]};
+      rs == 0;            // ADDI is only used to initialize registers, so rs is always $0
       rt inside {[1:4]};
       rd == 0;            // not used for this instruction
     }
-    else if (opcode == LW) {
-      rs inside {[0:4]};
+    else if ((opcode == LW) || (opcode == SW)) {
+      rs == 0;            // base register is always $0 for this assignment
       rt inside {[1:4]};
       rd == 0;            // not used for this instruction
     }
-    else if ((opcode == SW) || (opcode == BEQ)) {
-      rs inside {[0:4]};
-      rt inside {[0:4]};
+    else if (opcode == BEQ) {
+      rs inside {[1:4]};
+      rt inside {[1:4]};
       rd == 0;            // not used for these instructions
     }
   }
 
   constraint valid_imm {
     if (opcode == RTYPE) {
-      imm == 16'h0000; // not used for these instructions
+      imm == 16'h0000;    // not used for these instructions
     }
     else if ((opcode == LW) || (opcode == SW)) {
       imm inside {16'h0000, 16'h0004, 16'h0008, 16'h000C};
     }
     else if (opcode == ADDI) {
-      imm inside {[16'h0000:16'h000F]};
+      imm inside {[16'h0000:16'hFFFF]};
     }
     else if (opcode == BEQ) {
       imm inside {16'd1, 16'd2, 16'd3, 16'd4};
@@ -92,13 +92,61 @@ class instruction extends uvm_transaction;
   endfunction
 endclass
 
-class instruction_generator;
+class instruction_generator #(
+  parameter bit [4:0] TRICKBOX_REG = 5'd5,
+  parameter bit [15:0] TRICKBOX_VALUE = 16'hDEAD,
+  parameter bit [15:0] TRICKBOX_MEM_ADDR = 16'h8800
+);
   instruction instr_list[];
   bit [31:0] machine_code_list[];
 
   function void append_instruction(instruction instr);
     instr_list = new[instr_list.size() + 1] (instr_list);
     instr_list[instr_list.size() - 1] = instr;
+  endfunction
+
+  function void generate_setup();
+    // Initialize registers $1-$4 to known values using ADDI instructions
+    for (int i = 1; i <= 4; i++) begin
+      instruction init_reg_instr = new();
+      assert(init_reg_instr.randomize() with {
+        opcode == ADDI;
+        rt == i;
+      });
+      append_instruction(init_reg_instr);
+    end
+
+    // Initialize memory locations 0x0000, 0x0004, 0x0008, and 0x000C using SW instructions
+    for (int i = 0; i < 4; i++) begin
+      instruction init_mem_instr = new();
+      assert(init_mem_instr.randomize() with {
+        opcode == SW;
+        rt inside {[0:4]};
+        imm == (i * 16'h0004);
+      });
+      append_instruction(init_mem_instr);
+    end
+  endfunction
+
+  function void generate_trickbox_setup();
+    // Load a value into register $5 using an ADDI instruction
+    instruction trickbox_instr = new();
+
+    trickbox_instr.opcode = ADDI;
+    trickbox_instr.rt = TRICKBOX_REG;
+    trickbox_instr.imm = TRICKBOX_VALUE;
+    append_instruction(trickbox_instr);
+  endfunction
+
+  function void generate_trickbox_store();
+    // Store the value from register $5 into memory address 0x8800 using an SW instruction
+    instruction trickbox_instr = new();
+
+    trickbox_instr.opcode = SW;
+    trickbox_instr.rs = 0;
+    trickbox_instr.rt = TRICKBOX_REG;
+    trickbox_instr.imm = TRICKBOX_MEM_ADDR;
+    append_instruction(trickbox_instr);
   endfunction
 
   function void generate_individual();
@@ -127,10 +175,10 @@ class instruction_generator;
     instruction txn2 = new();
 
     randcase
-      // RTYPE -> RTYPE/BEQ: the consumer reads txn1.rd.
+      // RTYPE -> RTYPE/BEQ: txn2 reads txn1.rd (register dependency).
       1: begin
         assert(txn1.randomize() with {
-          opcode inside {RTYPE};
+          opcode == RTYPE;
         });
         assert(txn2.randomize() with {
           opcode inside {RTYPE, BEQ};
@@ -142,21 +190,21 @@ class instruction_generator;
         append_instruction(txn2);
       end
 
-      // RTYPE -> LW/SW: the consumer uses txn1.rd as its base register.
+      // RTYPE -> SW: txn2 uses txn1.rd as its target register (register dependency).
       1: begin
         assert(txn1.randomize() with {
-          opcode inside {RTYPE};
+          opcode == RTYPE;
         });
         assert(txn2.randomize() with {
-          opcode inside {LW, SW};
-          rs == txn1.rd;
+          opcode == SW;
+          rt == txn1.rd;
         });
         append_instruction(txn1);
         insert_gaps(-1, txn1.rd);
         append_instruction(txn2);
       end
 
-      // LW -> RTYPE/BEQ: the consumer reads the register loaded by txn1.
+      // LW -> RTYPE/BEQ: txn2 reads the register loaded by txn1 (register dependency).
       1: begin
         assert(txn1.randomize() with {
           opcode == LW;
@@ -170,24 +218,40 @@ class instruction_generator;
         append_instruction(txn2);
       end
 
-      // LW -> LW/SW: the consumer uses txn1.rt as its base register.
+      // LW -> SW: txn2 uses txn1.rt as its target register (register dependency).
       1: begin
         assert(txn1.randomize() with {
           opcode == LW;
         });
         assert(txn2.randomize() with {
-          opcode inside {LW, SW};
-          rs == txn1.rt;
+          opcode == SW;
+          rt == txn1.rt;
         });
         append_instruction(txn1);
         insert_gaps(-1, txn1.rt);
         append_instruction(txn2);
       end
+
+      // LW/SW -> LW/SW: txn2 accesses the same memory location as txn1 (memory dependency).
+      1: begin
+        assert(txn1.randomize() with {
+          opcode inside {LW, SW};
+        });
+        assert(txn2.randomize() with {
+          opcode inside {LW, SW};
+          imm == txn1.imm;
+        });
+        append_instruction(txn1);
+        insert_gaps();
+        append_instruction(txn2);
+      end
+
     endcase
   endfunction
 
   function void insert_gaps(int gap_size = -1, int avoid_reg = -1);
     int num_gaps;
+    instruction gap_instr;
 
     if (gap_size == -1)
       num_gaps = $urandom_range(1, 4);
@@ -196,9 +260,8 @@ class instruction_generator;
     else
       $fatal(1, "Gap size must be non-negative");
 
-    instr_list = new[instr_list.size() + num_gaps] (instr_list);
     for (int i = 0; i < num_gaps; i++) begin
-      instruction gap_instr = new();
+      gap_instr = new();
       if (avoid_reg != -1) begin
         assert(gap_instr.randomize() with {
           opcode inside {RTYPE, LW, SW};
@@ -206,10 +269,12 @@ class instruction_generator;
         });
       end
       else begin
-        assert(gap_instr.randomize() with {opcode inside {RTYPE, LW, SW}; });
+        assert(gap_instr.randomize() with {
+          opcode == RTYPE;
+        });
       end
 
-      instr_list[instr_list.size() - num_gaps + i] = gap_instr;
+      append_instruction(gap_instr);
     end
   endfunction
 
@@ -217,38 +282,25 @@ class instruction_generator;
     integer num_instr = $urandom_range(5, 8);
     instr_list = new[0];
 
-    for (int i = 1; i <= 4; i++) begin
-      instruction init_reg_instr = new();
-      assert(init_reg_instr.randomize() with {
-        opcode == ADDI;
-        rs == 0;
-        rt == i;
-      });
-      append_instruction(init_reg_instr);
-    end
+    // Setup the initial instructions to initialize registers and memory
+    generate_setup();
 
-    for (int i = 0; i < 4; i++) begin
-      instruction init_mem_instr = new();
-      assert(init_mem_instr.randomize() with {
-        opcode == SW;
-        rs == 0;
-        rt inside {[0:4]};
-        imm == (i * 16'h0004);
-      });
-      append_instruction(init_mem_instr);
-    end
+    // Setup the trick-box by loading a value into the trickbox register
+    generate_trickbox_setup();
 
     // Generate a sequence of instructions with a mix of individual and paired instructions.
     for (int i = 0; i < num_instr; i++) begin
-      randcase
-        1: generate_individual();
-        1: generate_pairs();
-      endcase
+      if ($urandom_range(1, 0) == 0)
+        generate_individual();
+      else
+        generate_pairs();
     end
 
-    // Pad the sequence with five instructions to cover the maximum branch
-    // offset when a branch is placed at the end of the sequence.
-    insert_gaps(5);
+    // Pad the sequence with four instructions to cover the maximum branch minus 1
+    insert_gaps(4);
+
+    // Store the trickbox value into the trickbox memory address
+    generate_trickbox_store();
   endfunction
 
   function void generate_machine_code();
@@ -286,7 +338,11 @@ module instr_gen;
   timeunit 1ns;
   timeprecision 1ps;
 
-  instruction_generator gen;
+  instruction_generator #(
+    .TRICKBOX_REG(5'd5),
+    .TRICKBOX_VALUE(16'hDEAD),
+    .TRICKBOX_MEM_ADDR(16'h8800)
+  ) gen;
   bit [31:0] machine_code_list[];
 
   logic clk, reset;
@@ -325,7 +381,10 @@ module instr_gen;
     repeat (2) @(posedge clk);
     reset = 0;
 
-    repeat (gen.instr_list.size() + 5) @(posedge clk);
+    // Wait until the trickbox value is stored in memory before finishing the simulation
+    while (dut.dmem.RAM[gen.TRICKBOX_MEM_ADDR[7:2]] != {16'h0000, gen.TRICKBOX_VALUE})
+      @(posedge clk);
+
     $finish;
   end
 
