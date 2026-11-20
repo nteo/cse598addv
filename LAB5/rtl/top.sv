@@ -1,5 +1,3 @@
-`timescale 1ns/1ps
-
 ////////////////////////////////////////////////////////////////////////////
 // ========================================================================
 // This file has the following module implementations:
@@ -17,7 +15,7 @@ module top (
     output [31:0] writedata, dataadr,
     output memwrite
 );
-    wire [31:0] pc, instr, readdata;
+    logic [31:0] pc, instr, readdata;
 
     // instantiate processor and memories
     mips mips (clk, reset, pc, instr, memwrite, dataadr, writedata, readdata);
@@ -33,17 +31,20 @@ module mips (
     input           clk, reset,
     output  [31:0]  pc,
     input   [31:0]  instr,
-    output          memwrite,
+    output          memwriteout,
     output  [31:0]  aluout, writedata,
     input   [31:0]  readdata
 );
 
-    wire memtoreg, branch, alusrc, regdst, regwrite, jump;
-    wire [2:0] alucontrol;
+    logic [31:0] instrD;
+    logic [1:0] resultsrc;
+    logic branch, alusrc, regdst, regwrite, jump;
+    logic memwrite, zero;
+    logic [2:0] alucontrol;
 
-    controller c(instr[31:26], instr[5:0], zero, memtoreg, memwrite, pcsrc, alusrc, regdst, regwrite, jump, alucontrol);
+    controller c(instrD[31:26], instrD[5:0], zero, resultsrc, memwrite, alusrc, regdst, regwrite, jump, branch, alucontrol);
 
-    datapath dp(clk, reset, memtoreg, pcsrc, alusrc, regdst, regwrite, jump,alucontrol, zero, pc, instr, aluout, writedata, readdata);
+    datapath dp(clk, reset, readdata, instr, regwrite, resultsrc, memwrite, alucontrol, alusrc, regdst, branch, jump, instrD, zero, pc, memwriteout, aluout, writedata);
 endmodule
 
 
@@ -55,11 +56,11 @@ module dmem (
     input [31:0] a, wd,
     output [31:0] rd
 );
-    reg [31:0] RAM[63:0];
+    logic [31:0] RAM[63:0];
 
     assign rd = RAM[a[31:2]]; // word aligned
     
-    always @ (posedge clk)
+    always_ff @ (posedge clk)
         if (we)
             RAM[a[31:2]] <= wd;
 endmodule
@@ -76,10 +77,10 @@ module imem (
     input [5:0] a,
     output [31:0] rd
 );
-    reg [31:0] RAM[63:0];
+    logic [31:0] RAM[63:0];
     
     initial begin
-        $readmemh("../rtl/memfile.dat",RAM);
+        $readmemh("../rtl/memfile_dh.dat",RAM);
     end
     assign rd = RAM[a]; // word aligned
 endmodule
