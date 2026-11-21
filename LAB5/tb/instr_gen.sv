@@ -140,7 +140,7 @@ class instruction_generator #(
   endfunction
 
   function void generate_trickbox_store();
-    // Store the value from register $5 into memory address 0x8800 using an SW instruction
+    // Store the value from register $5 into memory address 0x40 using an SW instruction
     instruction trickbox_store_instr = new();
 
     trickbox_store_instr.opcode = SW;
@@ -263,18 +263,17 @@ class instruction_generator #(
 
     for (int i = 0; i < num_gaps; i++) begin
       gap_instr = new();
-      if (avoid_reg != -1) begin
-        assert(gap_instr.randomize() with {
-          opcode inside {RTYPE, LW, SW};
-          (rs != avoid_reg) && (rt != avoid_reg) && (rd != avoid_reg);
-          (imm != avoid_mem);
-        });
-      end
-      else begin
-        assert(gap_instr.randomize() with {
-          opcode == RTYPE;
-        });
-      end
+      assert(gap_instr.randomize() with {
+        opcode inside {RTYPE, LW, SW};
+        if (avoid_reg != -1) {
+          rs != avoid_reg;
+          rt != avoid_reg;
+          rd != avoid_reg;
+        }
+        if (avoid_mem != -1) {
+          (opcode inside {LW, SW}) -> (imm != avoid_mem);
+        }
+      });
 
       append_instruction(gap_instr);
     end
