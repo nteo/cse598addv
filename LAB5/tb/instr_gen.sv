@@ -130,23 +130,31 @@ class instruction_generator #(
 
   function void generate_trickbox_setup();
     // Load a value into register $5 using an ADDI instruction
-    instruction trickbox_instr = new();
+    instruction trickbox_addi_instr = new();
+    instruction trickbox_store_instr = new();
 
-    trickbox_instr.opcode = ADDI;
-    trickbox_instr.rt = TRICKBOX_REG;
-    trickbox_instr.imm = TRICKBOX_VALUE;
-    append_instruction(trickbox_instr);
+    trickbox_addi_instr.opcode = ADDI;
+    trickbox_addi_instr.rt = TRICKBOX_REG;
+    trickbox_addi_instr.imm = TRICKBOX_VALUE;
+
+    trickbox_store_instr.opcode = SW;
+    trickbox_store_instr.rs = 0;
+    trickbox_store_instr.rt = $0;
+    trickbox_store_instr.imm = TRICKBOX_MEM_ADDR;
+    
+    append_instruction(trickbox_addi_instr);
+    append_instruction(trickbox_store_instr);
   endfunction
 
   function void generate_trickbox_store();
     // Store the value from register $5 into memory address 0x8800 using an SW instruction
-    instruction trickbox_instr = new();
+    instruction trickbox_store_instr = new();
 
-    trickbox_instr.opcode = SW;
-    trickbox_instr.rs = 0;
-    trickbox_instr.rt = TRICKBOX_REG;
-    trickbox_instr.imm = TRICKBOX_MEM_ADDR;
-    append_instruction(trickbox_instr);
+    trickbox_store_instr.opcode = SW;
+    trickbox_store_instr.rs = 0;
+    trickbox_store_instr.rt = TRICKBOX_REG;
+    trickbox_store_instr.imm = TRICKBOX_MEM_ADDR;
+    append_instruction(trickbox_store_instr);
   endfunction
 
   function void generate_individual();
