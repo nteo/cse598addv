@@ -52,9 +52,16 @@ batch:
 	@for i in $$(seq 1 $(K)); do $(MAKE) --no-print-directory next || exit 1; done
 
 # Merge every run in cov_runs/ and generate a report
+#
+# simv.vdb is passed first because it holds the design information written at
+# compile time. The per-run databases in cov_runs/ only hold test results, so
+# urg fails with "Design not yet loaded" without it. (simv.vdb also contains
+# the first single "make run", which used seed 1, the same program as run_1,
+# so it does not change the merged totals.)
 merge:
+	@rm -rf $(MERGED)
 	@mkdir -p $(MERGED)
-	$(VCS_HOME)/bin/urg -dir $(RUN_DIR)/*.vdb -dbname $(MERGED)/merged.vdb \
+	$(VCS_HOME)/bin/urg -dir simv.vdb $(RUN_DIR)/*.vdb -dbname $(MERGED)/merged.vdb \
 	    -report $(MERGED)/urgReport
 	@echo "Runs merged: $$(ls -d $(RUN_DIR)/*.vdb | wc -l)"
 	@cat $(MERGED)/urgReport/dashboard.txt 2>/dev/null || true
