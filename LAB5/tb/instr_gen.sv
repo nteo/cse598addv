@@ -154,8 +154,12 @@ class instruction_generator #(
     instruction instr = new();
 
     randcase
-      4: begin
-        assert(instr.randomize() with {opcode inside {RTYPE, LW, SW}; });
+      2: begin
+        assert(instr.randomize() with {opcode == RTYPE;});
+        append_instruction(instr);
+      end
+      2: begin
+        assert(instr.randomize() with {opcode inside {LW, SW}; });
         append_instruction(instr);
       end
 
