@@ -1,13 +1,18 @@
 # ---- Settings (override on the command line, e.g. make run SEED=7) ----
-SEED       = 1
-COV_DIR    = simv.vdb             # coverage database for a single "make run"
-CODE_COV   = line+cond+fsm+tgl    # code coverage metrics (Part 4)
+SEED = 1
+# Coverage database for a single "make run"
+COV_DIR = simv.vdb
+# Code coverage metrics (Part 4)
+CODE_COV = line+cond+fsm+tgl
 
 # ---- Multi-run settings ----
-RUN_DIR    = cov_runs             # one coverage db, log and program per run
-COUNTER    = .run_counter         # persists the last run number (= seed) used
-MERGED     = cov_merged
-K          = 10                   # runs per "make batch"
+# One coverage db, log and program per run
+RUN_DIR = cov_runs
+# Persists the last run number (= seed) used
+COUNTER = .run_counter
+MERGED = cov_merged
+# Runs per "make batch"
+K = 10
 
 # ---- Compile: RTL + instr_gen.sv (listed in ../project.f) ----
 # -ntb_opts uvm-1.2 is still required because instr_gen.sv does
