@@ -187,7 +187,7 @@ class instruction_generator #(
         });
 
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rd);
+        insert_gaps(.avoid_reg(txn1.rd));
         append_instruction(txn2);
       end
 
@@ -201,7 +201,7 @@ class instruction_generator #(
           rt == txn1.rd;
         });
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rd);
+        insert_gaps(.avoid_reg(txn1.rd));
         append_instruction(txn2);
       end
 
@@ -215,7 +215,7 @@ class instruction_generator #(
           (rs == txn1.rt) || (rt == txn1.rt);
         });
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rt);
+        insert_gaps(.avoid_reg(txn1.rt));
         append_instruction(txn2);
       end
 
@@ -229,7 +229,7 @@ class instruction_generator #(
           rt == txn1.rt;
         });
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rt);
+        insert_gaps(.avoid_reg(txn1.rt));
         append_instruction(txn2);
       end
 
@@ -243,14 +243,14 @@ class instruction_generator #(
           imm == txn1.imm;
         });
         append_instruction(txn1);
-        insert_gaps();
+        insert_gaps(.avoid_mem(txn1.imm));
         append_instruction(txn2);
       end
 
     endcase
   endfunction
 
-  function void insert_gaps(int gap_size = -1, int avoid_reg = -1);
+  function void insert_gaps(int gap_size = -1, int avoid_reg = -1, int avoid_mem = -1);
     int num_gaps;
     instruction gap_instr;
 
@@ -267,6 +267,7 @@ class instruction_generator #(
         assert(gap_instr.randomize() with {
           opcode inside {RTYPE, LW, SW};
           (rs != avoid_reg) && (rt != avoid_reg) && (rd != avoid_reg);
+          (imm != avoid_mem);
         });
       end
       else begin
@@ -298,7 +299,7 @@ class instruction_generator #(
     end
 
     // Pad the sequence with four instructions to cover the maximum branch minus 1
-    insert_gaps(4);
+    insert_gaps(.gap_size(4));
 
     // Store the trickbox value into the trickbox memory address
     generate_trickbox_store();
