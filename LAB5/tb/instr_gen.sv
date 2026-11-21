@@ -94,8 +94,8 @@ endclass
 
 class instruction_generator #(
   parameter bit [4:0] TRICKBOX_REG = 5'd5,
-  parameter bit [15:0] TRICKBOX_VALUE = 16'hDEAD,
-  parameter bit [15:0] TRICKBOX_MEM_ADDR = 16'h8800
+  parameter bit [15:0] TRICKBOX_VALUE = 16'h0DED,
+  parameter bit [15:0] TRICKBOX_MEM_ADDR = 16'h0040
 );
   instruction instr_list[];
   bit [31:0] machine_code_list[];
@@ -348,8 +348,8 @@ module instr_gen;
 
   instruction_generator #(
     .TRICKBOX_REG(5'd5),
-    .TRICKBOX_VALUE(16'hDEAD),
-    .TRICKBOX_MEM_ADDR(16'h8800)
+    .TRICKBOX_VALUE(16'h0DED),
+    .TRICKBOX_MEM_ADDR(16'h0040)
   ) gen;
   bit [31:0] machine_code_list[];
 
@@ -390,7 +390,7 @@ module instr_gen;
     reset = 0;
 
     // Wait until the trickbox value is stored in memory before finishing the simulation
-    while (dut.dmem.RAM[16'h8800] != 16'hDEAD)
+    while (dut.dmem.RAM[16'h0040 >> 2] != 32'h0000_0DED);
       @(posedge clk);
 
     $finish;
