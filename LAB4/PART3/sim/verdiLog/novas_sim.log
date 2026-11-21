@@ -1,0 +1,39 @@
+Invoking simulator...
+Verdi>./simv +VERBOSE=0 -sml=verdi +fsdb+gate=off -ucli2Proc -ucli
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2024
+Contains Synopsys proprietary information.
+Compiler version W-2024.09-SP2-3_Full64; Runtime version W-2024.09-SP2-3_Full64;  Nov 17 00:32 2026
+*Verdi* Loading libsscore_vcs202409.so
+FSDB Dumper for VCS, Release Verdi_W-2024.09-SP2-3, Linux x86_64/64bit, 06/23/2025
+(C) 1996 - 2025 by Synopsys, Inc.
+*Verdi* : Create FSDB file '/home/a34263_asu/CSE598/LAB4/PART3/sim/inter.fsdb'
+*Verdi* : Flush all FSDB Files at 0 s.
+*Verdi* : Enable RPC Server(2553936)
+Information: Term was not able to be set up using xterm-256color. Using "xterm" by default instead. (CLE-10)
+Verdi>run
+*Verdi* WARNING: Env/runtime option has specified fsdbfile name as "/home/a34263_asu/CSE598/LAB4/PART3/sim/inter.fsdb". Fsdbfile name in task "novas.fsdb" is ignored.
+*Verdi* : Begin traversing the scope (fifo_tb), layer (0).
+*Verdi* : End of traversing.
+FIFO READ SUCCESS at time 357. Expected: 0, Observed: 0
+FIFO READ SUCCESS at time 385. Expected: 1, Observed: 1
+FIFO READ SUCCESS at time 413. Expected: 2, Observed: 2
+FIFO READ SUCCESS at time 441. Expected: 3, Observed: 3
+FIFO READ SUCCESS at time 469. Expected: 4, Observed: 4
+FIFO READ SUCCESS at time 497. Expected: 5, Observed: 5
+FIFO READ SUCCESS at time 525. Expected: 6, Observed: 6
+FIFO READ SUCCESS at time 553. Expected: 7, Observed: 7
+FIFO READ SUCCESS at time 581. Expected: 8, Observed: 8
+FIFO READ SUCCESS at time 609. Expected: 9, Observed: 9
+FIFO READ SUCCESS at time 637. Expected: a, Observed: a
+FIFO READ SUCCESS at time 665. Expected: b, Observed: b
+FIFO READ SUCCESS at time 693. Expected: c, Observed: c
+FIFO READ SUCCESS at time 721. Expected: d, Observed: d
+FIFO READ SUCCESS at time 749. Expected: e, Observed: e
+FIFO READ SUCCESS at time 777. Expected: f, Observed: f
+FIFO READ SUCCESS at time 945. Expected: 1, Observed: 1
+$finish called from file "/home/a34263_asu/CSE598/LAB4/PART3/tb/fifo_tb.sv", line 114.
+$finish at simulation time                  976
+Simulation complete, time is 976.
+fifo_tb.sv, 114 :         $finish;

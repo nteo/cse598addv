@@ -399,7 +399,7 @@ module fifo_dpi_tb;
         checker.run();
 
         // Check if there is an insert_bug flag from command line arguments
-        insert_bug = $test$plusargs("INSERT_BUG");
+        insert_bug = $test$plusargs(1);
         
         // Get the test number from command line arguments (default to running all tests if not provided)
         if (!$value$plusargs("TEST=%d", test_num)) begin

@@ -1,0 +1,39 @@
+version: (200506)
+
+available memory: 64M bytes
+used memory: 139264 bytes [need 136K bytes if disable swap]
+
+used block: 10 [memory(10) file(0)]
+                 [ 8K(9) 64K(1) { total 136K bytes } ]
+overhead: (9514) bytes for (10) blocks [Average: (951) bytes/block]
+
+write  => 0(times) 0K(bytes) [0K bytes to file]
+read   => 1(times) 52K(bytes) [9K bytes compressed data from file]
+access => 98182(times) 791M(bytes)
+          [hit ratio: 99.999%]
+
+time: write(0) read(0)  unit: second
+
+swap file directory: (/home/a34263_asu/CSE598/LAB4/PART2/sim/verdiLog)
+used swap file number: (1)
+
+
+
+swap file manager:
+arrSize: (256)
+idxCnt: (3)
+closeHead: (1)
+closeTail: (2)
+openCnt: (2)
+fid(2): fd(24) fileName(/home/a34263_asu/CSE598/LAB4/PART2/sim/verdiLog/_swap_0001#-1838905749#2564957)
+	size(0) lastModTime(0) curModTime(1794876771)
+	mode(w+b)	hot(0) cool(1) pos(0)
+fid(1): fd(1073741824) fileName(/home/a34263_asu/CSE598/LAB4/PART2/sim/simv.daidir/kdb.elab++/work.lib++/fifo_dpi_tb.sv.tdc)
+	size(15649) lastModTime(1794876766) curModTime(1794876766)
+	mode(rb)	hot(2) cool(0) pos(0)
+fid(0): fd(0) fileName(NULL)
+	mode(NULL)	hot(0) cool(0) pos(0)
+==================================================
+mySelf(0x215490e0) pre(0x206a6bc0) next((nil))
+version(200506)
+date(Jun 27 2025 20:37:29)

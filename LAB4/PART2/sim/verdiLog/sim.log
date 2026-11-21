@@ -1,0 +1,819 @@
+Command: /home/a34263_asu/CSE598/LAB4/PART2/sim/simv +VERBOSE=0 +TEST=0 -sml=verdi +fsdb+gate=off -ucli2Proc -ucli -l /home/a34263_asu/CSE598/LAB4/PART2/sim/verdiLog/sim.log
+Chronologic VCS simulator copyright 1991-2024
+Contains Synopsys proprietary information.
+Compiler version W-2024.09-SP2-3_Full64; Runtime version W-2024.09-SP2-3_Full64;  Nov 17 00:53 2026
+
+ucli% synUtils::getArch
+linux64
+ucli% loaddl -simv /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUXAMD64/libnovas.so LoadFSDBDumpCmd;LoadFSDBDumpCmd
+LoadFSDBDumpCmd success
+ucli% config ckptfsdbcheck off;config endofsim noexit;config onfail {enable all};config followactivescope on;catch {setUcliVerdiConnected};set watch::resultTagsForVerdiBP {<ucli_break_bp_status_begin> <ucli_break_bp_status_end>};set ucliCore::support_restore_through_stask_in_verdi 1;cbug::config pretty_print auto;fsdbDumpfile {/home/a34263_asu/CSE598/LAB4/PART2/sim/inter.fsdb} ;fsdbDumpflush ; 
+*Verdi* Loading libsscore_vcs202409.so
+FSDB Dumper for VCS, Release Verdi_W-2024.09-SP2-3, Linux x86_64/64bit, 06/23/2025
+(C) 1996 - 2025 by Synopsys, Inc.
+*Verdi* : Create FSDB file '/home/a34263_asu/CSE598/LAB4/PART2/sim/inter.fsdb'
+*Verdi* : Flush all FSDB Files at 0 ps.
+
+ucli% synEnv::hasFataled
+0
+ucli% ucliCore::getToolPID
+2565381
+ucli% sps_interactive
+*Verdi* : Enable RPC Server(2565381)
+
+ucli% ucliCore::getToolPID
+2565381
+ucli% ucliCore::getToolPID
+2565381
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% puts $ucliCore::nativeUcliMode
+0
+
+ucli% ucliCore::getToolTopPID
+2565381
+ucli% pid
+2565394
+ucli% synUtils::sendTool -active {_icl_createSharedMemory /tmp/vcs_dve_general.a34263_asu.2565381 }
+
+ucli% if { [info vars watch::vcbp_str_len_limit_of_get_value] != ""} {set watch::vcbp_str_len_limit_of_get_value 1024}
+1024
+ucli% info command stateVerdiChangeCB
+
+ucli% proc stateVerdiChangeCB args { if {$ucliGUI::state eq "terminated"} {puts "\n<VERDI_Terminated>\n";catch {setVerdiSimTerminated}}}
+
+ucli% trace variable ucliGUI::state wu stateVerdiChangeCB
+
+ucli% if {[catch {rename synopsys::restore verdiHack::restore} ]} {puts "0"}
+
+ucli% proc synopsys::restore {args} { verdiHack::restore $args; puts "\n<VERDI_RESTORE>\n"}
+
+ucli% if {[catch {rename quit verdiHack::quit} ]} {puts "0"}
+
+ucli% proc quit {args} { if {[string length $args] == 0} { verdiHack::quit; } elseif {([string equal "-h" $args] == 1)||([string equal "-he" $args] == 1)||([string equal "-hel" $args] == 1)||([string equal "-help" $args] == 1)} { puts "\n quit           # Exit the simulation.\n \[-noprompt\]        (Exit the simulation and Verdi.)\n"} elseif {([string equal "-n" $args] == 1)||([string equal "-no" $args] == 1)||([string equal "-nop" $args] == 1)||([string equal "-nopr" $args] == 1)||([string equal "-nopro" $args] == 1)||([string equal "-noprom" $args] == 1)||([string equal "-nopromp" $args] == 1)||([string equal "-noprompt" $args] == 1)} { puts "\nVERDI_EXIT_N\n" } else { verdiHack::quit $args; } }
+
+ucli% if {[catch {rename exit verdiHack::exit} ]} {puts "0"}
+
+ucli% proc exit {args} { if {[string length $args] == 0} { verdiHack::exit; } elseif {([string equal "-h" $args] == 1)||([string equal "-he" $args] == 1)||([string equal "-hel" $args] == 1)||([string equal "-help" $args] == 1)} { puts "\n exit           # Exit the simulation.\n \[-noprompt\]        (Exit the simulation and Verdi.)\n"} elseif {([string equal "-n" $args] == 1)||([string equal "-no" $args] == 1)||([string equal "-nop" $args] == 1)||([string equal "-nopr" $args] == 1)||([string equal "-nopro" $args] == 1)||([string equal "-noprom" $args] == 1)||([string equal "-nopromp" $args] == 1)||([string equal "-noprompt" $args] == 1)} { puts "\nVERDI_EXIT_N\n" } else { verdiHack::exit $args; } }
+
+ucli% proc checkpoint::beforeRecreate {} { sps_interactive }
+
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% save::getUserdefinedProcs
+::stateVerdiChangeCB ::LoadFSDBDumpCmd
+ucli% info procs
+ipi_get_str fsdbDumpMDAByFile fsdbDumpMDA echo fsdbDumpMemNow fsdbAutoSwitchDumpfile unknown sps_interactive auto_import stat fsdbDumpfile setenv auto_execok pkg_mkIndex stateVerdiChangeCB fsdbDumpSingle proc_body ipi_begin fsdbDumpoff getenv fsdbDumplimit fsdbDumpPattern ipi_handle ipi_get_prop fsdbDumpvarsByFile fsdbDumpMDAInScope lminus ipi_sim_get ls auto_load_index proc_args fsdbAddRuntimeSignal fsdbDumpSC print_message_info ridbDump fsdbDumpSVAoff fsdbSuppress fsdbDumpvars help fsdbDumpMDAOnChange ipi_control auto_qualify fsdbDumpMem sourceSavedOnbreakHandler tclPkgUnknown printenv ipi_handle_by_name helpdoc fsdbDumpMemInScope fsdbDumpFinish is_true fsdbDumpon sh fsdbQueryInfo LoadFSDBDumpCmd fsdbDumpPSL fsdbDumpSVA ipi_end wrapperSpecmanSn fsdbDumpSVAon fsdbDumpClassObjectByFile is_false auto_load fsdbDumpPSLon ipi_get_int64 fsdbSubstituteHier ipi_get_value ipi_iterate exit fsdbDumpMemInFile tclLog fsdbDumpflush get_unix_variable mem_debug ipi_scan fsdbDumpPSLoff fsdbDumpClassObject fsdbDumpvarsToFile set_unix_variable bgerror fsdbDumpStrength add_group fsdbSwitchDumpfile source add_wave sos_fsdbDumpvars ipi_set_prop unsetenv fsdbDumpvarsES readline fsdbDisplay ipi_handle_free set_group ipi_get quit define_proc_attributes tclPkgSetup fsdbDumpMDANow ipi_init_play_tcl fsdbDumpIO
+ucli% info commands
+ipi_get_str cchange subst fsdbDumpMDAByFile pwd cshow guiSource fsdbDumpMDA echo fsdbDumpMemNow fsdbAutoSwitchDumpfile ucliConnectToSharedMem unknown ucliIsScriptPauseByVerdi lrange sps_interactive auto_import setVerdiSimTerminated coverage case stat fsdbDumpfile break setenv dump auto_execok msglog linsert pkg_mkIndex dumplist catch stateVerdiChangeCB mpformat fsdbDumpSingle if join detach_sim halt proc_body abortScriptAfterDetachVerdi report_violations which lp_show ipi_begin pause dve_help fsdbDumpoff format getenv listing fsdbDumplimit package binary trace ctimeout onbreak after flush fsdbDumpPattern step restore ipi_handle power continue get_command_option_values force try foreach ipi_get_prop fsdbDumpvarsByFile lrepeat tailcall unset fsdbDumpMDAInScope lminus ipi_sim_get interp write_app_var lindex stack yield ls resetInterruptCount runAfterDetachVerdi eof saif list printvar create_command_group keysFileChangeCB virtual auto_load_index checkpoint proc_args finish fsdbAddRuntimeSignal cgettimeout sexpr lsearch fblocked fsdbDumpSC fanin lappend print_message_info proc cextract ridbDump writelist get_defined_commands cdump fsdbDumpSVAoff fsdbSuppress man set_sig_vas_in_waiting_input fconfigure fsdbDumpvars help fsdbDumpMDAOnChange ipi_control switch auto_qualify fsdbDumpMem mpexpr status sourceSavedOnbreakHandler tclPkgUnknown close printenv ipi_handle_by_name helpdoc thread lreverse set read fsdbDumpMemInScope initAttachableFile unalias fsdbDumpFinish setVerdiAttachable seek while set_cle_options is_true set_message_info writeKeyLog cbug fsdbDumpon find_forces yieldto sh start_verdi load fsdbQueryInfo memory sn vcsExecFuncInSharedObject cenable history puts gdb loadSharedObject tblog assertion resume _synopsys_cci_unalias socket tell open get_message_ids cadd exec pid stop LoadFSDBDumpCmd unloadSharedObject redirect fsdbDumpPSL throw fsdbDumpSVA ipi_end return ace wrapperSpecmanSn error fsdbDumpSVAon split fsdbDumpClassObjectByFile is_false array ucliAttachedByVerdi vbus get lreplace concat coroutine fcopy update parse_proc_arguments report_app_var run search setUcliVerdiStatus for append auto_load fsdbDumpPSLon ucliLaunchVerdi alias logFileChangeCB scan setUcliVerdiConnected apply sdc_check abort set_current_command_mode release zlib chan loads _spw_define_proc_attributes ipi_get_int64 onerror print_suppressed_messages scope fileevent fsdbSubstituteHier inputFileChangeCB regexp resultTagsForVerdiCB set_app_var ipi_get_value cdelete upvar ipi_iterate save encoding onfail exit fsdbDumpMemInFile incr tclLog fsdbDumpflush get_message_info get_unix_variable show senv glob mem_debug ipi_scan GUIsource config fsdbDumpPSLoff time eval lassign fsdbDumpClassObject gets fsdbDumpvarsToFile tcl_exit set_unix_variable restart start change llength variable constraints xprop bgerror fsdbDumpStrength call clock info apropos add_group fsdbSwitchDumpfile ucliDetachVerdi source GUI_tcl_shell_puts global tcheck initreg add_wave report_timing sos_fsdbDumpvars ipi_set_prop next drivers cd file lmap unload namespace loaddl unsetenv get_app_var fsdbDumpvarsES suppress_message vwait dict readline fsdbDisplay uplevel ipi_handle_free date set_group lset rename ipi_get quit sh_list_key_bindings do unsuppress_message define_proc_attributes error_info tclPkgSetup expr printPromptStr regsub onCheckpointCB csave fsdbDumpMDANow dtl_load ipi_init_play_tcl lsort fsdbDumpIO doFileChangeCB _synopsys_cci_alias writeHistoryLog cdisable string
+ucli% set ucliCore::resultTagsForVerdi [list <?special_verdi_begin?> <?special_verdi_end?>]
+<?special_verdi_begin?> <?special_verdi_end?>
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% if {[catch {get uvm_pkg.UVM_VERSION_STRING} result] == 0} {puts $result}
+
+ucli% senv hasTB
+1
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% fsdbDumpflush 
+*Verdi* : Flush all FSDB Files at 0 ps.
+
+ucli% senv
+activeDomain: Verilog
+activeFile: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv
+activeFrame: -1
+activeLine: 215
+activeScope: fifo_dpi_tb
+activeThread: 0
+endCol: 0
+file: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv
+frame: -1
+fsdbFilename: 
+hasTB: 1
+inputFilename: 
+keyFilename: ucli.key
+line: 215
+logFilename: /home/a34263_asu/CSE598/LAB4/PART2/sim/verdiLog/sim.log
+macroIndex: -1
+macroOffset: -1
+pid: 2565381
+scope: fifo_dpi_tb
+startCol: 0
+state: stopped
+thread: 0
+time: 0
+timePrecision: 1 ps
+vcdFilename: 
+vpdFilename:
+ucli% puts $::ucliCore::cbug_active
+0
+
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% checkpoint -list -all
+There are no checkpoints present.
+ucli% stop
+No stop points are set
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% run
+*Verdi* WARNING: Env/runtime option has specified fsdbfile name as "/home/a34263_asu/CSE598/LAB4/PART2/sim/inter.fsdb". Fsdbfile name in task "novas.fsdb" is ignored.
+*Verdi* : Begin traversing the scope (fifo_dpi_tb), layer (0).
+*Verdi* : End of traversing.
+<slp!&*()_+>
+Running Test #1: Simultaneous Read and Write...
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 429<sls!&*()_+>time: 3500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 17500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=0 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 17500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=1 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 22500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=2 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 27500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=3 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 32500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=4 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 37500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=5 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 42500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=0 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 45500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=6 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 47500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=1 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 52500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=7 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 52500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=8 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 57500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=2 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 59500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=9 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 62500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=3 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 66500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=10 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 67500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=11 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 72500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=4 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 73500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=12 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 77500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=5 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 80500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=13 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 82500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=6 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 87500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=14 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 87500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=15 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 92500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=7 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 94500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=16 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 97500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=8 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 101500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=17 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 102500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=18 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 107500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=9 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 108500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=19 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 112500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=10 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 115500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=20 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 117500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=11 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 122500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=21 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 122500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=22 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 127500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=12 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 129500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=23 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 132500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=13 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 136500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=24 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 137500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=25 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 142500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=14 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 143500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=26 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 147500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=15 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 150500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=27 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 152500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=16 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 157500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=28 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 157500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=29 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 162500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=17 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 164500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=30 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 167500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=18 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 171500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=31 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 172500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=19 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 178500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=20 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 185500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=21 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 192500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=22 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 199500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=23 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 206500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=24 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 213500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=25 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 220500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=26 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 227500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=27 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 234500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=28 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 241500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=29 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 248500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=30 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 255500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=31 (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 262500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 269500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 276500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 283500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 290500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 297500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 304500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 311500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 318500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 325500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 332500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 339500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 346500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[CHK] writes=32 reads=32 errors=0 residual_model_count=0
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 205<sls!&*()_+>time: 350000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[CHK] PASS
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 207<sls!&*()_+>time: 350000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+
+Running Test #2: Full Condition...
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 433<sls!&*()_+>time: 350000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=0 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 357500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=1 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 362500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=2 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 367500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=3 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 372500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=4 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 377500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=5 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 382500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=6 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 387500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=7 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 392500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=8 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 397500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=9 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 402500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=10 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 407500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=11 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 412500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=12 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 417500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=13 (model count=14)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 422500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=14 (model count=15)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 427500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=15 (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 432500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 437500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 442500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 447500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 452500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 457500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 462500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=0 (model count=15)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 465500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=1 (model count=14)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 472500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=2 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 479500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=3 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 486500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=4 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 493500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=5 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 500500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=6 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 507500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=7 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 514500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=19 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 522500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=20 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 527500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=21 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 532500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=22 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 537500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=23 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 542500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=24 (model count=14)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 547500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=25 (model count=15)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 552500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=26 (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 557500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 562500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 567500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 572500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 577500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 582500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 587500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 592500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 597500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=8 (model count=15)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 598500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=9 (model count=14)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 605500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=10 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 612500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=11 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 619500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=12 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 626500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=13 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 633500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=14 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 640500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=15 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 647500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=19 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 654500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=20 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 661500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=21 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 668500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=22 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 675500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=23 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 682500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=24 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 689500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=25 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 696500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=26 (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 703500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[CHK] writes=56 reads=56 errors=0 residual_model_count=0
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 205<sls!&*()_+>time: 707000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[CHK] PASS
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 207<sls!&*()_+>time: 707000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+
+Running Test #3: Empty Condition...
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 437<sls!&*()_+>time: 707000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 717500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=0 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 717500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=1 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 722500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=2 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 727500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=3 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 732500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=4 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 737500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=5 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 742500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=6 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 747500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=7 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 752500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=0 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 759500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=1 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 766500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=2 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 773500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=3 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 780500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=4 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 787500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=5 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 794500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=6 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 801500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=7 (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 808500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 815500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 822500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 829500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 836500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 843500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=8 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 847500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=9 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 852500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=10 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 857500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=11 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 862500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=12 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 867500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=13 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 872500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=14 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 877500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=15 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 882500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=16 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 887500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=17 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 892500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=18 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 897500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=19 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 902500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=20 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 907500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=21 (model count=14)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 912500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=22 (model count=15)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 917500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] DUT successfully accepted a write: wdata=23 (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 922500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 927500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] full asserted while model is full (model count=16)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 932500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=8 (model count=15)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 934500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=9 (model count=14)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 941500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=10 (model count=13)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 948500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=11 (model count=12)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 955500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=12 (model count=11)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 962500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=13 (model count=10)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 969500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=14 (model count=9)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 976500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=15 (model count=8)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 983500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=16 (model count=7)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 990500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=17 (model count=6)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 997500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=18 (model count=5)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1004500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=19 (model count=4)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1011500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=20 (model count=3)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1018500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=21 (model count=2)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1025500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=22 (model count=1)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1032500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] READ DATA match: value=23 (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1039500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1046500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1053500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1060500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1067500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1074500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[PASS] empty asserted while model is empty (model count=0)
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 92<sls!&*()_+>time: 1081500 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[CHK] writes=80 reads=80 errors=0 residual_model_count=0
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 205<sls!&*()_+>time: 1085000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+<slp!&*()_+>
+[CHK] PASS
+<slb!&*()_+>---<sls!&*()_+>loc: -1<sls!&*()_+>src: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv<sls!&*()_+>line: 207<sls!&*()_+>time: 1085000 ps<sls!&*()_+>length: 0<sls!&*()_+>...<sls!&*()_+><sle!&*()_+>
+$finish called from file "/home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv", line 443.
+$finish at simulation time              1085000
+Simulation complete, time is 1085000 ps.
+fifo_dpi_tb.sv, 443 :         $finish;
+
+ucli% synEnv::hasFataled
+0
+ucli% ucliCore::getToolPID
+2565381
+ucli% save::getUserdefinedProcs
+::stateVerdiChangeCB ::LoadFSDBDumpCmd
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% fsdbDumpflush 
+*Verdi* : Flush all FSDB Files at 1,085,000 ps.
+
+ucli% senv
+activeDomain: TB
+activeFile: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv
+activeFrame: 0
+activeLine: 443
+activeScope: fifo_dpi_tb
+activeThread: 7
+endCol: 0
+file: /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv
+frame: 0
+fsdbFilename: 
+hasTB: 1
+inputFilename: 
+keyFilename: ucli.key
+line: 443
+logFilename: /home/a34263_asu/CSE598/LAB4/PART2/sim/verdiLog/sim.log
+macroIndex: -1
+macroOffset: -1
+pid: 2565381
+scope: fifo_dpi_tb
+startCol: 0
+state: stopped
+thread: 7
+time: 1085000
+timePrecision: 1 ps
+vcdFilename: 
+vpdFilename:
+ucli% puts $::ucliCore::cbug_active
+0
+
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% checkpoint -list -all
+There are no checkpoints present.
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% stop
+No stop points are set
+ucli% if {[catch {ucliCore::setFocus tool}]} {}
+
+ucli% finish; quit
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 1085000 ps
+CPU Time:      0.060 seconds;       Data structure size:   0.0Mb
+Tue Nov 17 00:54:04 2026
+
+<VERDI_Terminated>
+

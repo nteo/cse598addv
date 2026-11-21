@@ -1,0 +1,106 @@
+Start to rebuild KDB and simv binary
+
+make[1]: Entering directory '/home/a34263_asu/CSE598/LAB4/PART4/sim'
+/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/bin/vcs -full64 -sverilog -debug_pp -debug_access+all -kdb -lca -assert enable_diag -f ../project.f |& tee compile_verdi.log
+
+
+Warning-[DEBUG_DEP] Option will be deprecated
+  The option '-debug_pp' will be deprecated in a future release.  Please use 
+  '-debug_acc+pp+dmptf -debug_region+cell+encrypt' instead.
+
+
+
+Warning-[DBGACC_DBG] Multiple debug options being used
+  The debug switches '-debug_access' and '-debug_pp' are being used together. 
+  For better performance, consider using only '-debug_access'.
+
+
+                         Chronologic VCS (TM)
+      Version W-2024.09-SP2-3_Full64 -- Tue Nov 17 00:25:20 2026
+
+                    Copyright (c) 1991 - 2025 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            In
+clusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+
+Warning-[LCA_FEATURES_ENABLED] Usage warning
+  LCA features enabled by '-lca' argument on the command line.  For more 
+  information regarding list of LCA features please refer to Chapter "LCA 
+  features" in the VCS Release Notes
+
+
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_if.sv'
+
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_tb.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_rif.sv'
+Parsing design file '/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_wif.sv'
+Top Level Modules:
+       even_odd_sorter_tb
+No TimeScale specified
+
+Notice: Ports coerced to inout, use -notice for details
+Starting vcs inline pass...
+4 modules and 0 UDP read.
+	However, due to incremental compilation, no re-compilation is necessary.
+
+make[2]: Entering directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+
+make[2]: Leaving directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+
+make[2]: Entering directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x ../simv ]; then chmod a-x ../simv; fi
+g++  -o ../simv      -rdynamic  -Wl,-rpath='$ORIGIN'/simv.daidir -Wl,-rpath=./simv.daidir -Wl,-rpath=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib -L/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib  -Wl,-rpath-link=./  /usr/lib64/libnuma.so.1     _2549688_archive_1.so _prev_archive_1.so _cuarc0.so   SIM_l.o      rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o            -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -ldistsimclient -lsimprofile -luclinative /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcs_tls.o   -Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive        _vcs_pli_stub_.o   /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcs_save_restore_new.o /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/pli.a -ldl  -
+lc -lm -lpthread -ldl 
+../simv up to date
+make[2]: Leaving directory '/home/a34263_asu/CSE598/LAB4/PART4/sim/csrc'
+CPU time: .326 seconds to compile + .220 seconds to elab + .222 seconds to link
+Verdi KDB elaboration done and the database successfully generated
+make[1]: Leaving directory '/home/a34263_asu/CSE598/LAB4/PART4/sim'
+
+Rebuild finished!
+
+Invoking simulator...
+
+Verdi>./simv +VERBOSE=0 +fsdb+sva_success +fsdb+sva_vacuous -sml=verdi +fsdb+gate=off -ucli2Proc -ucli
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2024
+Contains Synopsys proprietary information.
+Compiler version W-2024.09-SP2-3_Full64; Runtime version W-2024.09-SP2-3_Full64;  Nov 17 00:25 2026
+*Verdi* Loading libsscore_vcs202409.so
+FSDB Dumper for VCS, Release Verdi_W-2024.09-SP2-3, Linux x86_64/64bit, 06/23/2025
+(C) 1996 - 2025 by Synopsys, Inc.
+*Verdi* : Create FSDB file '/home/a34263_asu/CSE598/LAB4/PART4/sim/inter.fsdb'
+*Verdi* : Flush all FSDB Files at 0 s.
+*Verdi* : Enable RPC Server(2549992)
+Information: Term was not able to be set up using xterm-256color. Using "xterm" by default instead. (CLE-10)
+Verdi>run
+Begin simulation
+*Verdi* WARNING: Env/runtime option has specified fsdbfile name as "/home/a34263_asu/CSE598/LAB4/PART4/sim/inter.fsdb". Fsdbfile name in task "novas.fsdb" is ignored.
+*Verdi* : Begin traversing the scope (even_odd_sorter_tb), layer (0).
+*Verdi* : End of traversing.
+*Verdi* : Begin traversing the SVA assertions under scope (even_odd_sorter_tb), layer (0).
+*Verdi* : Enable +sva_success dumping.
+*Verdi* : End of traversing the SVA assertions.
+Simulation finished
+$finish called from file "/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_tb.sv", line 73.
+$finish at simulation time                 3180
+"/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_if.sv", 72: even_odd_sorter_tb.even_odd_sorter_i.unnamed$$_4: Antecedent of the implication never satisfied.
+Simulation complete, time is 3180.
+even_odd_sorter_tb.sv, 73 :         $finish;

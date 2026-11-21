@@ -1,0 +1,186 @@
+0
+53
++cli+1
++itf+/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcsdp_lite.tab
++memcbk
++vcsd1
++vpi
++vpi
+-Mamsrun=
+-Masflags=
+-Mcc=gcc
+-Mcfl= -pipe -fPIC -O -I/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/include
+-Mcplusplus=g++
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mexternalobj=
+-Mldflags= -rdynamic
+-Mobjects= /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvirsim.so /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/liberrorinf.so /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libsnpsmalloc.so /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvfs.so
+-Mout=simv
+-Msaverestoreobj=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcs_save_restore_new.o
+-Msyslibs=/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/pli.a -ldl
+-Mvcsaceobjs=
+-Mxcflags= -pipe -fPIC -I/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/include
+-Mxllcflags=
+-P
+-Xcbug=0x1
+-Xfile_begin_f=../project.f
+-Xfile_end
+-Xufe=2steps
+-Xufe=2steps
+-Xufe=2steps
+-Xufe=2steps
+-assert
+-debug=1
+-debug_access+all
+-fsdb
+-full64
+-gen_obj
+-kdb
+-kdb=common_elab
+-kdb=common_elab
+-kdb=common_elab
+-lca
+-picarchive
+-sverilog
+/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/vcs1
+enable_diag
+/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/verdi.tab
+/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_if.sv
+/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter.sv
+/home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_tb.sv
+/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo.sv
+/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_rif.sv
+/home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_wif.sv
+111
+which_declare=declare -f
+XRDP_SOCKET_PATH=/run/xrdp
+XRDP_SESSION=1
+XRDP_PULSE_SOURCE_SOCKET=xrdp_chansrv_audio_in_socket_13
+XRDP_PULSE_SINK_SOCKET=xrdp_chansrv_audio_out_socket_13
+XNLSPATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/etc/access/nls
+XMODIFIERS=@im=none
+XKEYSYMDB=/usr/local2/synopsys/verdi_2024.09/verdi_2024/etc/access/XKeysymDB2.1
+XDG_SESSION_ID=c12022
+XDG_RUNTIME_DIR=/run/user/2288359
+XDG_MENU_PREFIX=gnome-
+XDG_DATA_DIRS=/home/a34263_asu/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+XDG_CURRENT_DESKTOP=GNOME
+WAVE_REDRAW_ALLVC=1
+VTE_VERSION=5204
+VMR_MODE_FLAG=64
+VERDI_TB_HT=1
+VERDI_SVTB_BETA=1
+VERDI_SVTB_ALPHA=1
+VERDI_QT5=1
+VERDI_ORIGNAL_LD_LIBRARY_PATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/platform/linux64/lib/Qt5/lib/depends/xlib:/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/linux64:/usr/lib64
+VERDI_HOME=/usr/local2/synopsys/verdi_2024.09/verdi_2024
+VERDI_DISABLE_AUTO_DETECT_LIBRARY=1
+VENDOR=unknown
+VCS_UCLI_STDIN_BLOCKING=1
+VCS_PYTHON3=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/Python3/bin/python3
+VCS_PATHMAP_PRELOAD_DONE=1
+VCS_MX_HOME_INTERNAL=1
+VCS_MODE_FLAG=64
+VCS_LCAMSG_PRINT_OFF=1
+VCS_INTERNAL_CONVERTEDLIBS=
+VCS_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3
+VCS_EXEC_DONE=1
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH=linux64
+UNAME=/bin/uname
+TS_TRMIS_DECIDE_RM_RC_ATTR=0
+TRMIS_REVERSE_JUMP_TO_EARLIEST=1
+TOOL_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64
+TFV_FSDB_MIS_RCA_MODE=1
+TFV_FSDB_MIS_BATCH_REMOVE_INTF_RC_HAVING_INTF_MISMATCH=0
+TFV_FSDB_MIS_BATCH_ENABLE_FSDB_GATE=1
+TFV_FSDB_MIS_BATCH_DUMP_TDC=0
+TCL_LIBRARY=/usr/local2/synopsys/verdi_2024.09/verdi_2024/etc/access/tcl86_library
+SYS_INST_DIR=/usr/local2/synopsys/verdi_2024.09/verdi_2024
+SYNOPSYS_SIM=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3
+SSH_AUTH_SOCK=/run/user/2288359/keyring/ssh
+SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+SSH_AGENT_PID=2545786
+SPS_XFONT_PATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/XFont
+SPS_RGB_PATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/etc/rgb
+SPS_FONT_PATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/font
+SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
+SNPS_VCS_VHDL_WRAPPER_KDB=1
+SNPS_VCS_PYTHON3=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/Python3/bin/python3
+SNPS_VCS_CLANG_PATH=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/clang
+SNPS_SIM_DEFAULT_GUI=verdi
+SNPS_INTERNAL_VCS_LINUX_OS=linux
+SIMV_DAIDIR_PATH=/home/a34263_asu/CSE598/LAB4/PART4/sim/./simv.daidir
+SIGNAL_BASE_EXTRACTION=1
+SIGNAL_BASED_BA=0
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+QT_XCB_NO_XI2=1
+QT_VERDI_ENABLE_ICON_MEM_FIX=1
+QT_PLUGIN_PATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/platform/LINUXAMD64/lib/Qt5/plugins
+QT_IM_MODULE=ibus
+QTWEBENGINE_CHROMIUM_FLAGS=--log-level=3
+PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+PROJECT_ROOT=/home/a34263_asu/CSE598/LAB4/PART4
+PDK_DIR=/usr/local2/cadence/NCSU/SRC/FreePDK45
+OVA_UUM=0
+OSTYPE=linux
+NOVAS_WAVE_REDRAW_ALLVC=1
+NOVAS_VERDI_TB_HT=1
+NOVAS_VERDI_SVTB_BETA=1
+NOVAS_VERDI_SVTB_ALPHA=1
+NOVAS_TCL_LIBRARY=/usr/local2/synopsys/verdi_2024.09/verdi_2024/etc/access/tcl86_library
+NOVAS_SYNC_MOTIF_DISP=
+NOVAS_SIGNAL_BASE_EXTRACTION=1
+NOVAS_SIGNAL_BASED_BA=0
+NOVAS_LC_ALL=C
+NOVASHLPPATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/doc
+MFLAGS=-w
+MALLOC_ARENA_MAX=1
+MAKE_TERMOUT=/dev/pts/3
+MAKE_TERMERR=/dev/pts/3
+MAKELEVEL=2
+MAKEFLAGS=w
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LD_NOVERSION=1
+LC_ALL=C
+KRB5CCNAME=FILE:/tmp/krb5cc_2288359
+HOSTTYPE=x86_64-linux
+HISTCONTROL=ignoreboth
+GROUP=a34263_asu
+GNOME_TERMINAL_SERVICE=:1.76
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/7bdec5d4_2627_4c9d_a07e_5f5b88b74f5d
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+GJS_DEBUG_OUTPUT=stderr
+FSDB_VHDL_PROTECTED=1
+FSDB_SVA_STATUS=1
+FSDB_RD_IR_ENABLE=1
+FSDB_FILE=/home/a34263_asu/CSE598/LAB4/PART4/sim/inter.fsdb
+DISABLE_LIBRARY_MAP_CHECK=1
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/2288359/bus
+COLORTERM=truecolor
+BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@_}
+AST_DUMP=11
+0
+0
+9
+1794121478 /home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_wif.sv
+1794121478 /home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo_rif.sv
+1794121478 /home/a34263_asu/CSE598/LAB4/PART4/rtl/fifo.sv
+1794121478 /home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_tb.sv
+1794121478 /home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter.sv
+1794121478 /home/a34263_asu/CSE598/LAB4/PART4/rtl/even_odd_sorter_if.sv
+1794121629 ../project.f
+1750737971 /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/verdi.tab
+1751080315 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcsdp_lite.tab
+4
+1751083201 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvirsim.so
+1751081831 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/liberrorinf.so
+1751081823 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libsnpsmalloc.so
+1751081835 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvfs.so
+1794875122 simv.daidir
+-1 partitionlib
