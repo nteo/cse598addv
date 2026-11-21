@@ -1,0 +1,9 @@
+{"vcs1":{"timestamp_begin":1794876133.240631409, "rt":1.06, "ut":0.16, "st":0.11}}
+{"vcselab":{"timestamp_begin":1794876134.352733868, "rt":0.91, "ut":0.14, "st":0.04}}
+{"link":{"timestamp_begin":1794876135.298444099, "rt":0.20, "ut":0.12, "st":0.05}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1794876132.905611997}
+{"VCS_COMP_START_TIME": 1794876132.905611997}
+{"VCS_COMP_END_TIME": 1794876135.594813145}
+{"VCS_USER_OPTIONS": "-full64 -sverilog -f ../project.f ../tb/dpi.c -debug_access+all -kdb -lca"}
+{"vcs1": {"peak_mem": 512296}}
+{"vcselab": {"peak_mem": 208012}}

@@ -1,0 +1,6 @@
+import_DPI reset_fifo _vcs_unit__134114212
+import_DPI push_fifo _vcs_unit__134114212
+import_DPI pop_fifo _vcs_unit__134114212
+import_DPI fifo_count _vcs_unit__134114212
+import_DPI is_fifo_empty _vcs_unit__134114212
+import_DPI is_fifo_full _vcs_unit__134114212

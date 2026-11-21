@@ -1,0 +1,96 @@
+@verdi rc file Version 1.0
+[General]
+saveDB = TRUE
+relativePath = FALSE
+saveSingleView = FALSE
+saveNWaveWinId = 
+VerdiVersion = Verdi_W-2024.09-SP2-3
+[KeyNote]
+Line1 = Automatic Backup 0
+Line2 = Save Open Database Information: Yes
+Line3 = Path Option: Absolute Paths
+Line4 = Windows Option: All Windows
+[OneSearch]
+isExisted = TRUE
+[TestBench]
+ConstrViewShow = 0
+InherViewShow = 0
+FSDBMsgShow = 0
+AnnotationShow = 0
+Console = TRUE
+powerDumped = 0
+[fusa]
+fdb_server = 
+fdb_proj = 
+fdb_campaign = 
+fdb_tool = 
+[hb]
+postSimFile = /home/a34263_asu/CSE598/LAB4/PART2/sim/inter.fsdb
+syncTime = 255500
+viewport = 0 27 1496 803 0 0 291 898
+activeNode = "fifo_dpi_tb"
+activeScope = "fifo_dpi_tb"
+activeFile = "/home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv"
+interactiveMode = False
+viewType = Source
+simulatorMode = False
+sourceBeginLine = 432
+baMode = False
+srcLineNum = True
+AutoWrap = True
+IdentifyFalseLogic = False
+syncSignal = False
+traceMode = Hierarchical
+showTraceInSchema = True
+paMode = False
+funcMode = False
+powerAwareAnnot = True
+safetyAwareAnnot = True
+amsAnnot = True
+DnDtraceCrossHierOnly = True
+leadingZero = False
+signalPane = False
+SourceVerticalScrollLines = 5
+Scope1 = "fifo_dpi_tb"
+rangeSelection = 443 443 1 4 1 1
+sdfCheckUndef = FALSE
+simFlow = FALSE
+[hb.design]
+importCmd = "-dbdir" "./simv.daidir" 
+invokeDir = /home/a34263_asu/CSE598/LAB4/PART2/sim
+[hb.sourceTab.1]
+scope = fifo_dpi_tb
+File = /home/a34263_asu/CSE598/LAB4/PART2/tb/fifo_dpi_tb.sv
+Line = 433
+[nMemoryManager]
+WaveformFile = /home/a34263_asu/CSE598/LAB4/PART2/sim/inter.fsdb
+UserActionNum = 0
+nMemWindowNum = 0
+[wave.0]
+viewPort = 0 11 992 330 100 65
+primaryWindow = TRUE
+SessionFile = /home/a34263_asu/CSE598/LAB4/PART2/sim/verdiLog/novas_autosave.ses.wave.0
+displayGrid = FALSE
+hierarchicalName = FALSE
+waveformToolTip = FALSE
+snap = TRUE
+displayLeadingZeros = FALSE
+displayGridLine = FALSE
+fixDelta = FALSE
+displayCursorMarker = FALSE
+autoUpdate = FALSE
+highlightGlitchs = FALSE
+waveformSyncCursorMarker = FALSE
+waveformSyncHorizontalRange = FALSE
+waveformSyncVerticalscroll = FALSE
+displayErrors = TRUE
+displayMsgSymbols = TRUE
+showMsgDescriptions = TRUE
+autoFit = FALSE
+displayDeltaY = FALSE
+centerCursor = FALSE
+fsaRegMask = TRUE
+fsaCoreMask = TRUE
+fsaSfsmMask = TRUE
+fsaEcrMask = TRUE
+tPropMask = TRUE

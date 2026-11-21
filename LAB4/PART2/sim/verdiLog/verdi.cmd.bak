@@ -1,0 +1,27 @@
+verdiSetActWin -dock widgetDock_<Decl._Tree>
+simSetSimulator "-vcssv" -exec "./simv" -args "+VERBOSE=0 +TEST=0"
+debImport "-dbdir" "./simv.daidir"
+debLoadSimResult /home/a34263_asu/CSE598/LAB4/PART2/sim/novas.fsdb
+wvCreateWindow
+verdiSetActWin -win $_nWave2
+verdiWindowResize -win $_Verdi_1 "298" "46" "900" "700"
+verdiSetActWin -dock widgetDock_MTB_SOURCE_TAB_1
+verdiSetActWin -win $_nWave2
+wvRestoreSignal -win $_nWave2 "/home/a34263_asu/CSE598/LAB4/PART2/sim/fifo.rc" \
+           -overWriteAutoAlias on -appendSignals on
+wvSetCursor -win $_nWave2 169021.861777 -snap {("fifo_rif" 1)}
+wvSetCursor -win $_nWave2 326077.574048 -snap {("fifo_rif" 2)}
+wvZoomAll -win $_nWave2
+wvZoom -win $_nWave2 52551.339915 111285.190409
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 351906.060504 -snap {("fifo_wif" 2)}
+wvSetCursor -win $_nWave2 84828.579556 -snap {("fifo_rif" 4)}
+wvZoom -win $_nWave2 63621.434667 119290.190001
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvZoomOut -win $_nWave2
+wvSetCursor -win $_nWave2 360551.374462 -snap {("fifo_rif" 4)}
+wvSetCursor -win $_nWave2 160175.262174 -snap {("fifo_rif" 1)}
+wvZoomAll -win $_nWave2
