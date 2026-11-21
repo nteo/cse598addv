@@ -1,17 +1,3 @@
-typedef enum bit [5:0] {
-  RTYPE = 6'b000000,
-  ADDI = 6'b001000,
-  LW = 6'b100011,
-  SW = 6'b101011,
-  BEQ = 6'b000100
-} opcode_t;
-
-typedef enum bit [5:0] {
-  NO_FUNCT = 6'b000000,
-  ADD = 6'b100000,
-  AND = 6'b100100
-} funct_t;
-
 class instr_monitor extends uvm_monitor;
   `uvm_component_utils(instr_monitor) // register monitor with UVM factory
 
@@ -38,25 +24,29 @@ class instr_monitor extends uvm_monitor;
     super.run_phase(phase);
 
     //wait for reset
+    wait(vif.reset == 0);
+
     forever begin
-      if (!vif.reset) begin
-        @(posedge vif.clk);
-        instr = new("instruction")
-        phase.raise_objection(this);
-        instr.opcode = vif.instr[31:26];
-        if (instr.opcode == 6'b000000) begin
-          instr.rs = vif.instr[25:21];
-          instr.rt = vif.instr[20:16];
-          instr.rd = vif.instr[15:11];
-          instr.funct = vif.instr[5:0];
-        end
-        else begin
-          instr.rs = vif.instr[25:21];
-          instr.rt = vif.instr[20:16];
-          instr.rd = 5'b0;
-        end
-        ap.write(instr); // post to UVM analysis
+      @(posedge vif.clk);
+      if (vif.reset)
+        continue;
+
+      instr = new("instruction"); // TODO: consider if this is the instruction being retired or fetched
+      instr.opcode = vif.instr[31:26];
+      instr.rs = vif.instr[25:21];
+      instr.rt = vif.instr[20:16];
+      if (instr.opcode == 6'b000000) begin
+        instr.rd = vif.instr[15:11];
+        instr.imm = 16'b0;
+        instr.funct = vif.instr[5:0];
       end
+      else begin
+        instr.rd = 5'b0;
+        instr.imm = vif.instr[15:0];
+        instr.funct = 6'b0;
+      end
+
+      ap.write(instr); // post to UVM analysis
     end
   endtask
 endclass
@@ -70,7 +60,8 @@ class instr_coverage extends uvm_subscriber #(instruction);
   instruction instr;
   int instr_type;
   int reg_gap[4];
-  int instr_gap;
+  int raw_gap;
+  int waw_gap;
 
   covergroup instr_fields_cg;
     coverpoint instr.opcode {
@@ -91,7 +82,7 @@ class instr_coverage extends uvm_subscriber #(instruction);
     coverpoint instr.imm {
       bins valid_imms = {[0:4], 6'h8, 6'hC};
     }
-    coverpoint instr.func {
+    coverpoint instr.funct {
       bins no_func = {6'b000000};
       bins add = {6'b100000};
       bins and = {6'b100100};
@@ -105,8 +96,11 @@ class instr_coverage extends uvm_subscriber #(instruction);
   endgroup
 
   covergroup instr_gap_cg;
-    coverpoint instr_gap {
-      bins instruction_gaps = {[1:4]};
+    coverpoint raw_gap {
+      bins raw_gaps = {[1:4]}; // read after write gaps
+    }
+    coverpoint waw_gap {
+      bins waw_gaps = {[1:4]}; // write after write gaps
     }
   endgroup
 
@@ -118,11 +112,9 @@ class instr_coverage extends uvm_subscriber #(instruction);
     instr_fields_cg = new();
     instr_order_cg = new();
     instr_gap_cg = new();
-    reg_gap[0] = 0;
-    reg_gap[1] = 0;
-    reg_gap[2] = 0;
-    reg_gap[3] = 0;
-    instr_gap = 0;
+    reg_gap = '{default:0};
+    raw_gap = 0;
+    waw_gap = 0;
   endfunction
 
   function void write(instruction i);
@@ -147,21 +139,44 @@ class instr_coverage extends uvm_subscriber #(instruction);
 
     // Updated the gaps between dependent instructions
     // Dependencies are tracked from the last write
-    if (instr_type == 1 || instr_type == 2) begin // write reg is rd
-      instr_gap = reg_gap[instr.rd - 1]; // save the gap of the rd register for sampling
+    if (instr_type == 1 || instr_type == 2) begin // write reg is rd, read reg is rs and rt
+      waw_gap = reg_gap[instr.rd - 1]; // save the gap of the rd register for sampling
+      instr_gap_cg.sample();
+      
+      raw_gap = reg_gap[instr.rs - 1]; // save the gap of the rs register for sampling
+      instr_gap_cg.sample();
+
+      raw_gap = reg_gap[instr.rt - 1]; // save the gap of the rt register for sampling
+      instr_gap_cg.sample();
+
       reg_gap[0] = (instr.rd == 1) ? 0 : reg_gap[0] + 1;  // if the write reg is 1, reset the count, otherwise increment
       reg_gap[1] = (instr.rd == 2) ? 0 : reg_gap[1] + 1;  // if the write reg is 2, reset the count, otherwise increment  
       reg_gap[2] = (instr.rd == 3) ? 0 : reg_gap[2] + 1;  // if the write reg is 3, reset the count, otherwise increment
       reg_gap[3] = (instr.rd == 4) ? 0 : reg_gap[3] + 1;  // if the write reg is 4, reset the count, otherwise increment
-      instr_gap_cg.sample();
     end
-    else if (instr_type == 3) begin // write reg is rt
-      instr_gap = reg_gap[instr.rt - 1]; // save the gap of the rt register for sampling
+    else if (instr_type == 3) begin // write reg is rt, read reg is rs
+      waw_gap = reg_gap[instr.rt - 1]; // save the gap of the rt register for sampling
+      instr_gap_cg.sample();
+
+      raw_gap = reg_gap[instr.rs - 1]; // save the gap of the rs register for sampling
+      instr_gap_cg.sample();
+
       reg_gap[0] = (instr.rt == 1) ? 0 : reg_gap[0] + 1;  // if the write reg is 1, reset the count, otherwise increment
       reg_gap[1] = (instr.rt == 2) ? 0 : reg_gap[1] + 1;  // if the write reg is 2, reset the count, otherwise increment  
       reg_gap[2] = (instr.rt == 3) ? 0 : reg_gap[2] + 1;  // if the write reg is 3, reset the count, otherwise increment
       reg_gap[3] = (instr.rt == 4) ? 0 : reg_gap[3] + 1;  // if the write reg is 4, reset the count, otherwise increment
+    end
+    else if (instr_type == 4 || instr_type == 5) begin // no write reg, read reg is rt and rs
+      raw_gap = reg_gap[instr.rs - 1]; // save the gap of the rs register for sampling
       instr_gap_cg.sample();
+
+      raw_gap = reg_gap[instr.rt - 1]; // save the gap of the rt register for sampling
+      instr_gap_cg.sample();
+
+      reg_gap[0] = reg_gap[0] + 1;  // if the write reg is 1, reset the count, otherwise increment
+      reg_gap[1] = reg_gap[1] + 1;  // if the write reg is 2, reset the count, otherwise increment  
+      reg_gap[2] = reg_gap[2] + 1;  // if the write reg is 3, reset the count, otherwise increment
+      reg_gap[3] = reg_gap[3] + 1;  // if the write reg is 4, reset the count, otherwise increment
     end
     else begin // no write reg
       reg_gap[0] = reg_gap[0] + 1;  // no write reg, increment
@@ -173,6 +188,7 @@ class instr_coverage extends uvm_subscriber #(instruction);
     //Create a queue
     //Call sample of various cgs
     instr_fields_cg.sample();
+    
     instr_order_cg.sample();
     
   endfunction
