@@ -97,7 +97,9 @@ class instr_coverage extends uvm_subscriber #(instruction);
   endgroup
 
   covergroup instr_order_cg;
-    coverpoint 
+    coverpoint instr_type {
+      bins instruction_transitions[] = {[1:5] => [1:5]};
+    }
   endgroup
 
   covergroup instr_gap_cg;
