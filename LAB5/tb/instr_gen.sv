@@ -136,14 +136,7 @@ class instruction_generator #(
     trickbox_addi_instr.opcode = ADDI;
     trickbox_addi_instr.rt = TRICKBOX_REG;
     trickbox_addi_instr.imm = TRICKBOX_VALUE;
-
-    trickbox_store_instr.opcode = SW;
-    trickbox_store_instr.rs = 0;
-    trickbox_store_instr.rt = $0;
-    trickbox_store_instr.imm = TRICKBOX_MEM_ADDR;
-    
     append_instruction(trickbox_addi_instr);
-    append_instruction(trickbox_store_instr);
   endfunction
 
   function void generate_trickbox_store();
