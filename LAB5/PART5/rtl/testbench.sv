@@ -6,13 +6,24 @@ module testbench;
   logic [31:0] writedata, dataadr;
   logic memwrite;
 
-  logic [31:0] machine_code_list [0:63];  // depth must match dut.imem.RAM
+  logic [31:0] machine_code_list [0:63];
 
   string  prog_file, trace_file;
   integer trace_fd;
   integer i;
   integer cycles;
   bit     done;
+
+  string register_names [0:31] = '{
+    "$zero", "$at", "$v0", "$v1",
+    "$a0", "$a1", "$a2", "$a3",
+    "$t0", "$t1", "$t2", "$t3",
+    "$t4", "$t5", "$t6", "$t7",
+    "$s0", "$s1", "$s2", "$s3",
+    "$s4", "$s5", "$s6", "$s7",
+    "$t8", "$t9", "$k0", "$k1",
+    "$gp", "$sp", "$fp", "$ra"
+  };
 
   top dut (
     .clk(clk),
@@ -24,65 +35,87 @@ module testbench;
 
   initial begin
     clk = 0;
-    forever #5 clk = ~clk; // 100MHz clock
+    forever #5 clk = ~clk;
   end
 
   initial begin
     done = 0;
+
     if (!$value$plusargs("PROG=%s", prog_file))
       $fatal(1, "Missing +PROG=<binary machine code file>");
+
     if (!$value$plusargs("TRACE=%s", trace_file))
       trace_file = "rtl.trace";
+
     trace_fd = $fopen(trace_file, "w");
     if (trace_fd == 0)
       $fatal(1, "Could not open trace file %s", trace_file);
 
     reset = 1;
 
-    // Wait for imem's own initialization to finish, clear it, then load program
-    // through memfile.dat, the same flow as instr_gen.sv
     #1;
-    for (i = 0; i < 64; i++) machine_code_list[i] = 32'h0;
+    for (i = 0; i < 64; i++)
+      machine_code_list[i] = 32'h0;
+
     $readmemb(prog_file, machine_code_list);
     $writememh("rtl/memfile.dat", machine_code_list);
     $readmemh("rtl/memfile.dat", dut.imem.RAM);
 
-    $fdisplay(trace_fd, "Translation complete. Binary instructions written to traces/prog1.bin.");
+    $fdisplay(trace_fd,
+      "Translation complete. Binary instructions written to traces/prog1.bin.");
 
     repeat (2) @(posedge clk);
     reset = 0;
 
-    // Run until the trickbox store (0xDED to byte address 0x40) or a timeout
     cycles = 0;
-    while (dut.dmem.RAM[16'h0040 >> 2] !== 32'h0000_0DED && cycles < 5000) begin
+    while (dut.dmem.RAM[16'h0040 >> 2] !== 32'h0000_0DED
+           && cycles < 5000) begin
       @(posedge clk);
       cycles++;
     end
+
     if (cycles >= 5000)
       $display("TIMEOUT: trickbox value never written");
     else
       $display("Trickbox written. Simulation ending after %0d cycles.", cycles);
 
-    repeat (5) @(posedge clk); // let the last instructions finish
+    repeat (5) @(posedge clk);
+
     done = 1;
     $fclose(trace_fd);
     $finish;
   end
 
-  // Trace logger. Sampling at posedge sees the values from the previous cycle
-  // (the instruction that was in WB / MEM), before this edge updates the pipeline.
-  always @(posedge clk) begin
-    if (!reset && !done) begin
-      if (dut.mips.dp.rf.we3 === 1'b1 && dut.mips.dp.rf.wa3 != 5'd0)
-        $fdisplay(trace_fd, "R %0d %08h", dut.mips.dp.rf.wa3, dut.mips.dp.rf.wd3);
-      if (memwrite === 1'b1)
-        $fdisplay(trace_fd, "M %08h %08h", dataadr, writedata);
-    end
-  end
-
+  // One trace entry per valid instruction reaching writeback.
+  // This assumes pcW is the PC corresponding to instrW.
   always @(negedge clk) begin
-    if (dut.mips.dp.validW === 1'b1) begin
-      $fdisplay(trace_fd, "Executing at 0x%h: %h", dut.mips.dp.pc, dut.mips.dp.instrW);
+    if (!reset && !done && dut.mips.dp.validW === 1'b1) begin
+
+      // Instruction execution line.
+      // Replace this with a disassembler that matches the Python ISS.
+      $fdisplay(trace_fd, "Executing at 0x%h: %h",
+                dut.mips.dp.pcW,
+                dut.mips.dp.instrW);
+
+      // Register dump header.
+      $fdisplay(trace_fd, "Register values:");
+
+      // Register dump contents.
+      $fwrite(trace_fd, "");
+
+      for (integer r = 0; r < 32; r++) begin
+        if (r == 0)
+          $fwrite(trace_fd, "%s: %0d",
+                  register_names[r], 0);
+        else
+          $fwrite(trace_fd, "%s: %0d",
+                  register_names[r], dut.mips.dp.rf.rf[r]);
+
+        if (r != 31)
+          $fwrite(trace_fd, " | ");
+      end
+
+      $fwrite(trace_fd, "\n");
     end
   end
 
@@ -92,4 +125,5 @@ module testbench;
     $fsdbDumpMDA(testbench.dut.dmem.RAM);
     $fsdbDumpMDA(testbench.dut.mips.dp.rf);
   end
+
 endmodule
