@@ -7,7 +7,7 @@
 
 PYTHON ?= python3
 PROJ_F ?= rtl/project.f
-TOP    ?= tb_trace
+TOP    ?= testbench
 SIM    := MIPS-Simulator/Mips_Simulator.py
 PROGS  := prog1 prog2 prog3
 
@@ -17,7 +17,7 @@ all: compile regress
 
 # This compiles the RTL (from project.f) plus the Part 5 testbench with VCS
 compile:
-	${VCS_HOME}/bin/vcs -full64 -sverilog -F $(PROJ_F) -top $(TOP) -debug_access+all -kdb -lca |& tee compile.log
+	${VCS_HOME}/bin/vcs -full64 -sverilog -timescale=1ns/1ps -F $(PROJ_F) -top $(TOP) -debug_access+all -kdb -lca |& tee compile.log
 
 # This runs all 3 programs
 regress: $(PROGS)

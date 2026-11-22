@@ -1,0 +1,83 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2024
+Contains Synopsys proprietary information.
+Compiler version W-2024.09-SP2-3_Full64; Runtime version W-2024.09-SP2-3_Full64;  Nov 22 22:25 2026
+*Verdi* Loading libsscore_vcs202409.so
+FSDB Dumper for VCS, Release Verdi_W-2024.09-SP2-3, Linux x86_64/64bit, 06/23/2025
+(C) 1996 - 2025 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file 'novas.fsdb'
+*Verdi* : Begin traversing the scope (testbench), layer (0).
+*Verdi* : End of traversing.
+*Verdi* : Dumping the MDA (testbench.dut.dmem.RAM).
+*Verdi* : Begin traversing the MDAs under scope (testbench.dut.mips.dp.rf), layer (0).
+*Verdi* : Enable +mda and +packedmda dumping.
+*Verdi* : End of traversing the MDAs.
+Instruction 20080001 is in ID stage
+Instruction 20090001 is in ID stage
+Instruction 20080001 is in EX stage
+Instruction 01095020 is in ID stage
+Instruction 20090001 is in EX stage
+Instruction 20080001 entered MEM stage
+Instruction 01495820 is in ID stage
+Instruction 01095020 is in EX stage
+Instruction 20090001 entered MEM stage
+Instruction 20080001 entered WB stage
+Instruction 016a6020 is in ID stage
+Instruction 01495820 is in EX stage
+Instruction 01095020 entered MEM stage
+Instruction 20090001 entered WB stage
+Instruction 018b6820 is in ID stage
+Instruction 016a6020 is in EX stage
+Instruction 01495820 entered MEM stage
+Instruction 01095020 entered WB stage
+Instruction 01ac7020 is in ID stage
+Instruction 018b6820 is in EX stage
+Instruction 016a6020 entered MEM stage
+Instruction 01495820 entered WB stage
+Instruction 01cd7822 is in ID stage
+Instruction 01ac7020 is in EX stage
+Instruction 018b6820 entered MEM stage
+Instruction 016a6020 entered WB stage
+Instruction 01cf4024 is in ID stage
+Instruction 01cd7822 is in EX stage
+Instruction 01ac7020 entered MEM stage
+Instruction 018b6820 entered WB stage
+Instruction 010a4825 is in ID stage
+Instruction 01cf4024 is in EX stage
+Instruction 01cd7822 entered MEM stage
+Instruction 01ac7020 entered WB stage
+Instruction 012e502a is in ID stage
+Instruction 010a4825 is in EX stage
+Instruction 01cf4024 entered MEM stage
+Instruction 01cd7822 entered WB stage
+Instruction ac0e0008 is in ID stage
+Instruction 012e502a is in EX stage
+Instruction 010a4825 entered MEM stage
+Instruction 01cf4024 entered WB stage
+Instruction ac0a000c is in ID stage
+Instruction ac0e0008 is in EX stage
+Instruction 012e502a entered MEM stage
+Instruction 010a4825 entered WB stage
+Instruction 20190ded is in ID stage
+Instruction ac0a000c is in EX stage
+Instruction ac0e0008 entered MEM stage
+Instruction 012e502a entered WB stage
+Instruction ac190040 is in ID stage
+Instruction 20190ded is in EX stage
+Instruction ac0a000c entered MEM stage
+Instruction ac0e0008 entered WB stage
+Instruction ac190040 is in EX stage
+Instruction 20190ded entered MEM stage
+Instruction ac0a000c entered WB stage
+Instruction ac190040 entered MEM stage
+Instruction 20190ded entered WB stage
+Trickbox written. Simulation ending after 18 cycles.
+Instruction ac190040 entered WB stage
+$finish called from file "/home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv", line 67.
+$finish at simulation time               245000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 245000 ps
+CPU Time:      0.160 seconds;       Data structure size:   0.0Mb
+Sun Nov 22 22:25:18 2026

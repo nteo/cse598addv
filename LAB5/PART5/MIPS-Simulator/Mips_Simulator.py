@@ -500,6 +500,21 @@ class MIPSProcessor:
             register_values.append(f"{reg_name}: {self.registers[i]}")
         # Join the values with a separator and print them in one line
         print(' | '.join(register_values))
+    
+    def print_registers(self, trace_file):
+    """Print the current state of the registers horizontally."""
+    print("Register values:")
+    trace_file.write("Register values:\n")
+
+    register_values = []
+    for i in range(32):
+        reg_name = self.get_register_name(format(i, '05b'))
+        register_values.append(f"{reg_name}: {self.registers[i]}")
+
+    output = ' | '.join(register_values)
+
+    print(output)
+    trace_file.write(output + '\n')
 
     def print_memory(self):
         """Print the current state of memory."""

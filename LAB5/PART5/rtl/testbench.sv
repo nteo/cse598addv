@@ -80,8 +80,8 @@ module testbench;
 
   initial begin
     $fsdbDumpfile("novas.fsdb");
-    $fsdbDumpvars(0, tb_trace);
-    $fsdbDumpMDA(tb_trace.dut.dmem.RAM);
-    $fsdbDumpMDA(tb_trace.dut.mips.dp.rf);
+    $fsdbDumpvars(0, testbench);
+    $fsdbDumpMDA(testbench.dut.dmem.RAM);
+    $fsdbDumpMDA(testbench.dut.mips.dp.rf);
   end
 endmodule
