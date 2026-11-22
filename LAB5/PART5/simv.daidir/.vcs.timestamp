@@ -115,7 +115,7 @@ BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty
 0
 0
 7
-1795386018 /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv
+1795390458 /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv
 1795386305 /home/a34263_asu/CSE598/LAB5/PART5/rtl/top.sv
 1795386165 /home/a34263_asu/CSE598/LAB5/PART5/rtl/datapath.sv
 1795332814 /home/a34263_asu/CSE598/LAB5/PART5/rtl/controller.sv
@@ -127,5 +127,5 @@ BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty
 1751081831 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/liberrorinf.so
 1751081823 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libsnpsmalloc.so
 1751081835 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvfs.so
-1795386316 simv.daidir
+1795390465 simv.daidir
 -1 partitionlib

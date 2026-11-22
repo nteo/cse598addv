@@ -566,9 +566,9 @@ if __name__ == "__main__":
     translate_mips_to_binary(input_file, output_file)
 
     with open(trace_file_name, 'w') as trace_file:
-        output = f"Translation complete. Binary instructions written to {output_file}."
-        print(output + '\n')
-        trace_file.write(output + '\n')
+#        output = f"Translation complete. Binary instructions written to {output_file}."
+#        print(output + '\n')
+#        trace_file.write(output + '\n')
 
         output = f"Memory Map: {memory_map}"
         print(output + '\n')

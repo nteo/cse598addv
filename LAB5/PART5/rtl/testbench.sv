@@ -47,6 +47,8 @@ module testbench;
     $writememh("rtl/memfile.dat", machine_code_list);
     $readmemh("rtl/memfile.dat", dut.imem.RAM);
 
+    $fdisplay(trace_fd, "Translation complete. Binary instructions written to traces/prog1.bin.");
+
     repeat (2) @(posedge clk);
     reset = 0;
 
@@ -75,6 +77,12 @@ module testbench;
         $fdisplay(trace_fd, "R %0d %08h", dut.mips.dp.rf.wa3, dut.mips.dp.rf.wd3);
       if (memwrite === 1'b1)
         $fdisplay(trace_fd, "M %08h %08h", dataadr, writedata);
+    end
+  end
+
+  always @(negedge clk) begin
+    if (dut.mips.dp.validW === 1'b1) begin
+      $fdisplay(trace_fd, "Executing at 0x%h: %h", dut.mips.dp.pc, dut.mips.dp.instrW);
     end
   end
 
