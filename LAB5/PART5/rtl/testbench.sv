@@ -6,6 +6,8 @@ module testbench;
   logic [31:0] writedata, dataadr;
   logic memwrite;
 
+  logic [31:0] machine_code_list [0:63];  // depth must match dut.imem.RAM
+
   string  prog_file, trace_file;
   integer trace_fd;
   integer i;
@@ -38,9 +40,12 @@ module testbench;
     reset = 1;
 
     // Wait for imem's own initialization to finish, clear it, then load program
+    // through memfile.dat, the same flow as instr_gen.sv
     #1;
-    for (i = 0; i < $size(dut.imem.RAM); i++) dut.imem.RAM[i] = '0;
-    $readmemb(prog_file, dut.imem.RAM);
+    for (i = 0; i < 64; i++) machine_code_list[i] = 32'h0;
+    $readmemb(prog_file, machine_code_list);
+    $writememh("rtl/memfile.dat", machine_code_list);
+    $readmemh("rtl/memfile.dat", dut.imem.RAM);
 
     repeat (2) @(posedge clk);
     reset = 0;
