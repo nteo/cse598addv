@@ -400,17 +400,32 @@ class MIPSProcessor:
 
         return "unknown instruction"
 
-    def run(self):
+    # def run(self, trace_file):
+    #     """Run the MIPS processor and print each instruction with register states."""
+    #     while self.pc in self.memory:
+    #         instruction = self.memory[self.pc]
+    #         decoded_instruction = self.decode_instruction(instruction)
+    #         print(f"Executing at {hex(self.pc)}: {decoded_instruction}")
+
+    #         self.pc += 4  # Move to the next instruction by default
+    #         self.execute_instruction(instruction)
+
+    #         self.print_registers(trace_file)  # Print the state of registers after each instruction
+    
+    def run(self, trace_file):
         """Run the MIPS processor and print each instruction with register states."""
         while self.pc in self.memory:
             instruction = self.memory[self.pc]
             decoded_instruction = self.decode_instruction(instruction)
-            print(f"Executing at {hex(self.pc)}: {decoded_instruction}")
 
-            self.pc += 4  # Move to the next instruction by default
+            output = f"Executing at {hex(self.pc)}: {decoded_instruction}"
+            print(output)
+            trace_file.write(output + '\n')
+
+            self.pc += 4
             self.execute_instruction(instruction)
 
-            self.print_registers()  # Print the state of registers after each instruction
+            self.print_registers(trace_file)
 
     def execute_instruction(self, instruction):
         """Decode and execute a 32-bit binary MIPS instruction."""
@@ -491,53 +506,89 @@ class MIPSProcessor:
             self.registers[31] = self.pc  # Store return address in $ra
             self.pc = (self.pc & 0xF0000000) | (address << 2)
 
-    def print_registers(self):
+    # def print_registers(self):
+    #     """Print the current state of the registers horizontally."""
+    #     print("Register values:")
+    #     register_values = []
+    #     for i in range(32):
+    #         reg_name = self.get_register_name(format(i, '05b'))
+    #         register_values.append(f"{reg_name}: {self.registers[i]}")
+    #     # Join the values with a separator and print them in one line
+    #     print(' | '.join(register_values))
+    
+    def print_registers(self, trace_file):
         """Print the current state of the registers horizontally."""
         print("Register values:")
+        trace_file.write("Register values:\n")
+
         register_values = []
         for i in range(32):
             reg_name = self.get_register_name(format(i, '05b'))
             register_values.append(f"{reg_name}: {self.registers[i]}")
-        # Join the values with a separator and print them in one line
-        print(' | '.join(register_values))
-    
-    def print_registers(self, trace_file):
-    """Print the current state of the registers horizontally."""
-    print("Register values:")
-    trace_file.write("Register values:\n")
 
-    register_values = []
-    for i in range(32):
-        reg_name = self.get_register_name(format(i, '05b'))
-        register_values.append(f"{reg_name}: {self.registers[i]}")
+        output = ' | '.join(register_values)
 
-    output = ' | '.join(register_values)
+        print(output)
+        trace_file.write(output + '\n')
 
-    print(output)
-    trace_file.write(output + '\n')
-
-    def print_memory(self):
+    def print_memory(self, trace_file):
         """Print the current state of memory."""
         print("Memory values:")
+        trace_file.write("Memory values:\n")
         for address, value in sorted(self.memory.items()):
-            print(f"{hex(address)}: {value}")
+            output = f"{hex(address)}: {value}"
+            print(output)
+            trace_file.write(output + '\n')
 
 
 
 
 
 # Main function
+# if __name__ == "__main__":
+#     input_file = sys.argv[1] if len(sys.argv) > 1 else 'input.txt'
+#     output_file = sys.argv[2] if len(sys.argv) > 2 else 'output.txt'
+#     translate_mips_to_binary(input_file, output_file)
+#     print(f"Translation complete. Binary instructions written to {output_file}.")
+#     print("Memory Map:", memory_map)
+#     print("Label Map:", label_map)
+#     print("Memory: ", memory)
+#     processor = MIPSProcessor(memory_map, memory, label_map, current_data_address, current_instruction_address)
+#     processor.load_instructions(output_file)
+#     processor.run()
+#     processor.print_memory()
+
 if __name__ == "__main__":
     input_file = sys.argv[1] if len(sys.argv) > 1 else 'input.txt'
     output_file = sys.argv[2] if len(sys.argv) > 2 else 'output.txt'
-    translate_mips_to_binary(input_file, output_file)
-    print(f"Translation complete. Binary instructions written to {output_file}.")
-    print("Memory Map:", memory_map)
-    print("Label Map:", label_map)
-    print("Memory: ", memory)
-    processor = MIPSProcessor(memory_map, memory, label_map, current_data_address, current_instruction_address)
-    processor.load_instructions(output_file)
-    processor.run()
-    processor.print_memory()
+    trace_file_name = sys.argv[3] if len(sys.argv) > 3 else 'iss_trace.txt'
 
+    translate_mips_to_binary(input_file, output_file)
+
+    with open(trace_file_name, 'w') as trace_file:
+        output = f"Translation complete. Binary instructions written to {output_file}."
+        print(output + '\n')
+        trace_file.write(output + '\n')
+
+        output = f"Memory Map: {memory_map}"
+        print(output + '\n')
+        trace_file.write(output + '\n')
+
+        output = f"Label Map: {label_map}"
+        print(output + '\n')
+        trace_file.write(output + '\n')
+
+        output = f"Memory: {memory}"
+        print(output + '\n')
+        trace_file.write(output + '\n')
+
+        processor = MIPSProcessor(
+            memory_map, memory, label_map,
+            current_data_address, current_instruction_address
+        )
+
+        processor.load_instructions(output_file)
+
+        processor.run(trace_file)
+        processor.print_memory(trace_file)
 
