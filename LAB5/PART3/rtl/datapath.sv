@@ -58,7 +58,7 @@ module datapath (
     logic [4:0] rtE, rsE, rdE;
     logic [31:0] pcnext, pcnextbr, pcbranch, pcbranchD, pcbranchM, pcplus4, pcplus4D, pcplus4E;
     logic [31:0] signimmsh, signimmD, signimmE;
-    logic [31:0] srca, srcaMUX, srcaE, srcbE, srccE;
+    logic [31:0] srca, srcaMUX, srcaE, srcbE, srcc, srccE;
     logic [31:0] result;
 
     // Hazard internal signals

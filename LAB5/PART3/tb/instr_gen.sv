@@ -340,7 +340,7 @@ class instruction_generator #(
     end
   endfunction
 endclass
-
+/*
 module instr_gen;
   timeunit 1ns;
   timeprecision 1ps;
@@ -402,3 +402,4 @@ module instr_gen;
     $fsdbDumpMDA(instr_gen.dut.mips.dp.rf);
   end
 endmodule
+*/

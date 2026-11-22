@@ -1,6 +1,6 @@
-*/sim/*
-*/synth/*
-!*/synth/compile_dc.tcl
-!*/synth/Makefile
-!*/sim/Makefile
-!*/sim/*.rc
+**/sim/*
+**/synth/*
+!**/synth/compile_dc.tcl
+!**/synth/Makefile
+!**/sim/Makefile
+!**/sim/*.rc

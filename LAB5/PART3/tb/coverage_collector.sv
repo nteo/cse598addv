@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 class instr_monitor extends uvm_monitor;
   `uvm_component_utils(instr_monitor) // register monitor with UVM factory
 
@@ -34,19 +36,19 @@ class instr_monitor extends uvm_monitor;
         continue;
       end
       
-        instr = instruction::type_id::create("instr");
-        instr.opcode = vif.instr[31:26];
+        instr = new();
+        instr.opcode = opcode_t'(vif.instr[31:26]);
         instr.rs = vif.instr[25:21];
         instr.rt = vif.instr[20:16];
         if (instr.opcode == 6'b000000) begin
           instr.rd = vif.instr[15:11];
           instr.imm = 16'b0;
-          instr.funct = vif.instr[5:0];
+          instr.funct = funct_t'(vif.instr[5:0]);
         end
         else begin
           instr.rd = 5'b0;
           instr.imm = vif.instr[15:0];
-          instr.funct = 6'b0;
+          instr.funct = funct_t'(6'b0);
         end
         instr.branch = vif.branch;
         instr.equal = vif.equal;
@@ -60,8 +62,6 @@ endclass
 
 class instr_coverage extends uvm_subscriber #(instruction);
   `uvm_component_utils(instr_coverage)
-
-  uvm_analysis_imp #(instruction, instr_coverage) imp;
 
   instruction instr;
   int instr_type;
@@ -97,9 +97,9 @@ class instr_coverage extends uvm_subscriber #(instruction);
       bins valid_imms = {[0:4], 16'h8, 16'hC};
     }
     coverpoint instr.funct {
-      bins no_func = {6'b000000};
-      bins add = {6'b100000};
-      bins and = {6'b100100};
+      bins NO_FUNC = {6'b000000};
+      bins ADD = {6'b100000};
+      bins AND = {6'b100100};
     }
   endgroup
 
@@ -154,7 +154,6 @@ class instr_coverage extends uvm_subscriber #(instruction);
 
   function new(string name, uvm_component parent);
     super.new(name, parent);
-    imp = new("analysis_imp", this);
     instr_fields_cg = new();
     instr_branch_cg = new();
     instr_order_cg = new();
@@ -176,9 +175,9 @@ class instr_coverage extends uvm_subscriber #(instruction);
     dependency_addr = 0;
   endfunction
 
-  function void write(instruction i);
+  function void write(instruction t);
 
-    instr = i;
+    instr = t;
 
     branch_taken = instr.branch && instr.equal;
     if (instr.branch) begin
@@ -365,7 +364,7 @@ class instr_env extends uvm_env;
 
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    mon.ap.connect(cov.imp);
+    mon.ap.connect(cov.analysis_export);
   endfunction
 endclass
 
@@ -390,6 +389,7 @@ class my_test extends uvm_test;
     task run_phase(uvm_phase phase);
         phase.raise_objection(this);
 
+	wait(vif.reset == 0);
         wait(vif.program_done == 1);
 
         // Allow final monitor/coverage activity to settle
@@ -402,9 +402,6 @@ endclass
 module tb;
   import uvm_pkg::*;
   `include "uvm_macros.svh"
-
-  timeunit 1ns;
-  timeprecision 1ps;
 
   instruction_generator #(
     .TRICKBOX_REG(5'd5),
@@ -460,9 +457,10 @@ module tb;
 
     repeat (2) @(posedge instr_mem_if.clk);
     instr_mem_if.reset = 0;
+  end
 
+  initial begin
     uvm_resource_db #(virtual instr_mem_if)::set(
-        null,
         "*",
         "instr_mem_if_ptr",
         instr_mem_if

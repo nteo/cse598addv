@@ -1,5 +1,6 @@
 SEED ?= 244
 CM_NAME ?= my_test
+CM_DIR ?= $(CM_NAME).vdb
 
 all: sim clean
 
@@ -12,7 +13,7 @@ compile_and_sim:
 
 # This compiles with VCS
 compile:
-	${VCS_HOME}/bin/vcs -full64 -sverilog -f ../project.f -debug_access+all |& tee compile.log
+	${VCS_HOME}/bin/vcs -full64 -sverilog -timescale=1ns/1ps -ntb_opts uvm-1.2 -f ../project.f -debug_access+all |& tee compile.log
 
 # This compiles with VCS and also generates the database for Verdi
 compile_verdi:
@@ -31,6 +32,7 @@ sim:
 		+ntb_random_seed=$(SEED) \
 		-cm line+cond+fsm+branch+tgl \
 		-cm_name $(CM_NAME) \
+		-cm_dir $(CM_DIR) \
 		-l vcs.log
 
 # This launches Verdi

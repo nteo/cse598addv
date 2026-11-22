@@ -10,7 +10,7 @@ interface instr_mem_if;
         input reset,
         input clk,
         input program_done,
-        output [31:0] instr,
+        output instr,
         output branch,
         output equal
     );
@@ -19,7 +19,7 @@ interface instr_mem_if;
         output reset,
         output clk,
         output program_done,
-        input [31:0] instr,
+        input instr,
         input branch,
         input equal
     );
