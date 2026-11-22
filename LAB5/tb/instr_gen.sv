@@ -20,6 +20,8 @@ class instruction extends uvm_transaction;
   rand bit [4:0] rs, rt, rd;
   rand bit [15:0] imm;
   rand funct_t funct;
+  bit branch;
+  bit equal;
 
   function new(string name = "instruction");
     super.new(name);
