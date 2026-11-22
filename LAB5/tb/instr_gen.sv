@@ -142,7 +142,7 @@ class instruction_generator #(
   endfunction
 
   function void generate_trickbox_store();
-    // Store the value from register $5 into memory address 0x8800 using an SW instruction
+    // Store the value from register $5 into memory address 0x40 using an SW instruction
     instruction trickbox_store_instr = new();
 
     trickbox_store_instr.opcode = SW;
@@ -156,8 +156,12 @@ class instruction_generator #(
     instruction instr = new();
 
     randcase
-      4: begin
-        assert(instr.randomize() with {opcode inside {RTYPE, LW, SW}; });
+      2: begin
+        assert(instr.randomize() with {opcode == RTYPE;});
+        append_instruction(instr);
+      end
+      2: begin
+        assert(instr.randomize() with {opcode inside {LW, SW}; });
         append_instruction(instr);
       end
 
@@ -189,7 +193,7 @@ class instruction_generator #(
         });
 
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rd);
+        insert_gaps(.avoid_reg(txn1.rd));
         append_instruction(txn2);
       end
 
@@ -203,7 +207,7 @@ class instruction_generator #(
           rt == txn1.rd;
         });
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rd);
+        insert_gaps(.avoid_reg(txn1.rd));
         append_instruction(txn2);
       end
 
@@ -217,7 +221,7 @@ class instruction_generator #(
           (rs == txn1.rt) || (rt == txn1.rt);
         });
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rt);
+        insert_gaps(.avoid_reg(txn1.rt));
         append_instruction(txn2);
       end
 
@@ -231,7 +235,7 @@ class instruction_generator #(
           rt == txn1.rt;
         });
         append_instruction(txn1);
-        insert_gaps(-1, txn1.rt);
+        insert_gaps(.avoid_reg(txn1.rt));
         append_instruction(txn2);
       end
 
@@ -245,14 +249,14 @@ class instruction_generator #(
           imm == txn1.imm;
         });
         append_instruction(txn1);
-        insert_gaps();
+        insert_gaps(.avoid_mem(txn1.imm));
         append_instruction(txn2);
       end
 
     endcase
   endfunction
 
-  function void insert_gaps(int gap_size = -1, int avoid_reg = -1);
+  function void insert_gaps(int gap_size = -1, int avoid_reg = -1, int avoid_mem = -1);
     int num_gaps;
     instruction gap_instr;
 
@@ -265,17 +269,17 @@ class instruction_generator #(
 
     for (int i = 0; i < num_gaps; i++) begin
       gap_instr = new();
-      if (avoid_reg != -1) begin
-        assert(gap_instr.randomize() with {
-          opcode inside {RTYPE, LW, SW};
-          (rs != avoid_reg) && (rt != avoid_reg) && (rd != avoid_reg);
-        });
-      end
-      else begin
-        assert(gap_instr.randomize() with {
-          opcode == RTYPE;
-        });
-      end
+      assert(gap_instr.randomize() with {
+        opcode inside {RTYPE, LW, SW};
+        if (avoid_reg != -1) {
+          rs != avoid_reg;
+          rt != avoid_reg;
+          rd != avoid_reg;
+        }
+        if (avoid_mem != -1) {
+          (opcode inside {LW, SW}) -> (imm != avoid_mem);
+        }
+      });
 
       append_instruction(gap_instr);
     end
@@ -300,7 +304,7 @@ class instruction_generator #(
     end
 
     // Pad the sequence with four instructions to cover the maximum branch minus 1
-    insert_gaps(4);
+    insert_gaps(.gap_size(4));
 
     // Store the trickbox value into the trickbox memory address
     generate_trickbox_store();
@@ -385,7 +389,7 @@ module instr_gen;
     reset = 0;
 
     // Wait until the trickbox value is stored in memory before finishing the simulation
-    while (dut.dmem.RAM[16'h0040 >> 2] != 32'h0000_0DED)
+    while (dut.dmem.RAM[16'h0040 >> 2] !== 32'h0000_0DED)
       @(posedge clk);
 
     $finish;
