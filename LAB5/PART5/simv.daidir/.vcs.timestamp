@@ -1,5 +1,5 @@
 0
-47
+49
 +itf+/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcsdp_lite.tab
 +vcsd1
 +vpi
@@ -36,12 +36,14 @@
 -kdb=common_elab
 -kdb=common_elab
 -lca
+-o simv
 -picarchive
 -sverilog
 -timescale=1ns/1ps
 -top
 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/vcs1
 testbench
+simv
 /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/verdi.tab
 /home/a34263_asu/CSE598/LAB5/PART5/rtl/controller.sv
 /home/a34263_asu/CSE598/LAB5/PART5/rtl/datapath.sv
@@ -94,8 +96,8 @@ PDK_DIR=/usr/local2/cadence/NCSU/SRC/FreePDK45
 OVA_UUM=0
 OSTYPE=linux
 MFLAGS=
-MAKE_TERMOUT=/dev/pts/1
-MAKE_TERMERR=/dev/pts/1
+MAKE_TERMOUT=/dev/pts/4
+MAKE_TERMERR=/dev/pts/4
 MAKELEVEL=1
 MAKEFLAGS=
 LESSOPEN=||/usr/bin/lesspipe.sh %s
@@ -105,7 +107,7 @@ HOSTTYPE=x86_64-linux
 HISTCONTROL=ignoreboth
 GROUP=a34263_asu
 GNOME_TERMINAL_SERVICE=:1.76
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/687f2270_e30b_4b85_89ac_f4c3668a477a
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/18a312d5_9fe8_49cc_b15d_3b48875c0a70
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 GJS_DEBUG_TOPICS=JS ERROR;JS LOG
 GJS_DEBUG_OUTPUT=stderr
@@ -115,11 +117,11 @@ BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty
 0
 0
 7
-1795412418 /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv
+1795413239 /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv
 1795386305 /home/a34263_asu/CSE598/LAB5/PART5/rtl/top.sv
 1795391914 /home/a34263_asu/CSE598/LAB5/PART5/rtl/datapath.sv
 1795332814 /home/a34263_asu/CSE598/LAB5/PART5/rtl/controller.sv
-1795332814 rtl/project.f
+1795414007 rtl/project.f
 1750737971 /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/LINUX64/verdi.tab
 1751080315 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/vcsdp_lite.tab
 4
@@ -127,5 +129,5 @@ BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty
 1751081831 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/liberrorinf.so
 1751081823 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libsnpsmalloc.so
 1751081835 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvfs.so
-1795412424 simv.daidir
+1795414061 simv.daidir
 -1 partitionlib
