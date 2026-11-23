@@ -312,6 +312,7 @@ def translate_mips_to_binary(input_file, output_file):
         for binary_instruction in binary_instructions:
             file.write(binary_instruction + '\n')
 
+    current_instruction_address = 0x00400000
 
 
 class MIPSProcessor:
