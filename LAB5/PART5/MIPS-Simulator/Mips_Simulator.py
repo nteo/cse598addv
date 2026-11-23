@@ -407,7 +407,7 @@ class MIPSProcessor:
             instruction = self.memory[self.pc]
 
             # Convert 32-bit binary instruction to 8-digit hexadecimal.
-            instruction_hex = format(int(instruction, 2), '08X')
+            instruction_hex = format(int(instruction, 2), '08x')
 
             output = f"Executing at {hex(self.pc)}: {instruction_hex}"
             print(output)

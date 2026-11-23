@@ -111,8 +111,8 @@ module testbench;
     if (!reset && !done && dut.mips.dp.validW === 1'b1) begin
 
       // Instruction execution line.
-      $fdisplay(trace_fd, "Executing at 0x%h: %h",
-                32'h400000 + dut.mips.dp.pcW,
+      $fdisplay(trace_fd, "Executing at 0x%0H: %8H",
+                32'h400000 + dut.mips.dp.pcW[23:0],
                 dut.mips.dp.instrW);
 
       // Register dump header.
