@@ -1,52 +1,49 @@
 Memory Map: {}
-
 Label Map: {}
-
 Memory: {}
-
-Executing at 0x400000: addi $t0, $zero, 1
+Executing at 0x400000: 20080001
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 0 | $t2: 0 | $t3: 0 | $t4: 0 | $t5: 0 | $t6: 0 | $t7: 0 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400004: addi $t1, $zero, 1
+Executing at 0x400004: 20090001
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 1 | $t2: 0 | $t3: 0 | $t4: 0 | $t5: 0 | $t6: 0 | $t7: 0 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400008: add $t2, $t0, $t1
+Executing at 0x400008: 01095020
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 1 | $t2: 2 | $t3: 0 | $t4: 0 | $t5: 0 | $t6: 0 | $t7: 0 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x40000c: add $t3, $t2, $t1
+Executing at 0x40000c: 01495820
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 1 | $t2: 2 | $t3: 3 | $t4: 0 | $t5: 0 | $t6: 0 | $t7: 0 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400010: add $t4, $t3, $t2
+Executing at 0x400010: 016A6020
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 1 | $t2: 2 | $t3: 3 | $t4: 5 | $t5: 0 | $t6: 0 | $t7: 0 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400014: add $t5, $t4, $t3
+Executing at 0x400014: 018B6820
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 1 | $t2: 2 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 0 | $t7: 0 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400018: add $t6, $t5, $t4
+Executing at 0x400018: 01AC7020
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 1 | $t2: 2 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 0 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x40001c: sub $t7, $t6, $t5
+Executing at 0x40001c: 01CD7822
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 1 | $t1: 1 | $t2: 2 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400020: and $t0, $t6, $t7
+Executing at 0x400020: 01CF4024
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 5 | $t1: 1 | $t2: 2 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400024: or $t1, $t0, $t2
+Executing at 0x400024: 010A4825
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 5 | $t1: 7 | $t2: 2 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400028: slt $t2, $t1, $t6
+Executing at 0x400028: 012E502A
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 5 | $t1: 7 | $t2: 1 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x40002c: sw $t6, 8($zero)
+Executing at 0x40002c: AC0E0008
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 5 | $t1: 7 | $t2: 1 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400030: sw $t2, 12($zero)
+Executing at 0x400030: AC0A000C
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 5 | $t1: 7 | $t2: 1 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 0 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400034: addi $t9, $zero, 3565
+Executing at 0x400034: 20190DED
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 5 | $t1: 7 | $t2: 1 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 3565 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
-Executing at 0x400038: sw $t9, 64($zero)
+Executing at 0x400038: AC190040
 Register values:
 $zero: 0 | $at: 0 | $v0: 0 | $v1: 0 | $a0: 0 | $a1: 0 | $a2: 0 | $a3: 0 | $t0: 5 | $t1: 7 | $t2: 1 | $t3: 3 | $t4: 5 | $t5: 8 | $t6: 13 | $t7: 5 | $s0: 0 | $s1: 0 | $s2: 0 | $s3: 0 | $s4: 0 | $s5: 0 | $s6: 0 | $s7: 0 | $t8: 0 | $t9: 3565 | $k0: 0 | $k1: 0 | $gp: 0 | $sp: 0 | $fp: 0 | $ra: 0
 Memory values:

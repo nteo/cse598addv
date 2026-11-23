@@ -54,7 +54,7 @@ XRDP_SESSION=1
 XRDP_PULSE_SOURCE_SOCKET=xrdp_chansrv_audio_in_socket_13
 XRDP_PULSE_SINK_SOCKET=xrdp_chansrv_audio_out_socket_13
 XMODIFIERS=@im=ibus
-XDG_SESSION_ID=c722
+XDG_SESSION_ID=c2387
 XDG_RUNTIME_DIR=/run/user/2288359
 XDG_MENU_PREFIX=gnome-
 XDG_DATA_DIRS=/home/a34263_asu/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
@@ -78,13 +78,13 @@ UNAME=/bin/uname
 TOOL_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64
 SSH_AUTH_SOCK=/run/user/2288359/keyring/ssh
 SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
-SSH_AGENT_PID=90570
+SSH_AGENT_PID=284030
 SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
 SNPS_VCS_VHDL_WRAPPER_KDB=1
 SNPS_VCS_PYTHON3=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/bin/Python3/bin/python3
 SNPS_VCS_CLANG_PATH=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/clang
 SNPS_INTERNAL_VCS_LINUX_OS=linux
-SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/90388,unix/unix:/tmp/.ICE-unix/90388
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/283856,unix/unix:/tmp/.ICE-unix/283856
 SCRNAME=vcs
 SCRIPT_NAME=vcs
 QT_IM_MODULE=ibus
@@ -94,8 +94,8 @@ PDK_DIR=/usr/local2/cadence/NCSU/SRC/FreePDK45
 OVA_UUM=0
 OSTYPE=linux
 MFLAGS=
-MAKE_TERMOUT=/dev/pts/5
-MAKE_TERMERR=/dev/pts/5
+MAKE_TERMOUT=/dev/pts/1
+MAKE_TERMERR=/dev/pts/1
 MAKELEVEL=1
 MAKEFLAGS=
 LESSOPEN=||/usr/bin/lesspipe.sh %s
@@ -105,7 +105,7 @@ HOSTTYPE=x86_64-linux
 HISTCONTROL=ignoreboth
 GROUP=a34263_asu
 GNOME_TERMINAL_SERVICE=:1.76
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/9b2df5a2_2b79_4b24_b785_2d829edf37a5
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/687f2270_e30b_4b85_89ac_f4c3668a477a
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 GJS_DEBUG_TOPICS=JS ERROR;JS LOG
 GJS_DEBUG_OUTPUT=stderr
@@ -115,7 +115,7 @@ BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty
 0
 0
 7
-1795392167 /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv
+1795412418 /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv
 1795386305 /home/a34263_asu/CSE598/LAB5/PART5/rtl/top.sv
 1795391914 /home/a34263_asu/CSE598/LAB5/PART5/rtl/datapath.sv
 1795332814 /home/a34263_asu/CSE598/LAB5/PART5/rtl/controller.sv
@@ -127,5 +127,5 @@ BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty
 1751081831 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/liberrorinf.so
 1751081823 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libsnpsmalloc.so
 1751081835 /usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/linux64/lib/libvfs.so
-1795392172 simv.daidir
+1795412424 simv.daidir
 -1 partitionlib

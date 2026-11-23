@@ -529,22 +529,28 @@ if __name__ == "__main__":
 
     translate_mips_to_binary(input_file, output_file)
 
-    with open(trace_file_name, 'w') as trace_file:
-#        output = f"Translation complete. Binary instructions written to {output_file}."
-#        print(output + '\n')
-#        trace_file.write(output + '\n')
+    # Write memory metadata for the RTL testbench.
+    with open("iss_metadata.txt", "w") as metadata_file:
+        metadata_file.write(f"Memory Map: {memory_map}\n")
+        metadata_file.write(f"Label Map: {label_map}\n")
+        metadata_file.write(f"Memory: {memory}\n")
 
+    with open(trace_file_name, 'w') as trace_file:
+        #output = "Translation complete. Binary instructions written to traces/prog1.bin."
+        #print(output)
+        #trace_file.write(output)
+        
         output = f"Memory Map: {memory_map}"
-        print(output + '\n')
-        trace_file.write(output + '\n')
+        print(output)
+        trace_file.write(output)
 
         output = f"Label Map: {label_map}"
-        print(output + '\n')
-        trace_file.write(output + '\n')
+        print(output)
+        trace_file.write(output)
 
         output = f"Memory: {memory}"
-        print(output + '\n')
-        trace_file.write(output + '\n')
+        print(output)
+        trace_file.write(output)
 
         processor = MIPSProcessor(
             memory_map, memory, label_map,

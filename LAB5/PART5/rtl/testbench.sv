@@ -33,6 +33,27 @@ module testbench;
     .memwrite(memwrite)
   );
 
+  task automatic copy_metadata(input string filename);
+    integer metadata_fd;
+    integer status;
+    string line;
+
+    metadata_fd = $fopen(filename, "r");
+
+    if (metadata_fd == 0)
+        $fatal(1, "ERROR: Could not open metadata file %s", filename);
+    
+    $display("Copying metadata from %s", filename);
+   
+    while (!$feof(metadata_fd)) begin
+        status = $fgets(line, metadata_fd);
+        if (status != 0)
+            $fwrite(trace_fd, "%s", line);
+    end
+
+    $fclose(metadata_fd);
+  endtask
+
   initial begin
     clk = 0;
     forever #5 clk = ~clk;
@@ -51,6 +72,8 @@ module testbench;
     if (trace_fd == 0)
       $fatal(1, "Could not open trace file %s", trace_file);
 
+    copy_metadata("iss_metadata.txt");
+
     reset = 1;
 
     #1;
@@ -60,9 +83,6 @@ module testbench;
     $readmemb(prog_file, machine_code_list);
     $writememh("rtl/memfile.dat", machine_code_list);
     $readmemh("rtl/memfile.dat", dut.imem.RAM);
-
-    $fdisplay(trace_fd,
-      "Translation complete. Binary instructions written to traces/prog1.bin.");
 
     repeat (2) @(posedge clk);
     reset = 0;
