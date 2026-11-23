@@ -87,15 +87,8 @@ module testbench;
   end
 
   // One trace entry per valid instruction reaching writeback.
-  // This assumes pcW is the PC corresponding to instrW.
-  always @(negedge clk) begin
+  always @(posedge clk) begin
     if (!reset && !done && dut.mips.dp.validW === 1'b1) begin
-
-      // Instruction execution line.
-      // Replace this with a disassembler that matches the Python ISS.
-      $fdisplay(trace_fd, "Executing at 0x%h: %h",
-                dut.mips.dp.pcW,
-                dut.mips.dp.instrW);
 
       // Register dump header.
       $fdisplay(trace_fd, "Register values:");
@@ -116,6 +109,11 @@ module testbench;
       end
 
       $fwrite(trace_fd, "\n");
+      
+      // Instruction execution line.
+      $fdisplay(trace_fd, "Executing at 0x%h: %h",
+                32'h40000000 + dut.mips.dp.pcW,
+                dut.mips.dp.instrW);
     end
   end
 
