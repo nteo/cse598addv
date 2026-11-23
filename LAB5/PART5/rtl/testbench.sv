@@ -112,7 +112,7 @@ module testbench;
 
       // Instruction execution line.
       $fdisplay(trace_fd, "Executing at 0x%h: %h",
-                32'h40000000 + dut.mips.dp.pcW,
+                32'h400000 + dut.mips.dp.pcW,
                 dut.mips.dp.instrW);
 
       // Register dump header.
