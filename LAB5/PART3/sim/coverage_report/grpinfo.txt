@@ -1,0 +1,585 @@
+Group : $unit::instr_coverage::instr_branch_cg
+
+===============================================================================
+Group : $unit::instr_coverage::instr_branch_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+  0.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::instr_branch_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 2        2         0       0.00    
+
+
+Variables for Group  $unit::instr_coverage::instr_branch_cg
+
+
+VARIABLE     EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+branch_taken 2        2         0       0.00    100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable branch_taken
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 2        2         0       0.00    
+
+
+User Defined Bins for branch_taken
+
+
+Uncovered bins
+
+NAME      COUNT AT LEAST NUMBER 
+not_taken 0     1        1      
+taken     0     1        1      
+
+
+Group : $unit::instr_coverage::instr_order_cg
+
+===============================================================================
+Group : $unit::instr_coverage::instr_order_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+ 56.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::instr_order_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 25       11        14      56.00   
+
+
+Variables for Group  $unit::instr_coverage::instr_order_cg
+
+
+VARIABLE   EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+instr_type 25       11        14      56.00   100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable instr_type
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 25       11        14      56.00   
+
+
+User Defined Bins for instr_type
+
+
+Uncovered bins
+
+NAME                         COUNT AT LEAST NUMBER 
+instruction_transitions:1->2 0     1        1      
+instruction_transitions:1->5 0     1        1      
+instruction_transitions:2->5 0     1        1      
+instruction_transitions:3->4 0     1        1      
+instruction_transitions:3->5 0     1        1      
+instruction_transitions:4->5 0     1        1      
+instruction_transitions:5->1 0     1        1      
+instruction_transitions:5->2 0     1        1      
+instruction_transitions:5->3 0     1        1      
+instruction_transitions:5->4 0     1        1      
+instruction_transitions:5->5 0     1        1      
+
+
+Covered bins
+
+NAME                         COUNT AT LEAST 
+instruction_transitions:1->1 2     1        
+instruction_transitions:1->3 1     1        
+instruction_transitions:1->4 5     1        
+instruction_transitions:2->1 2     1        
+instruction_transitions:2->2 2     1        
+instruction_transitions:2->3 1     1        
+instruction_transitions:2->4 1     1        
+instruction_transitions:3->1 2     1        
+instruction_transitions:3->2 2     1        
+instruction_transitions:3->3 1     1        
+instruction_transitions:4->1 1     1        
+instruction_transitions:4->2 2     1        
+instruction_transitions:4->3 2     1        
+instruction_transitions:4->4 4     1        
+
+
+Group : $unit::instr_coverage::instr_fields_cg
+
+===============================================================================
+Group : $unit::instr_coverage::instr_fields_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+ 95.83 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::instr_fields_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 11       1         10      95.83   
+
+
+Variables for Group  $unit::instr_coverage::instr_fields_cg
+
+
+VARIABLE     EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+instr.opcode 4        1         3       75.00   100  1      1        0                    
+instr.rd     1        0         1       100.00  100  1      1        0                    
+instr.rs     1        0         1       100.00  100  1      1        0                    
+instr.rt     1        0         1       100.00  100  1      1        0                    
+instr.imm    1        0         1       100.00  100  1      1        0                    
+instr.funct  3        0         3       100.00  100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable instr.opcode
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 4        1         3       75.00   
+
+
+User Defined Bins for instr.opcode
+
+
+Uncovered bins
+
+NAME COUNT AT LEAST NUMBER 
+beq  0     1        1      
+
+
+Covered bins
+
+NAME  COUNT AT LEAST 
+sw    11    1        
+lw    5     1        
+rtype 18    1        
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable instr.rd
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for instr.rd
+
+
+Bins
+
+NAME       COUNT AT LEAST 
+valid_regs 14    1        
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable instr.rs
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for instr.rs
+
+
+Bins
+
+NAME       COUNT AT LEAST 
+valid_regs 14    1        
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable instr.rt
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for instr.rt
+
+
+Bins
+
+NAME       COUNT AT LEAST 
+valid_regs 33    1        
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable instr.imm
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for instr.imm
+
+
+Bins
+
+NAME       COUNT AT LEAST 
+valid_imms 33    1        
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable instr.funct
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 3        0         3       100.00  
+
+
+User Defined Bins for instr.funct
+
+
+Bins
+
+NAME    COUNT AT LEAST 
+AND     6     1        
+ADD     8     1        
+NO_FUNC 25    1        
+
+
+Group : $unit::instr_coverage::mem_waw_gap_cg
+
+===============================================================================
+Group : $unit::instr_coverage::mem_waw_gap_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+100.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::mem_waw_gap_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 1        0         1       100.00  
+
+
+Variables for Group  $unit::instr_coverage::mem_waw_gap_cg
+
+
+VARIABLE    EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+mem_waw_gap 1        0         1       100.00  100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable mem_waw_gap
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for mem_waw_gap
+
+
+Bins
+
+NAME         COUNT AT LEAST 
+mem_waw_gaps 3     1        
+
+
+Group : $unit::instr_coverage::dependency_addr_cg
+
+===============================================================================
+Group : $unit::instr_coverage::dependency_addr_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+100.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::dependency_addr_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 1        0         1       100.00  
+
+
+Variables for Group  $unit::instr_coverage::dependency_addr_cg
+
+
+VARIABLE        EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+dependency_addr 1        0         1       100.00  100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable dependency_addr
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for dependency_addr
+
+
+Bins
+
+NAME  COUNT AT LEAST 
+addrs 11    1        
+
+
+Group : $unit::instr_coverage::reg_raw_gap_cg
+
+===============================================================================
+Group : $unit::instr_coverage::reg_raw_gap_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+100.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::reg_raw_gap_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 1        0         1       100.00  
+
+
+Variables for Group  $unit::instr_coverage::reg_raw_gap_cg
+
+
+VARIABLE    EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+reg_raw_gap 1        0         1       100.00  100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable reg_raw_gap
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for reg_raw_gap
+
+
+Bins
+
+NAME         COUNT AT LEAST 
+reg_raw_gaps 13    1        
+
+
+Group : $unit::instr_coverage::dependency_reg_cg
+
+===============================================================================
+Group : $unit::instr_coverage::dependency_reg_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+100.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::dependency_reg_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 1        0         1       100.00  
+
+
+Variables for Group  $unit::instr_coverage::dependency_reg_cg
+
+
+VARIABLE       EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+dependency_reg 1        0         1       100.00  100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable dependency_reg
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for dependency_reg
+
+
+Bins
+
+NAME COUNT AT LEAST 
+regs 43    1        
+
+
+Group : $unit::instr_coverage::mem_raw_gap_cg
+
+===============================================================================
+Group : $unit::instr_coverage::mem_raw_gap_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+100.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::mem_raw_gap_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 1        0         1       100.00  
+
+
+Variables for Group  $unit::instr_coverage::mem_raw_gap_cg
+
+
+VARIABLE    EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+mem_raw_gap 1        0         1       100.00  100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable mem_raw_gap
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for mem_raw_gap
+
+
+Bins
+
+NAME         COUNT AT LEAST 
+mem_raw_gaps 3     1        
+
+
+Group : $unit::instr_coverage::reg_waw_gap_cg
+
+===============================================================================
+Group : $unit::instr_coverage::reg_waw_gap_cg
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING 
+100.00 1      100    1        64           64            
+
+
+Source File(s) : 
+
+/home/a34263_asu/CSE598/LAB5/PART3/tb/coverage_collector.sv
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   $unit::instr_coverage::reg_waw_gap_cg
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT 
+Variables 1        0         1       100.00  
+
+
+Variables for Group  $unit::instr_coverage::reg_waw_gap_cg
+
+
+VARIABLE    EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT 
+reg_waw_gap 1        0         1       100.00  100  1      1        0                    
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable reg_waw_gap
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT 
+User Defined Bins 1        0         1       100.00  
+
+
+User Defined Bins for reg_waw_gap
+
+
+Bins
+
+NAME         COUNT AT LEAST 
+reg_waw_gaps 9     1        
+
+

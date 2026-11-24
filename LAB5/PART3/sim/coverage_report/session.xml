@@ -1,0 +1,50 @@
+<session version="1.1" release="W-2024.09-SP2-3" timestp="2026-11-22 08:04:37 GMT">
+  <info>
+    <attr name="datetime" value="Mon Nov 23 06:35:14 2026
+"/>
+    <attr name="command" value="urg -full64 -dir simv.vdb -format both -report coverage_report"/>
+  </info>
+  <hvp>
+    <datadef>
+      <metdef name="Group" type="percent" aggregator="average" builtin="1" />
+    </datadef>
+  </hvp>
+  <old_coverage>
+  <scope type="top" name="top">
+    <metric name="Group" value="83.537%" />
+  </scope>
+  <scope type="instance" name="top">
+  </scope>
+  <scope type="group" name="top">
+    <scope type="group" name="$unit::instr_coverage::instr_branch_cg">
+      <metric name="Group" value="0%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::instr_order_cg">
+      <metric name="Group" value="56%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::instr_fields_cg">
+      <metric name="Group" value="95.8333%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::mem_waw_gap_cg">
+      <metric name="Group" value="100%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::dependency_addr_cg">
+      <metric name="Group" value="100%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::reg_raw_gap_cg">
+      <metric name="Group" value="100%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::dependency_reg_cg">
+      <metric name="Group" value="100%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::mem_raw_gap_cg">
+      <metric name="Group" value="100%" />
+    </scope>
+    <scope type="group" name="$unit::instr_coverage::reg_waw_gap_cg">
+      <metric name="Group" value="100%" />
+    </scope>
+  </scope>
+  <scope type="assert" name="Statistics">
+  </scope>
+  </old_coverage>
+</session>

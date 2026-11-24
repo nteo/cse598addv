@@ -1,0 +1,21 @@
+Dashboard
+
+Date: Mon Nov 23 23:34:11 2026
+
+User: a34263_asu
+
+Version: W-2024.09-SP2-3
+Command line: urg -full64 -dir merged_coverage.vdb -format both
+Number of tests: 1
+
+-------------------------------------------------------------------------------
+Total Coverage Summary 
+SCORE  GROUP  
+100.00 100.00 
+
+
+-------------------------------------------------------------------------------
+Total Groups Coverage Summary 
+SCORE  WEIGHT 
+100.00 1      
+

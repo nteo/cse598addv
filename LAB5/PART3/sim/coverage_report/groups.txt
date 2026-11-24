@@ -1,0 +1,20 @@
+Testbench Group List
+
+Total Groups Coverage Summary 
+SCORE  WEIGHT 
+ 83.54 1      
+
+
+Total groups in report: 9
+-------------------------------------------------------------------------------
+SCORE  WEIGHT GOAL   AT LEAST PER INSTANCE AUTO BIN MAX PRINT MISSING COMMENT NAME                                      
+  0.00 1      100    1        0            64           64                    $unit::instr_coverage::instr_branch_cg    
+ 56.00 1      100    1        0            64           64                    $unit::instr_coverage::instr_order_cg     
+ 95.83 1      100    1        0            64           64                    $unit::instr_coverage::instr_fields_cg    
+100.00 1      100    1        0            64           64                    $unit::instr_coverage::mem_waw_gap_cg     
+100.00 1      100    1        0            64           64                    $unit::instr_coverage::dependency_addr_cg 
+100.00 1      100    1        0            64           64                    $unit::instr_coverage::reg_raw_gap_cg     
+100.00 1      100    1        0            64           64                    $unit::instr_coverage::dependency_reg_cg  
+100.00 1      100    1        0            64           64                    $unit::instr_coverage::mem_raw_gap_cg     
+100.00 1      100    1        0            64           64                    $unit::instr_coverage::reg_waw_gap_cg     
+

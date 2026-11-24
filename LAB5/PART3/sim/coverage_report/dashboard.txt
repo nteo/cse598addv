@@ -1,0 +1,21 @@
+Dashboard
+
+Date: Mon Nov 23 06:35:14 2026
+
+User: a34263_asu
+
+Version: W-2024.09-SP2-3
+Command line: urg -full64 -dir simv.vdb -format both -report coverage_report
+Number of tests: 1
+
+-------------------------------------------------------------------------------
+Total Coverage Summary 
+SCORE  GROUP  
+ 83.54  83.54 
+
+
+-------------------------------------------------------------------------------
+Total Groups Coverage Summary 
+SCORE  WEIGHT 
+ 83.54 1      
+
