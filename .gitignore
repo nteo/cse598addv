@@ -1,5 +1,6 @@
 **/sim/*
 **/synth/*
+!**/sim/*.vdb
 !**/synth/compile_dc.tcl
 !**/synth/Makefile
 !**/sim/Makefile

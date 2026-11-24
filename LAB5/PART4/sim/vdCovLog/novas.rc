@@ -4,7 +4,6 @@ work = ./work
 [Annotation]
 3D_Active_Annotation = FALSE
 [ColumnCfg]
-covtblAssertList_Assert = true
 m_hvpDetailPlanEditAttributeListView_V1.1_Name_pos = 0
 m_hvpDetailPlanEditAttributeListView_V1.1_Name_width = 100
 m_hvpDetailPlanEditAttributeListView_V1.1_Name = true
@@ -653,8 +652,8 @@ SyncBrowserDir = TRUE
 ScaleFactor = 100%
 ToolbarIconSize = Medium
 ColorThemeModern = bright
+prevColorThemeModern = classic
 version = Verdi_W-2024.09-SP2-3
-prevColorThemeModern = bright
 [GlobalProp]
 ErrWindow_Font = Helvetica_M_R_12
 [Globals]
@@ -762,7 +761,7 @@ FileName = test.ps
 PaperSize = A4 - 210x297 (mm)
 ColorPrint = FALSE
 [QtDialog]
-QwUserAskDlg = 590,391,324,122
+QwUserAskDlg = 576,323,324,122
 [Session Cache]
 1 = string (session file name)
 2 = string (session file name)
@@ -812,6 +811,7 @@ showColorForActive = FALSE
 tabWidth = 8
 editor = vi
 reload = Never
+sync_active_to_source = true
 navigateAsColored = FALSE
 navigateCovered = FALSE
 navigateUncovered = TRUE
@@ -826,7 +826,6 @@ restoredItemsLimitNum = 100000
 disableRendering = false
 disableLoadInclude = false
 tooltipLineLimit = 20
-sync_active_to_source = true
 [TclShell]
 nLineSize = 1024
 [Test]
@@ -1136,7 +1135,7 @@ read_system_defaults_pref_file = 0
 read_pref_file = 0
 gui_autosave_pref = 1
 pref_file_name = .synopsys_syn_prefs.tcl
-pref_file_path = /home/a34282_asu
+pref_file_path = /home/a34263_asu
 [eman]
 eman_web_browser = firefox
 EmanPopupDlgWhenOpenVdbPlan = true

@@ -3310,3 +3310,580 @@ QWidget::paintEngine: Should no longer be called
 QPainter::begin: Paint device returned engine == 0, type: 1
 QWidget::paintEngine: Should no longer be called
 QPainter::begin: Paint device returned engine == 0, type: 1
+QFont::fromString: Invalid description '(empty)'
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+QWidget::paintEngine: Should no longer be called
+QPainter::begin: Paint device returned engine == 0, type: 1
+The X11 connection broke (error 1). Did the X11 server die?
+The X11 connection broke (error 1). Did the X11 server die?
+The X11 connection broke: I/O error (code 1)
+The X11 connection broke: I/O error (code 1)
+The X11 connection broke (error 1). Did the X11 server die?
+The X11 connection broke: I/O error (code 1)

@@ -1,4 +1,4 @@
-verdiWindowResize -win $_vdCoverage_1 "0" "27" "1504" "776"
+verdiWindowResize -win $_vdCoverage_1 "0" "27" "1496" "803"
 gui_set_pref_value -category {coveragesetting} -key {geninfodumping} -value 1
 gui_exclusion -set_force true
 verdiSetFont  -font  {DejaVu Sans}  -size  12
@@ -9,63 +9,52 @@ gui_excl_mgr_flat_list -on  0
 gui_covdetail_select -id  CovDetail.1   -name   Line
 verdiWindowWorkMode -win $_vdCoverage_1 -coverageAnalysis
 gui_open_cov  -hier cov_merged/merged.vdb -testdir {} -test {cov_merged/merged/test} -merge MergedTest -db_max_tests 10 -sdc_level 1 -fsm transition
+gui_set_pref_value -category {ColumnCfg} -key {covtblAssertList_Assert} -value {true}
 verdiSetActWin -dock widgetDock_<CovDetail>
-gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen
+gui_covtable_show -show  { Tests } -id  CoverageTable.1  -test  MergedTest
 verdiSetActWin -dock widgetDock_<Summary>
+gui_list_select -id CoverageTable.1 -list covtblTestSummaryList { cov_runs/run_1/test   }
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_runs/run_1/test  -column {Test Name/Test Location} 
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_runs/run_1/test  -column {Test Name/Test Location} 
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_runs/run_1/test  -column {Test Name/Test Location} 
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_runs/run_1/test  -column {Type} 
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_runs/run_1/test  -column {Test Name/Test Location} 
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_runs/run_1/test  -column {Type} 
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_runs/run_1/test  -column {Simulation Time} 
+gui_covtable_show -show  { Design Hierarchy } -id  CoverageTable.1  -test  MergedTest
+gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen
 gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut
+gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen   }
+gui_exclude_items -id  CoverageTable.1  -list { covtblInstancesList } { instr_gen }
+gui_covtable_show -show  { Tests } -id  CoverageTable.1  -test  MergedTest
+gui_list_select -id CoverageTable.1 -list covtblTestSummaryList { cov_runs/run_1/test  cov_merged/merged/test   }
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_merged/merged/test  -column {Test Name/Test Location} 
+gui_list_action -id  CoverageTable.1 -list {covtblTestSummaryList} cov_merged/merged/test  -column {Test Name/Test Location} 
+gui_covtable_show -show  { Design Hierarchy } -id  CoverageTable.1  -test  MergedTest
 gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut.mips
 gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut.mips.dp
-gui_covtable_show -show  { Module List } -id  CoverageTable.1  -test  MergedTest
-gui_list_select -id CoverageTable.1 -list covtblModulesList { /performance_monitor   } -type { Module  }
-gui_exclude_items -id  CoverageTable.1  -selected
-gui_list_expand -id  CoverageTable.1   -list {covtblModulesList} /aludec
-gui_list_select -id CoverageTable.1 -list covtblModulesList { /performance_monitor  /aludec/instr_gen.dut.mips.c.ad   } -type { Module Scope  }
-gui_list_collapse -id  CoverageTable.1   -list {covtblModulesList} /aludec
-gui_covtable_show -show  { Design Hierarchy } -id  CoverageTable.1  -test  MergedTest
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut.mips.dp.pcadd1   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.pcadd1  -column {Toggle} 
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut.mips.dp.pcadd1  instr_gen.dut   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut  -column {Toggle} 
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut  instr_gen.dut.mips.dp.wrmux   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.wrmux  -column {Toggle} 
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.wrmux  -column {Toggle} 
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut.mips.dp.wrmux  instr_gen.dut.mips.dp.pcadd1   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.pcadd1  -column {Toggle} 
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.pcadd1  -column {Toggle} 
-gui_list_select -id CovDetail.1 -list tgl { {a[31:0]}  {b[31:0]}   }
-verdiSetActWin -dock widgetDock_<CovDetail>
-gui_list_select -id CovDetail.1 -list tgl { {b[31:0]}  {a[31:0]}   }
-gui_list_select -id CovDetail.1 -list tgl { {a[31:0]}  {y[31:0]}   }
-gui_list_select -id CovDetail.1 -list tgl { {y[31:0]}  {b[31:0]}   }
-gui_list_select -id CovDetail.1 -list tgl { {b[31:0]}  {a[31:0]}   }
-gui_list_select -id CovDetail.1 -list tgl { {a[31:0]}  {b[31:0]}   }
-gui_list_select -id CovDetail.1 -list tgl { {b[31:0]}  {a[31:0]}   }
-gui_list_select -id CovDetail.1 -list tgl { {a[31:0]}  {b[31:0]}   }
-gui_list_select -id CovDetail.1 -list tgl { {b[31:0]}  {a[31:0]}   }
+gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut.mips.c
+gui_list_collapse -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut.mips.c
 gui_list_collapse -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut.mips.dp
-verdiSetActWin -dock widgetDock_<Summary>
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut.mips.dp.pcadd1  instr_gen   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen  -column {} 
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen   }
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut  -column {Toggle} 
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut  -column {Line} 
+gui_covtable_show -show  { Module List } -id  CoverageTable.1  -test  MergedTest
+gui_covtable_show -show  { Function Groups } -id  CoverageTable.1  -test  MergedTest
+gui_covtable_show -show  { Design Hierarchy } -id  CoverageTable.1  -test  MergedTest
+gui_covtable_show -show  { Module List } -id  CoverageTable.1  -test  MergedTest
+gui_list_expand -id  CoverageTable.1   -list {covtblModulesList} /mips
+gui_list_collapse -id  CoverageTable.1   -list {covtblModulesList} /mips
+gui_list_expand -id  CoverageTable.1   -list {covtblModulesList} /flopr
+gui_list_collapse -id  CoverageTable.1   -list {covtblModulesList} /flopr
+gui_covtable_show -show  { Design Hierarchy } -id  CoverageTable.1  -test  MergedTest
+gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut.mips.dp
+gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen  instr_gen.dut.mips.dp.pcadd1   }
+gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.pcadd1  -column {} 
+gui_covdetail_select -id  CovDetail.1   -name   Toggle
 verdiSetActWin -dock widgetDock_<CovDetail>
 gui_covtable_show -show  { Design Hierarchy } -id  CoverageTable.1  -test  MergedTest
 verdiSetActWin -dock widgetDock_<CovSrc.1>
-gui_src_cov_navigation_set_criteria -id CovSrc.1 -category Covered
-gui_src_cov_navigation_set_criteria -id CovSrc.1 -category Excluded
-gui_src_cov_navigation_set_criteria -id CovSrc.1 -category Uncovered
-gui_list_expand -id  CoverageTable.1   -list {covtblInstancesList} instr_gen.dut.mips.dp
+gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut.mips.dp.pcadd1  instr_gen.dut.mips.dp.MEM_WB   }
 verdiSetActWin -dock widgetDock_<Summary>
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut  instr_gen.dut.mips.dp.pcreg   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.pcreg  -column {} 
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.pcreg  -column {Toggle} 
-gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut.mips.dp.pcreg  instr_gen.dut.mips.dp.alu   }
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.alu  -column {Line} 
-gui_covtable_show -show  { Design Hierarchy } -id  CoverageTable.1  -test  MergedTest
-gui_summarybar_goto -id  CovSrc.1   214
-verdiSetActWin -dock widgetDock_<CovSrc.1>
-gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.alu  -column {Line} 
-verdiSetActWin -dock widgetDock_<Summary>
-vdCovExit -noprompt
+gui_list_select -id CoverageTable.1 -list covtblInstancesList { instr_gen.dut.mips.dp.MEM_WB  instr_gen.dut.mips.dp.alu   }
+gui_list_action -id  CoverageTable.1 -list {covtblInstancesList} instr_gen.dut.mips.dp.alu  -column {} 
+gui_covdetail_select -id  CovDetail.1   -name   Line
+verdiSetActWin -dock widgetDock_<CovDetail>

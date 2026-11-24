@@ -1,3 +1,2 @@
-Command Line: /usr/local2/synopsys/verdi_2024.09/verdi_2024/platform/LINUXAMD64/bin/vdCov -covdir cov_merged/merged.vdb
+Command Line: /usr/local2/synopsys/verdi_2024.09/verdi_2024/platform/LINUXAMD64/bin/vdCov -covdir simv.vdb
 uname(Linux nc-asu6-l05.apporto.com 4.18.0-372.19.1.el8_6.x86_64 #1 SMP Mon Jul 18 11:14:02 EDT 2022 x86_64)
-au time 140.553588 7.445847 0.185613 delta 0 0 total 61981740 0

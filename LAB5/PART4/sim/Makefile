@@ -33,7 +33,7 @@ run:
 	$(SIMV)
 
 # Compile and simulate in one step
-all: comp run
+all: comp run cov
 
 # ---- Multi-run flow ----
 # Each call increments .run_counter and uses that number as the seed, so no

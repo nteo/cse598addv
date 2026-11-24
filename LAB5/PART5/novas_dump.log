@@ -157,66 +157,59 @@ maxproc		5000
 (Special)Runtime environment variables:
 
 Runtime environment variables:
-LD_LIBRARY_PATH=/usr/local2/synopsys/verdi_2024.09/verdi_2024/platform/linux64/lib/Qt5/lib/depends/xlib:/usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/VCS/linux64:/usr/lib64
 LS_COLORS=rs=0:di=38;5;33:ln=38;5;51:mh=00:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=01;05;37;41:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;40:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.zst=38;5;9:*.tzst=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.wim=38;5;9:*.swm=38;5;9:*.dwm=38;5;9:*.esd=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.mjpg=38;5;13:*.mjpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.m4a=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.oga=38;5;45:*.opus=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
 HOSTTYPE=x86_64-linux
 XDG_MENU_PREFIX=gnome-
 _=./simv
 LANG=en_US.UTF-8
 HISTCONTROL=ignoreboth
-DISPLAY=:13.0
-HOSTNAME=nc-asu6-l06.apporto.com
+DISPLAY=:10.0
+HOSTNAME=nc-asu6-l05.apporto.com
 COLORTERM=truecolor
 MAKE_TERMOUT=/dev/pts/4
-SNPSLMD_LICENSE_FILE=27020@enlicense5.eas.asu.edu
 VENDOR=unknown
 MACHTYPE=x86_64
 SSH_AUTH_SOCK=/run/user/2288359/keyring/ssh
 MFLAGS=
 which_declare=declare -f
 OSTYPE=linux
-XDG_SESSION_ID=c2387
+XDG_SESSION_ID=c236
 XRDP_SOCKET_PATH=/run/xrdp
 USER=a34263_asu
-GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/18a312d5_9fe8_49cc_b15d_3b48875c0a70
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/224279f9_b886_435b_bf3a_01bca0d9551b
 GROUP=a34263_asu
-XRDP_PULSE_SINK_SOCKET=xrdp_chansrv_audio_out_socket_13
+XRDP_PULSE_SINK_SOCKET=xrdp_chansrv_audio_out_socket_10
 PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
 PWD=/home/a34263_asu/CSE598/LAB5/PART5
 SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
 HOME=/home/a34263_asu
 UID=2288359
-SSH_AGENT_PID=284030
-HOST=nc-asu6-l06.apporto.com
+SSH_AGENT_PID=31851
+HOST=nc-asu6-l05.apporto.com
 KRB5CCNAME=FILE:/tmp/krb5cc_2288359
 XDG_DATA_DIRS=/home/a34263_asu/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
 GJS_DEBUG_OUTPUT=stderr
-XRDP_PULSE_SOURCE_SOCKET=xrdp_chansrv_audio_in_socket_13
-PROJECT_ROOT=/home/a34263_asu/CSE598/LAB5/PART5
+XRDP_PULSE_SOURCE_SOCKET=xrdp_chansrv_audio_in_socket_10
 MAIL=/var/spool/mail/a34263_asu
 TERM=xterm-256color
 VTE_VERSION=5204
 SHELL=/bin/bash
 QT_IM_MODULE=ibus
 XMODIFIERS=@im=ibus
-LM_LICENSE_FILE=27020@enlicense5.eas.asu.edu
 XDG_CURRENT_DESKTOP=GNOME
 GNOME_TERMINAL_SERVICE=:1.76
 MAKELEVEL=1
-VERDI_HOME=/usr/local2/synopsys/verdi_2024.09/verdi_2024
 SHLVL=4
 MAKE_TERMERR=/dev/pts/4
-PDK_DIR=/usr/local2/cadence/NCSU/SRC/FreePDK45
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 LOGNAME=a34263_asu
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/2288359/bus
 XDG_RUNTIME_DIR=/run/user/2288359
-PATH=/usr/local2/synopsys/syn_2023.12-SP51/bin:/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/bin/:/usr/local2/synopsys/verdi_2024.09/verdi_2024/bin:/usr/local2/synopsys/syn_2023.12-SP51/bin:/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/bin/:/usr/local2/synopsys/verdi_2024.09/verdi_2024/bin:/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin
-VCS_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3
+PATH=/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin
 HISTSIZE=1000
 MAKEFLAGS=
 GJS_DEBUG_TOPICS=JS ERROR;JS LOG
-SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/283856,unix/unix:/tmp/.ICE-unix/283856
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/31680,unix/unix:/tmp/.ICE-unix/31680
 XRDP_SESSION=1
 LESSOPEN=||/usr/bin/lesspipe.sh %s
 BASH_FUNC_which%%=() {  ( alias;
@@ -225,54 +218,58 @@ BASH_FUNC_which%%=() {  ( alias;
 VCS_PATHMAP_PRELOAD_DONE=1
 VCS_STACK_EXEC=true
 VCS_EXEC_DONE=1
+LM_LICENSE_FILE=27020@enlicense5.eas.asu.edu
+SNPSLMD_LICENSE_FILE=27020@enlicense5.eas.asu.edu
+VCS_HOME=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3
 LC_ALL=C
+VERDI_HOME=/usr/local2/synopsys/verdi_2024.09/verdi_2024
 DVE=/usr/local2/synopsys/vcs_2024/vcs/W-2024.09-SP2-3/gui/dve
 SPECMAN_OUTPUT_TO_TTY=1
-FLEXLM_BORROWFILE=/home/a34263_asu/.nc-asu6-l06.apporto.com-borrow.txt
+FLEXLM_BORROWFILE=/home/a34263_asu/.nc-asu6-l05.apporto.com-borrow.txt
 Runtime command line arguments:
 argv[0]=./simv
 argv[1]=+PROG=traces/prog3.bin
 argv[2]=+TRACE=traces/prog3.rtl.trace
-233 profile - 100
-          CPU/Mem usage: 0.030 sys,  0.110 user,  267.98M mem
-234 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-235 User CPU time used: 0 seconds
-236 System CPU time used: 0 seconds
-237 pliAppInit
-238 FSDB_GATE is set.
-239 FSDB_RTL is set.
-240 FSDB_DYNAMIC_ALIAS is enabled.
-241 libnuma.so open fail. libnuma.so: cannot open shared object file: No such file or directory
-242 FSDB NUMA optimize not available.
-243 FSDB_PACKED_MODE is enabled.
-244 FSDB_GATE_PACKED is enabled.
-245 [SC]Init: MemoryConsumed=0.00MB ElapsedTime=0hour 0min. 0sec.
-246 FSDB_REDUCE_VC_MEM is enabled.
-247 FSDB_ALIAS_ARRAY_ELEM is set to 4294967295.
-248 Enable Parallel Dumping.
-249 pliAppMiscSet: New Sim Round
-250 pliEntryInit
-251 LIBSSCORE=found /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/lib/LINUXAMD64/libsscore_vcs202409.so through $NOVAS_HOME setting.
-252 FSDB Dumper for VCS, Release Verdi_W-2024.09-SP2-3, Linux x86_64/64bit, 06/23/2025
-253 (C) 1996 - 2025 by Synopsys, Inc.
-254 sps_call_fsdbDumpfile_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(141)
-255 argv[0]: (novas.fsdb)
-256 *Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
-258 *Verdi* : Create FSDB file 'novas.fsdb'
-259 [spi_vcs_vd_ppi_create_root]: no upf option
-260 DUMPER_MEMORY_REDUCTION is enabled.
-261 compile option from '/home/a34263_asu/CSE598/LAB5/PART5/simv.daidir/vcs_rebuild'.
-262   "vcs '-full64' '-sverilog' '-timescale=1ns/1ps' '-F' 'rtl/project.f' '-top' 'testbench' '-debug_access+all' '-kdb' '-lca' '-o' 'simv' 2>&1"
-263 DVDI_is_vir_unload_enabled is enable
-264 FSDB_VCS_ENABLE_NATIVE_VC is enable
-265 FSDB_VCS_ENABLE_MEMORY_NATIVE_VC is enabled
-266 sps_call_fsdbDumpvars_vd_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(142)
-267 argv[0]: (0)
-268 argv[1]: (handle) testbench
-269 *Verdi* : Begin traversing the scope (testbench), layer (0).
-270 *Verdi* : End of traversing.
-271 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.030 sys,  0.110 user,  369.40M mem
+230 profile - 100
+          CPU/Mem usage: 0.020 sys,  0.100 user,  267.96M mem
+231 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+232 User CPU time used: 0 seconds
+233 System CPU time used: 0 seconds
+234 pliAppInit
+235 FSDB_GATE is set.
+236 FSDB_RTL is set.
+237 FSDB_DYNAMIC_ALIAS is enabled.
+238 libnuma.so open fail. libnuma.so: cannot open shared object file: No such file or directory
+239 FSDB NUMA optimize not available.
+240 FSDB_PACKED_MODE is enabled.
+241 FSDB_GATE_PACKED is enabled.
+242 [SC]Init: MemoryConsumed=0.00MB ElapsedTime=0hour 0min. 0sec.
+243 FSDB_REDUCE_VC_MEM is enabled.
+244 FSDB_ALIAS_ARRAY_ELEM is set to 4294967295.
+245 Enable Parallel Dumping.
+246 pliAppMiscSet: New Sim Round
+247 pliEntryInit
+248 LIBSSCORE=found /usr/local2/synopsys/verdi_2024.09/verdi_2024/share/PLI/lib/LINUXAMD64/libsscore_vcs202409.so through $NOVAS_HOME setting.
+249 FSDB Dumper for VCS, Release Verdi_W-2024.09-SP2-3, Linux x86_64/64bit, 06/23/2025
+250 (C) 1996 - 2025 by Synopsys, Inc.
+251 sps_call_fsdbDumpfile_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(141)
+252 argv[0]: (novas.fsdb)
+253 *Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+255 *Verdi* : Create FSDB file 'novas.fsdb'
+256 [spi_vcs_vd_ppi_create_root]: no upf option
+257 DUMPER_MEMORY_REDUCTION is enabled.
+258 compile option from '/home/a34263_asu/CSE598/LAB5/PART5/simv.daidir/vcs_rebuild'.
+259   "vcs '-full64' '-sverilog' '-timescale=1ns/1ps' '-F' 'rtl/project.f' '-top' 'testbench' '-debug_access+all' '-kdb' '-lca' '-o' 'simv' 2>&1"
+260 DVDI_is_vir_unload_enabled is enable
+261 FSDB_VCS_ENABLE_NATIVE_VC is enable
+262 FSDB_VCS_ENABLE_MEMORY_NATIVE_VC is enabled
+263 sps_call_fsdbDumpvars_vd_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(142)
+264 argv[0]: (0)
+265 argv[1]: (handle) testbench
+266 *Verdi* : Begin traversing the scope (testbench), layer (0).
+267 *Verdi* : End of traversing.
+268 pliAppHDL_DumpVarComplete traverse var: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  369.38M mem
                    incr: 0.000 sys,  0.000 user,  11.38M mem
                    accu: 0.000 sys,  0.000 user,  11.38M mem
               accu incr: 0.000 sys,  0.000 user,  11.38M mem
@@ -281,12 +278,12 @@ argv[2]=+TRACE=traces/prog3.rtl.trace
                  incr: 343 var,  323 idcode,  62 callback
                  accu: 343 var,  323 idcode,  62 callback
             accu incr: 343 var,  323 idcode,  62 callback
-272 Idcode  0 - bc1:0  mda:0
-273 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-274 User CPU time used: 0 seconds
-275 System CPU time used: 0 seconds
-276 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.030 sys,  0.110 user,  369.40M mem
+269 Idcode  0 - bc1:0  mda:0
+270 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+271 User CPU time used: 0 seconds
+272 System CPU time used: 0 seconds
+273 pliAppHDL_DumpVarComplete: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  369.38M mem
                    incr: 0.000 sys,  0.000 user,  0.00M mem
                    accu: 0.000 sys,  0.000 user,  11.38M mem
               accu incr: 0.000 sys,  0.000 user,  0.00M mem
@@ -295,15 +292,15 @@ argv[2]=+TRACE=traces/prog3.rtl.trace
                  incr: 0 var,  0 idcode,  0 callback
                  accu: 343 var,  323 idcode,  62 callback
             accu incr: 0 var,  0 idcode,  0 callback
-277 Idcode  0 - bc1:0  mda:0
-278 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-279 User CPU time used: 0 seconds
-280 System CPU time used: 0 seconds
-281 sps_call_fsdbDumpMDA_vd_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(143)
-282 argv[0]: (handle) testbench.dut.dmem.RAM
-283 *Verdi* : Dumping the MDA (testbench.dut.dmem.RAM).
-284 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.030 sys,  0.110 user,  369.40M mem
+274 Idcode  0 - bc1:0  mda:0
+275 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+276 User CPU time used: 0 seconds
+277 System CPU time used: 0 seconds
+278 sps_call_fsdbDumpMDA_vd_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(143)
+279 argv[0]: (handle) testbench.dut.dmem.RAM
+280 *Verdi* : Dumping the MDA (testbench.dut.dmem.RAM).
+281 pliAppHDL_DumpVarComplete traverse var: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  369.38M mem
                    incr: 0.000 sys,  0.000 user,  0.00M mem
                    accu: 0.000 sys,  0.000 user,  0.00M mem
               accu incr: 0.000 sys,  0.000 user,  0.00M mem
@@ -312,12 +309,12 @@ argv[2]=+TRACE=traces/prog3.rtl.trace
                  incr: 0 var,  0 idcode,  1 callback
                  accu: 0 var,  0 idcode,  1 callback
             accu incr: 0 var,  0 idcode,  1 callback
-285 Idcode  0 - bc1:0  mda:65
-286 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-287 User CPU time used: 0 seconds
-288 System CPU time used: 0 seconds
-289 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.030 sys,  0.110 user,  369.40M mem
+282 Idcode  0 - bc1:0  mda:65
+283 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+284 User CPU time used: 0 seconds
+285 System CPU time used: 0 seconds
+286 pliAppHDL_DumpVarComplete: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  369.38M mem
                    incr: 0.000 sys,  0.000 user,  0.00M mem
                    accu: 0.000 sys,  0.000 user,  0.00M mem
               accu incr: 0.000 sys,  0.000 user,  0.00M mem
@@ -326,17 +323,17 @@ argv[2]=+TRACE=traces/prog3.rtl.trace
                  incr: 0 var,  0 idcode,  0 callback
                  accu: 0 var,  0 idcode,  1 callback
             accu incr: 0 var,  0 idcode,  0 callback
-290 Idcode  0 - bc1:0  mda:65
-291 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-292 User CPU time used: 0 seconds
-293 System CPU time used: 0 seconds
-294 sps_call_fsdbDumpMDA_vd_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(144)
-295 argv[0]: (handle) testbench.dut.mips.dp.rf
-296 *Verdi* : Begin traversing the MDAs under scope (testbench.dut.mips.dp.rf), layer (0).
-297 *Verdi* : Enable +mda and +packedmda dumping.
-298 *Verdi* : End of traversing the MDAs.
-299 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.030 sys,  0.110 user,  369.40M mem
+287 Idcode  0 - bc1:0  mda:65
+288 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+289 User CPU time used: 0 seconds
+290 System CPU time used: 0 seconds
+291 sps_call_fsdbDumpMDA_vd_main at 0 : /home/a34263_asu/CSE598/LAB5/PART5/rtl/testbench.sv(144)
+292 argv[0]: (handle) testbench.dut.mips.dp.rf
+293 *Verdi* : Begin traversing the MDAs under scope (testbench.dut.mips.dp.rf), layer (0).
+294 *Verdi* : Enable +mda and +packedmda dumping.
+295 *Verdi* : End of traversing the MDAs.
+296 pliAppHDL_DumpVarComplete traverse var: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  369.38M mem
                    incr: 0.000 sys,  0.000 user,  0.00M mem
                    accu: 0.000 sys,  0.000 user,  0.00M mem
               accu incr: 0.000 sys,  0.000 user,  0.00M mem
@@ -345,48 +342,48 @@ argv[2]=+TRACE=traces/prog3.rtl.trace
                  incr: 32 var,  0 idcode,  1 callback
                  accu: 32 var,  0 idcode,  1 callback
             accu incr: 32 var,  0 idcode,  1 callback
-300 Idcode  0 - bc1:0  mda:98
-301 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-302 User CPU time used: 0 seconds
-303 System CPU time used: 0 seconds
-304 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.040 sys,  0.110 user,  369.40M mem
-                   incr: 0.010 sys,  0.000 user,  0.00M mem
-                   accu: 0.010 sys,  0.000 user,  0.00M mem
-              accu incr: 0.010 sys,  0.000 user,  0.00M mem
+297 Idcode  0 - bc1:0  mda:98
+298 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+299 User CPU time used: 0 seconds
+300 System CPU time used: 0 seconds
+301 pliAppHDL_DumpVarComplete: profile - 
+          CPU/Mem usage: 0.020 sys,  0.110 user,  369.38M mem
+                   incr: 0.000 sys,  0.000 user,  0.00M mem
+                   accu: 0.000 sys,  0.000 user,  0.00M mem
+              accu incr: 0.000 sys,  0.000 user,  0.00M mem
 
           Count usage: 375 var,  323 idcode,  64 callback
                  incr: 0 var,  0 idcode,  0 callback
                  accu: 32 var,  0 idcode,  1 callback
             accu incr: 0 var,  0 idcode,  0 callback
-305 Idcode  0 - bc1:0  mda:98
-306 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-307 User CPU time used: 0 seconds
-308 System CPU time used: 0 seconds
-309 End of simulation at 345000
-310 Memory usage: 369.402 M
-311 Maximum resident set size: 126 MB
-312 Hard page faults: 0
-313 Soft page faults: 13085
-314 Elapsed time:    0:00:01    Mon Nov 23 06:21:46 2026
-315 User CPU time used: 0 seconds
-316 System CPU time used: 0 seconds
-317 Begin FSDB profile info:
-318 FSDB Writer : bc1(228) bcn(788) mtf/stf(0/0)
-FSDB Writer elapsed time : flush(0.002913) io wait(0.000000) theadpool wait(0.000000)
+302 Idcode  0 - bc1:0  mda:98
+303 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+304 User CPU time used: 0 seconds
+305 System CPU time used: 0 seconds
+306 End of simulation at 345000
+307 Memory usage: 369.381 M
+308 Maximum resident set size: 126 MB
+309 Hard page faults: 0
+310 Soft page faults: 13103
+311 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+312 User CPU time used: 0 seconds
+313 System CPU time used: 0 seconds
+314 Begin FSDB profile info:
+315 FSDB Writer : bc1(228) bcn(788) mtf/stf(0/0)
+FSDB Writer elapsed time : flush(0.002785) io wait(0.000000) theadpool wait(0.000000)
 FSDB Writer cpu time : MT Compression : 0
-319 End FSDB profile info
-320 FSDB closed. Name: novas.fsdb Size: 19537
-321 Parallel profile     - ProducerThread:1 ConsumerThread:1 Buffer:64MB
-322                      - BlockUsed:1 Acquire:0 BufferUsed:16281
-323                      - Flush:5 Expand:0 ProducerWait:0 ConsumerWait:0
-324                      - MainProducerTime:0.164105425 TotalConsumerTime:0.000000000
-325                      - ElapsedTime:0.027728000
-326 Producer   0 profile - BlockUsed:2 Acquire:0 BufferUsed:16281
-327 Consumer   0 profile - Affinity:-1 CPUTime:0.000000000 LifeTime:0.000000000 (-nan%)
-328                      - BlockUsed:2 Acquire:0 BufferUsed:16281
-329 SimExit
-330 Elapsed time:    0:00:02    Mon Nov 23 06:21:47 2026
-331 User CPU time used: 0 seconds
-332 System CPU time used: 0 seconds
-333 Sim process exit
+316 End FSDB profile info
+317 FSDB closed. Name: novas.fsdb Size: 19537
+318 Parallel profile     - ProducerThread:1 ConsumerThread:1 Buffer:64MB
+319                      - BlockUsed:1 Acquire:0 BufferUsed:16281
+320                      - Flush:5 Expand:0 ProducerWait:0 ConsumerWait:0
+321                      - MainProducerTime:0.148291364 TotalConsumerTime:0.000000000
+322                      - ElapsedTime:0.025036000
+323 Producer   0 profile - BlockUsed:2 Acquire:0 BufferUsed:16281
+324 Consumer   0 profile - Affinity:-1 CPUTime:0.000000000 LifeTime:0.000000000 (-nan%)
+325                      - BlockUsed:2 Acquire:0 BufferUsed:16281
+326 SimExit
+327 Elapsed time:    0:00:01    Mon Nov 23 23:36:18 2026
+328 User CPU time used: 0 seconds
+329 System CPU time used: 0 seconds
+330 Sim process exit
